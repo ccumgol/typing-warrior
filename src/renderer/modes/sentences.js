@@ -71,7 +71,7 @@ export function createSentencesMode(ctx) {
   function submit() {
     if (typed.length === 0) return;
     for (let i = typed.length; i < target.tokens.length; i += 1) session.stroke(false);
-    if (typedText(typed) !== target.text) sounds.miss();
+    if (typedText(typed) !== target.text) sounds.typo();
     else sounds.done();
     session.item();
     index += 1;
@@ -102,7 +102,7 @@ export function createSentencesMode(ctx) {
       const ok = target.isCorrectAt(typed.length, result.added);
       session.stroke(ok);
       ctx.keyboard.flash(event.code, ok);
-      if (!ok) sounds.miss();
+      if (!ok) sounds.typo();
     }
     typed = result.tokens;
     renderTyping();

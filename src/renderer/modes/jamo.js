@@ -99,7 +99,7 @@ export function createJamoMode(ctx) {
     session.stroke(ok);
     ctx.keyboard.flash(event.code, ok);
     if (!ok) {
-      sounds.miss();
+      sounds.typo();
       track.classList.remove('shake');
       void track.offsetWidth;
       track.classList.add('shake');

@@ -69,7 +69,7 @@ export function createWordsMode(ctx) {
     for (let i = typed.length; i < target.tokens.length; i += 1) session.stroke(false);
     if (!ok) {
       missed += 1;
-      sounds.miss();
+      sounds.typo();
     }
     session.item();
     index += 1;
@@ -107,7 +107,7 @@ export function createWordsMode(ctx) {
       const ok = target.isCorrectAt(typed.length, result.added);
       session.stroke(ok);
       ctx.keyboard.flash(event.code, ok);
-      if (!ok) sounds.miss();
+      if (!ok) sounds.typo();
     }
     typed = result.tokens;
     renderWord();

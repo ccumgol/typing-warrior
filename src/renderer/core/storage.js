@@ -14,6 +14,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   showFingers: true,
   sound: true,
   gameTextScale: 1.25,
+  soundPack: 'classic',
   shortcutPlatform: null,
   completedStages: [],
 });
@@ -50,6 +51,7 @@ export function loadSettings() {
     showFingers: pick('showFingers', isBool),
     sound: pick('sound', isBool),
     gameTextScale: pick('gameTextScale', (v) => GAME_TEXT_SCALES.includes(v)),
+    soundPack: pick('soundPack', (v) => ['calm', 'classic', 'dopamine'].includes(v)),
     shortcutPlatform: pick('shortcutPlatform', (v) => v === 'mac' || v === 'win'),
     completedStages: pick('completedStages', (v) => Array.isArray(v) && v.every((s) => typeof s === 'string')),
   });

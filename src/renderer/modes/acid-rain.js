@@ -4,6 +4,7 @@ import { strokeCount } from '../core/hangul.js';
 import { el, pickRandom } from '../ui/dom.js';
 import { createGameInput } from '../ui/game-input.js';
 import { createTextSizeControl } from '../ui/text-size-control.js';
+import { createSoundPackControl } from '../ui/sound-pack-control.js';
 import { sounds } from '../core/sound.js';
 import { createSession, finishSession } from './session.js';
 import { formatTime } from '../core/stats.js';
@@ -23,9 +24,10 @@ export function createAcidRainMode(ctx) {
   const overlay = el('div', { class: 'game-overlay' });
   const hud = el('div', { class: 'game-hud' });
   ctx.root.replaceChildren(
-    el('section', { class: 'mode game acid-rain' }, el('div', { class: 'rain-stage' }, hud, field, ground, overlay), el('div', { class: 'game-input-row' }, input.el, createTextSizeControl(ctx))),
+    el('section', { class: 'mode game acid-rain' }, el('div', { class: 'rain-stage' }, hud, field, ground, overlay), el('div', { class: 'game-input-row' }, createSoundPackControl(ctx), input.el, createTextSizeControl(ctx))),
   );
   ctx.keyboard.highlight(null);
+  ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: 'Enter로 시작' });
 
   let state = 'ready'; // ready | playing | paused | over
   let drops = [];
@@ -39,6 +41,7 @@ export function createAcidRainMode(ctx) {
   let lastTime = 0;
   let nextId = 1;
   let pausedAt = 0;
+  let streak = 0;
   let lang = ctx.settings().lang; // fixed for the whole game so falling words stay typable
 
   const words = () => Object.values(lang === 'ko' ? KO_WORD_SETS : EN_WORD_SETS).flat();
@@ -55,6 +58,7 @@ export function createAcidRainMode(ctx) {
     cleared = 0;
     score = 0;
     hp = MAX_HP;
+    streak = 0;
     spawnTimer = 0;
     slowUntil = 0;
     session.reset();
@@ -108,6 +112,7 @@ export function createAcidRainMode(ctx) {
       if (drop.y >= 1) {
         removeDrop(drop, 'splash');
         hp -= 1;
+        streak = 0;
         sounds.hurt();
         renderGround();
         if (hp <= 0) return gameOver();
@@ -120,6 +125,7 @@ export function createAcidRainMode(ctx) {
     const lowest = drops.filter((d) => d.text === text).sort((a, b) => b.y - a.y)[0];
     if (!lowest) {
       session.stroke(false);
+      streak = 0;
       sounds.miss();
       input.setState('miss');
       return;
@@ -127,7 +133,9 @@ export function createAcidRainMode(ctx) {
     for (let i = 0; i < strokeCount(text); i += 1) session.stroke(true);
     session.item();
     input.setState('hit');
-    sounds.hit();
+    sounds.hit({ combo: streak });
+    streak += 1;
+    if (lowest.kind !== 'normal') setTimeout(sounds.special, 120);
     score += strokeCount(text) * 10 * level;
     cleared += 1;
     if (lowest.kind === 'bomb') drops.forEach((d) => d !== lowest && removeDrop(d, 'pop'));

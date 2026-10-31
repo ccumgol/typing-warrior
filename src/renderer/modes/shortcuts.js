@@ -77,7 +77,7 @@ export function createShortcutsMode(ctx) {
     ctx.keyboard.flash(event.code, ok);
     if (!ok) {
       misses += 1;
-      sounds.miss();
+      sounds.typo();
       area.classList.remove('shake');
       void area.offsetWidth;
       area.classList.add('shake');

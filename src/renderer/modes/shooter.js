@@ -6,6 +6,7 @@ import { formatTime } from '../core/stats.js';
 import { el, pickRandom } from '../ui/dom.js';
 import { createGameInput } from '../ui/game-input.js';
 import { createTextSizeControl } from '../ui/text-size-control.js';
+import { createSoundPackControl } from '../ui/sound-pack-control.js';
 import { isTypable } from '../core/keyboard-layout.js';
 import { sounds } from '../core/sound.js';
 import { createSession, finishSession } from './session.js';
@@ -43,8 +44,9 @@ export function createShooterMode(ctx) {
   const canvas = el('canvas', { class: 'shooter-canvas' });
   const overlay = el('div', { class: 'game-overlay' });
   const stage = el('div', { class: 'shooter-stage' }, canvas, overlay);
-  ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, input.el, createTextSizeControl(ctx, () => state !== 'playing' && draw()))));
+  ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, createSoundPackControl(ctx), input.el, createTextSizeControl(ctx, () => state !== 'playing' && draw()))));
   ctx.keyboard.highlight(null);
+  ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: 'Enter로 시작' });
   const g = canvas.getContext('2d');
 
   let state = 'ready';
@@ -196,6 +198,7 @@ export function createShooterMode(ctx) {
     const commands = COMMANDS[lang];
     if (text === commands.reload) {
       game.ammo = MAGAZINE;
+      sounds.reload();
       ctx.toast('🔄 재장전 완료');
       return;
     }
@@ -205,21 +208,23 @@ export function createShooterMode(ctx) {
       game.score += game.enemies.length * 50;
       game.enemies = [];
       game.banner = { text: '✈ 공습!', life: 1.5 };
-      sounds.levelUp();
+      sounds.special();
       return;
     }
     if (game.ammo === 0) {
-      sounds.miss();
+      sounds.dryFire(); // 찰칵: trigger pulled on an empty gun
       return;
     }
     game.ammo -= 1;
     game.recoil = 1;
     sounds.shot();
+    if (game.ammo === 0) setTimeout(sounds.empty, 250); // warn after the last bullet
     const target = game.enemies.filter((e) => e.text === text).sort((a, b) => a.z - b.z)[0];
     if (!target) {
       session.stroke(false);
       game.streak = 0;
       input.setState('miss');
+      sounds.miss();
       return;
     }
     for (let i = 0; i < strokeCount(text); i += 1) session.stroke(true);
@@ -236,7 +241,7 @@ export function createShooterMode(ctx) {
     const bonus = 1 + Math.min(game.streak, 10) * 0.1;
     game.score += Math.round(strokeCount(text) * 10 * KINDS[target.kind].points * bonus);
     input.setState('hit');
-    sounds.hit();
+    sounds.hit({ combo: game.streak - 1 });
   }
 
   function loop(now) {
