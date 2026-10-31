@@ -19,7 +19,7 @@ const MODES = Object.freeze([
   { id: 'sentences', label: '문장', create: createSentencesMode, keyboard: true, fixedLang: true },
   { id: 'acid', label: '☔ 산성비', create: createAcidRainMode, keyboard: false },
   { id: 'shooter', label: '🎖️ 전선 작전', create: createShooterMode, keyboard: false },
-  { id: 'shortcuts', label: '단축키', create: createShortcutsMode, keyboard: true },
+  { id: 'shortcuts', label: '단축키', create: createShortcutsMode, keyboard: true, fixedLang: true },
   { id: 'records', label: '📊 기록', create: createRecordsMode, keyboard: false },
 ]);
 

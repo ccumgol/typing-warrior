@@ -23,7 +23,11 @@ export function createKeyboardView(container, { platform: initialPlatform = 'win
     }
     const main = lang === 'ko' ? key.ko : key.en.toUpperCase();
     const sub = lang === 'ko' ? key.en.toUpperCase() : key.enShift !== key.en.toUpperCase() ? key.enShift : '';
-    const shiftJamo = lang === 'ko' && key.koShift !== key.ko && /[ㄱ-ㅣ]/.test(key.koShift) ? key.koShift : '';
+    // Top-right corner: the Shift jamo in Korean mode; in 'shortcut' mode (English letters big)
+    // the Korean jamo as a small hint.
+    const cornerFor = { ko: key.koShift !== key.ko ? key.koShift : '', shortcut: key.ko };
+    const corner = cornerFor[lang] || '';
+    const shiftJamo = /[ㄱ-ㅣ]/.test(corner) ? corner : '';
     return [
       el('span', { class: 'kb-main' }, main),
       sub ? el('span', { class: 'kb-sub' }, sub) : null,

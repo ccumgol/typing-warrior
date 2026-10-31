@@ -153,11 +153,13 @@ export function createShortcutsMode(ctx) {
   function destroy() {
     ctx.keyboard.highlight(null);
     ctx.keyboard.setExtended(false);
+    ctx.setKeyboardLang(ctx.settings().lang);
     ctx.keyboard.setPlatform(ctx.platform);
   }
 
   let shownBefore = keyboardShown();
   ctx.keyboard.setExtended(true);
+  ctx.setKeyboardLang('shortcut'); // shortcuts are named by English letters
   restart();
   return { onKeyDown, onLangChange() {}, onSettingsChange, tick, destroy, capturesAllKeys: true };
 }
