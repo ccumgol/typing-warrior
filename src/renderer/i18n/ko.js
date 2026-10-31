@@ -143,6 +143,7 @@ export const KO = Object.freeze({
   'long.pick': '편 고르기',
   'long.completed': '완료 {count}/{total}편',
   'rec.longtext-psalms': '긴 글 · 시편',
+  'rec.longtext-psalms-kjv': '긴 글 · 시편 (KJV)',
 
   // 산성비
   'acid.title': '☔ 산성비',

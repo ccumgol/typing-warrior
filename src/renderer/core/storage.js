@@ -20,7 +20,8 @@ export const DEFAULT_SETTINGS = Object.freeze({
   shortcutPlatform: null,
   acidMode: 'endless', // 산성비: endless | stage
   acidCleared: 0, // highest 산성비 stage level cleared
-  longTextProgress: {}, // 긴 글: { psalms: { chapter, verse } }
+  longTextProgress: {}, // 긴 글: { psalms: { chapter, verse }, 'psalms-kjv': … }
+  longTextId: 'psalms', // 긴 글: last text practiced
   completedStages: [],
 });
 
@@ -67,6 +68,7 @@ export function loadSettings() {
     shortcutPlatform: pick('shortcutPlatform', (v) => v === 'mac' || v === 'win'),
     acidMode: pick('acidMode', (v) => v === 'endless' || v === 'stage'),
     longTextProgress: pick('longTextProgress', isProgress),
+    longTextId: pick('longTextId', (v) => typeof v === 'string' && /^[a-z0-9-]{1,40}$/.test(v)),
     acidCleared: pick('acidCleared', (v) => Number.isInteger(v) && v >= 0 && v <= 100),
     completedStages: pick('completedStages', (v) => Array.isArray(v) && v.every((s) => typeof s === 'string')),
   });

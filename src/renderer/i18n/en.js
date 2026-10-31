@@ -142,7 +142,8 @@ export const EN = Object.freeze({
   'long.nextBtn': 'Next psalm',
   'long.pick': 'Choose a psalm',
   'long.completed': '{count}/{total} done',
-  'rec.longtext-psalms': 'Long texts · Psalms',
+  'rec.longtext-psalms': 'Long texts · Psalms (Korean)',
+  'rec.longtext-psalms-kjv': 'Long texts · Psalms (KJV)',
 
   // Acid Rain
   'acid.title': '☔ Acid Rain',

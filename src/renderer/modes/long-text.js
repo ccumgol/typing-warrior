@@ -1,20 +1,24 @@
-// 긴 글 연습: 시편을 한 편씩, 한 절씩 이어서 칩니다. 어디까지 쳤는지 저장해 다음에 이어서 합니다.
-import { PSALMS, PSALMS_TRANSLATION } from '../data/psalms.js';
+// 긴 글 연습: 시편을 한 편씩, 한 절씩 이어서 칩니다. 글마다 어디까지 쳤는지 저장해 다음에 이어서 합니다.
+import { PSALMS as KO_PSALMS, PSALMS_TRANSLATION as KO_TRANSLATION } from '../data/psalms.js';
+import { PSALMS as KJV_PSALMS, PSALMS_TRANSLATION as KJV_TRANSLATION } from '../data/psalms-kjv.js';
 import { applyKey, createTarget, typedText, detectLang } from '../core/typing-input.js';
-import { el } from '../ui/dom.js';
+import { el, pills } from '../ui/dom.js';
 import { renderTypingLine } from '../ui/typing-line.js';
 import { sounds } from '../core/sound.js';
 import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 
-const TEXT_ID = 'psalms';
-const doneId = (chapter) => `${TEXT_ID}-${chapter}`;
+const TEXTS = Object.freeze([
+  { id: 'psalms', chapters: KO_PSALMS, translation: KO_TRANSLATION },
+  { id: 'psalms-kjv', chapters: KJV_PSALMS, translation: KJV_TRANSLATION },
+]);
+const findText = (id) => TEXTS.find((text) => text.id === id) || TEXTS[0];
 
 export function createLongTextMode(ctx) {
   const session = createSession();
-  const saved = ctx.settings().longTextProgress[TEXT_ID];
-  let chapter = saved?.chapter || 1;
-  let verse = saved?.verse || 0; // index of the verse being typed
+  let text = findText(ctx.settings().longTextId);
+  let chapter = 1;
+  let verse = 0; // index of the verse being typed
   let typed = [];
   let target = null;
   let lang = 'ko';
@@ -30,15 +34,33 @@ export function createLongTextMode(ctx) {
       el('div', { class: 'practice-area' }, title, previous, line, input, upcoming, el('div', { class: 'practice-desc' }, t('long.desc')))),
   );
 
-  const verses = () => PSALMS[chapter - 1].verses;
+  const chapters = () => text.chapters;
+  const verses = () => chapters()[chapter - 1].verses;
+  const doneId = (number) => `${text.id}-${number}`;
 
   function saveProgress() {
-    const progress = { ...ctx.settings().longTextProgress, [TEXT_ID]: { chapter, verse } };
-    ctx.updateSettings({ longTextProgress: progress });
+    const progress = { ...ctx.settings().longTextProgress, [text.id]: { chapter, verse } };
+    ctx.updateSettings({ longTextProgress: progress, longTextId: text.id });
+  }
+
+  /** Pick up where this text was left off. */
+  function resume() {
+    const saved = ctx.settings().longTextProgress[text.id];
+    chapter = Math.min(saved?.chapter || 1, chapters().length);
+    verse = Math.min(saved?.verse || 0, verses().length - 1);
+    session.reset();
+    load();
+  }
+
+  function switchText(id) {
+    if (id === text.id) return;
+    text = findText(id);
+    ctx.updateSettings({ longTextId: text.id });
+    resume();
   }
 
   function openChapter(next, startVerse = 0) {
-    chapter = ((next - 1 + PSALMS.length) % PSALMS.length) + 1;
+    chapter = ((next - 1 + chapters().length) % chapters().length) + 1;
     verse = Math.min(startVerse, verses().length - 1);
     session.reset();
     saveProgress();
@@ -55,14 +77,14 @@ export function createLongTextMode(ctx) {
 
   function renderToolbar() {
     const done = ctx.settings().completedStages;
-    const doneCount = PSALMS.filter((p) => done.includes(doneId(p.chapter))).length;
+    const doneCount = chapters().filter((p) => done.includes(doneId(p.chapter))).length;
     const picker = el('select', { class: 'long-picker', title: t('long.pick'), tabindex: '-1', onchange: (e) => { e.target.blur(); openChapter(Number(e.target.value)); } },
-      PSALMS.map((p) => el('option', { value: p.chapter, selected: p.chapter === chapter }, `${done.includes(doneId(p.chapter)) ? '✓ ' : ''}${t('long.chapter', { chapter: p.chapter })}`)));
+      chapters().map((p) => el('option', { value: p.chapter, selected: p.chapter === chapter }, `${done.includes(doneId(p.chapter)) ? '✓ ' : ''}${t('long.chapter', { chapter: p.chapter })}`)));
     const step = (label, tip, delta) => el('button', { class: 'pill', type: 'button', tabindex: '-1', title: tip, onclick: () => openChapter(chapter + delta) }, label);
     toolbar.replaceChildren(
-      el('span', { class: 'pill active' }, t('long.psalms', { translation: PSALMS_TRANSLATION })),
+      pills(TEXTS.map((item) => ({ value: item.id, label: t('long.psalms', { translation: item.translation }) })), text.id, switchText),
       el('div', { class: 'level-stepper' }, step('◀', t('long.prev'), -1), picker, step('▶', t('long.nextBtn'), 1)),
-      el('span', { class: 'practice-desc' }, t('long.completed', { count: doneCount, total: PSALMS.length })),
+      el('span', { class: 'practice-desc' }, t('long.completed', { count: doneCount, total: chapters().length })),
     );
   }
 
@@ -88,10 +110,10 @@ export function createLongTextMode(ctx) {
     const finished = chapter;
     ctx.markStageDone(doneId(finished));
     verse = 0;
-    chapter = (finished % PSALMS.length) + 1;
+    chapter = (finished % chapters().length) + 1;
     saveProgress(); // next time, continue with the next psalm
     finishSession({
-      mode: `longtext-${TEXT_ID}`,
+      mode: `longtext-${text.id}`,
       label: t('long.chapter', { chapter: finished }),
       title: t('long.done', { chapter: finished }),
       snap: session.snapshot(),
@@ -132,7 +154,7 @@ export function createLongTextMode(ctx) {
     return true;
   }
 
-  load();
+  resume();
   return {
     onKeyDown,
     onLangChange() {}, // language follows the text

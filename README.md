@@ -26,7 +26,7 @@ npm run dist:win   # Windows 설치본 + 포터블 .exe
 | 자리 연습 | 한글 7단계(기본자리 → 윗줄 → 아랫줄 → 쌍자음 → 쌍모음 → 복모음 → 숫자·기호), 영문 6단계, 🔀 혼합 모드 |
 | 단어 | 일상·자연·음식·쌍자음/겹받침·신앙 / English basic·everyday·advanced·faith |
 | 문장 | 명언 100개, 성경 암송 말씀 100구절(개역한글), 같은 구절의 영어 성경 100구절(ESV), 영어 문장 30개 |
-| 📜 긴 글 | 시편 150편(개역한글)을 한 절씩 이어서 타이핑. 어디까지 쳤는지 저장되고 끝낸 편에 ✓ 표시 |
+| 📜 긴 글 | 시편 150편(개역한글 / KJV)을 한 절씩 이어서 타이핑. 어디까지 쳤는지 저장되고 끝낸 편에 ✓ 표시 |
 | ☔ 산성비 | 떨어지는 단어 입력. ♾️ 연속 모드(12단어마다 레벨 상승) / 🎯 단계 모드(LEVEL 1~20, 단어 20개를 막으면 다음 레벨 열림). 레벨 10 = 분당 200타 기준. 💣 금색 단어 = 화면 정리, ❄️ 파란 단어 = 5초 감속 |
 | 🎖️ 전선 작전 | 1인칭 전장 타자 게임. 탄약·재장전("장전"), 7연속 명중 시 공습("공습"), 5웨이브마다 지휘관(긴 문장) |
 | 단축키 | macOS / Windows 기본 단축키를 실제로 눌러 연습. 1단계 기본 → 2단계 문서·브라우저 → 3단계 텍스트 이동, 🔀 전체 + 📋 단축키 표. 화면 키보드에 Ctrl·Alt·⌘·Esc·F1~F12·방향키까지 표시되고, 키보드를 보이면 정답 키가 켜지고 감추면(F2) 외워서 누르기 |
@@ -54,7 +54,7 @@ npm run dist:win   # Windows 설치본 + 포터블 .exe
 
 - `src/renderer/data/bible.js`는 `tools/build-bible.py`로 로컬 성경 DB에서 생성했습니다. 개역한글은 저작권이 만료된 번역본이라 기본값으로 사용합니다.
   다른 번역본으로 바꾸려면: `python3 tools/build-bible.py 개역개정` (개인 연습용으로만 사용하세요).
-- 영어 성경 구절과 시편도 같은 스크립트로 만듭니다: `python3 tools/build-bible.py english ESV`, `python3 tools/build-bible.py psalms`.
+- 영어 성경 구절과 시편도 같은 스크립트로 만듭니다: `python3 tools/build-bible.py english ESV`, `python3 tools/build-bible.py psalms`. KJV 시편은 로컬 DB의 KJV에 표제가 잘리고 아포스트로피가 빠진 곳이 있어, 구텐베르크 프로젝트의 공개 KJV(eBook #10, `pg10.txt`)에서 만듭니다: `python3 tools/build-bible.py psalms-kjv pg10.txt`.
 - **ESV 사용 조건**: Crossway 기준(500구절 이하, 앱 전체 글의 25% 미만, 비상업, 저작권 문구 표시)에 맞춰 넣었습니다. 시편을 함께 넣어 ESV 비중은 약 9.5%이고, `tests/content.test.js`가 25%를 넘지 않는지 검사합니다. 앱을 판매하거나 광고를 넣으려면 Crossway의 정식 허락이 필요합니다.
   > Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.
 - 단어·명언·단축키는 `src/renderer/data/`의 파일을 고치면 바로 반영됩니다.
