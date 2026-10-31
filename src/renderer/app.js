@@ -1,7 +1,7 @@
 // App shell: navigation, settings, theme, fullscreen, status bar and key routing.
 import { loadSettings, saveSettings } from './core/storage.js';
 import { isLangToggle } from './core/typing-input.js';
-import { setSoundEnabled, setSoundPack } from './core/sound.js';
+import { setSoundEnabled } from './core/sound.js';
 import { el } from './ui/dom.js';
 import { createKeyboardView } from './ui/keyboard-view.js';
 import { isModalOpen, closeModal } from './ui/result-modal.js';
@@ -44,7 +44,6 @@ function applySettings() {
   document.documentElement.dataset.theme = settings.theme;
   document.documentElement.style.setProperty('--game-scale', String(settings.gameTextScale));
   setSoundEnabled(settings.sound);
-  setSoundPack(settings.soundPack);
   const dock = $('keyboard-dock');
   dock.hidden = !(settings.showKeyboard && activeDef.keyboard);
   dock.classList.toggle('fingers-on', settings.showFingers);

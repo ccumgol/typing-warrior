@@ -7,6 +7,7 @@ import { el, pickRandom } from '../ui/dom.js';
 import { createGameInput } from '../ui/game-input.js';
 import { createTextSizeControl } from '../ui/text-size-control.js';
 import { createSoundPackControl } from '../ui/sound-pack-control.js';
+import { createAmbience } from '../core/ambience.js';
 import { isTypable } from '../core/keyboard-layout.js';
 import { sounds } from '../core/sound.js';
 import { createSession, finishSession } from './session.js';
@@ -44,10 +45,17 @@ export function createShooterMode(ctx) {
   const canvas = el('canvas', { class: 'shooter-canvas' });
   const overlay = el('div', { class: 'game-overlay' });
   const stage = el('div', { class: 'shooter-stage' }, canvas, overlay);
-  ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, createSoundPackControl(ctx), input.el, createTextSizeControl(ctx, () => state !== 'playing' && draw()))));
+  ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, createSoundPackControl(ctx, { settingKey: 'shooterSoundPack', shooter: true, onChange: syncAmbience }), input.el, createTextSizeControl(ctx, () => state !== 'playing' && draw()))));
   ctx.keyboard.highlight(null);
   ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: 'Enter로 시작' });
   const g = canvas.getContext('2d');
+  const ambience = createAmbience();
+
+  /** Battlefield background sounds play only while a game runs with the 전장 pack. */
+  function syncAmbience() {
+    if (state === 'playing' && ctx.settings().shooterSoundPack === 'warzone') ambience.start();
+    else ambience.stop();
+  }
 
   let state = 'ready';
   let lang = ctx.settings().lang;
@@ -122,6 +130,8 @@ export function createShooterMode(ctx) {
     game.recoil = Math.max(0, game.recoil - dt * 6);
     game.damage = Math.max(0, game.damage - dt * 1.5);
     if (game.banner) game.banner = game.banner.life - dt > 0 ? { ...game.banner, life: game.banner.life - dt } : null;
+    const nearest = game.enemies.reduce((min, e) => Math.min(min, e.z), 1);
+    ambience.update({ hp: Math.max(0, game.hp) / MAX_HP, threat: game.enemies.length ? 1 - nearest : 0, wave: game.wave });
     if (game.hp <= 0) return gameOver();
     if (!game.toSpawn.length && !game.enemies.length && !game.banner) {
       game.hp = Math.min(MAX_HP, game.hp + 15);
@@ -267,6 +277,7 @@ export function createShooterMode(ctx) {
     input.clear();
     startWave();
     state = 'playing';
+    syncAmbience();
     overlay.hidden = true;
     last = performance.now();
     frame = requestAnimationFrame(loop);
@@ -278,9 +289,11 @@ export function createShooterMode(ctx) {
       pausedAt = performance.now();
       cancelAnimationFrame(frame);
       showOverlay('일시정지', ['Esc를 누르면 계속합니다']);
+      syncAmbience();
     } else if (state === 'paused') {
       session.excludePause(performance.now() - pausedAt);
       state = 'playing';
+      syncAmbience();
       overlay.hidden = true;
       last = performance.now();
       frame = requestAnimationFrame(loop);
@@ -289,6 +302,7 @@ export function createShooterMode(ctx) {
 
   function gameOver() {
     state = 'over';
+    syncAmbience();
     cancelAnimationFrame(frame);
     draw();
     showOverlay('작전 실패', ['Enter를 눌러 재출격']);
@@ -338,6 +352,7 @@ export function createShooterMode(ctx) {
     tick,
     destroy() {
       cancelAnimationFrame(frame);
+      ambience.stop();
       observer.disconnect();
     },
   };

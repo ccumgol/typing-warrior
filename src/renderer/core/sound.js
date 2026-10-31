@@ -1,10 +1,12 @@
-// Synthesized sound effects (no audio files) in three selectable packs:
-// calm (잔잔) → classic (아케이드) → dopamine (도파민).
+// Synthesized sound effects (no audio files) in selectable packs:
+// calm (잔잔) → classic (아케이드) → dopamine (도파민), plus warzone (전장) for 전선 작전.
+import { createWarzonePack } from './sound-warzone.js';
 
 export const SOUND_PACKS = Object.freeze([
   { id: 'calm', label: '🔈 잔잔', desc: '부드럽고 작은 소리' },
   { id: 'classic', label: '🔉 아케이드', desc: '레트로 게임기 소리' },
   { id: 'dopamine', label: '🔊 도파민', desc: '연속 명중할수록 음이 올라가요' },
+  { id: 'warzone', label: '🎖️ 전장', desc: '실전 같은 총성과 포격, 심장박동 배경음', shooterOnly: true },
 ]);
 export const DEFAULT_PACK = 'classic';
 
@@ -36,7 +38,7 @@ function ensureAudio() {
 }
 
 /** A pitched note, optionally gliding from f to f2. `at` = delay in seconds. */
-function tone({ f, f2 = f, dur = 0.1, type = 'sine', vol = 0.05, at = 0 }) {
+export function tone({ f, f2 = f, dur = 0.1, type = 'sine', vol = 0.05, at = 0 }) {
   const start = audio.currentTime + at;
   const osc = audio.createOscillator();
   const gain = audio.createGain();
@@ -52,7 +54,7 @@ function tone({ f, f2 = f, dur = 0.1, type = 'sine', vol = 0.05, at = 0 }) {
 }
 
 /** A filtered noise burst (gunshots, clicks, whooshes). */
-function noise({ dur = 0.1, vol = 0.1, at = 0, filter = 'bandpass', freq = 1200, freq2 = freq, q = 1 }) {
+export function noise({ dur = 0.1, vol = 0.1, at = 0, filter = 'bandpass', freq = 1200, freq2 = freq, q = 1 }) {
   const start = audio.currentTime + at;
   const src = audio.createBufferSource();
   const biquad = audio.createBiquadFilter();
@@ -73,6 +75,7 @@ const notes = (freqs, { gap = 0.08, ...opts }) => freqs.forEach((f, i) => tone({
 const semitone = (base, steps) => base * 2 ** (steps / 12);
 
 const PACKS = {
+  warzone: createWarzonePack({ tone, noise }),
   calm: {
     hit: () => tone({ f: 660, dur: 0.12, vol: 0.035 }),
     miss: () => tone({ f: 220, f2: 200, dur: 0.12, vol: 0.03 }),
@@ -152,7 +155,7 @@ function play(event, options, pack = packId) {
   try {
     ensureAudio();
     if (audio.state === 'suspended') audio.resume();
-    PACKS[pack][event](options);
+    PACKS[pack][event]?.(options);
   } catch (error) {
     console.warn('Sound is unavailable.', error);
     enabled = false;
@@ -187,7 +190,49 @@ function withAudio(fn) {
 
 /** Short demo of a pack: two climbing hits, then a miss. */
 export function previewPack(id) {
+  if (id === 'warzone') {
+    play('shot', undefined, id);
+    setTimeout(() => play('hit', { combo: 0 }, id), 120);
+    setTimeout(() => play('reload', undefined, id), 900);
+    return;
+  }
   play('hit', { combo: 0 }, id);
   setTimeout(() => play('hit', { combo: 4 }, id), 260);
   setTimeout(() => play('miss', undefined, id), 560);
 }
+
+/** Prepares audio for long-running sounds; false when sound is off or unavailable. */
+export function synthReady() {
+  if (!enabled) return false;
+  try {
+    ensureAudio();
+    if (audio.state === 'suspended') audio.resume();
+    return true;
+  } catch (error) {
+    console.warn('Sound is unavailable.', error);
+    enabled = false;
+    return false;
+  }
+}
+
+/** Continuous filtered noise (wind, rumble). Returns a function that fades it out. */
+export function loopNoise({ filter = 'lowpass', freq = 200, vol = 0.04 }) {
+  const src = audio.createBufferSource();
+  const biquad = audio.createBiquadFilter();
+  const gain = audio.createGain();
+  src.buffer = noiseBuffer;
+  src.loop = true;
+  biquad.type = filter;
+  biquad.frequency.value = freq;
+  gain.gain.setValueAtTime(0.0001, audio.currentTime);
+  gain.gain.exponentialRampToValueAtTime(vol, audio.currentTime + 1.5);
+  src.connect(biquad).connect(gain).connect(master);
+  src.start();
+  return () => {
+    gain.gain.setTargetAtTime(0.0001, audio.currentTime, 0.2);
+    src.stop(audio.currentTime + 1);
+  };
+}
+
+/** Effects shared with the battlefield ambience. */
+export const warzoneFx = PACKS.warzone;

@@ -15,6 +15,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   sound: true,
   gameTextScale: 1.25,
   soundPack: 'classic',
+  shooterSoundPack: 'warzone',
   shortcutPlatform: null,
   completedStages: [],
 });
@@ -52,6 +53,7 @@ export function loadSettings() {
     sound: pick('sound', isBool),
     gameTextScale: pick('gameTextScale', (v) => GAME_TEXT_SCALES.includes(v)),
     soundPack: pick('soundPack', (v) => ['calm', 'classic', 'dopamine'].includes(v)),
+    shooterSoundPack: pick('shooterSoundPack', (v) => ['calm', 'classic', 'dopamine', 'warzone'].includes(v)),
     shortcutPlatform: pick('shortcutPlatform', (v) => v === 'mac' || v === 'win'),
     completedStages: pick('completedStages', (v) => Array.isArray(v) && v.every((s) => typeof s === 'string')),
   });

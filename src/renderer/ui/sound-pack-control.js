@@ -1,20 +1,28 @@
-// Sound pack picker for the games: 🔈 잔잔 / 🔉 아케이드 / 🔊 도파민 (plays a short preview).
-import { SOUND_PACKS, previewPack } from '../core/sound.js';
+// Sound pack picker for the games (plays a short preview). Each game remembers its own pack.
+import { SOUND_PACKS, previewPack, setSoundPack } from '../core/sound.js';
 import { el } from './dom.js';
 
-export function createSoundPackControl(ctx) {
+/**
+ * @param {object} ctx
+ * @param {{settingKey?:string, shooter?:boolean, onChange?:Function}} [options]
+ */
+export function createSoundPackControl(ctx, { settingKey = 'soundPack', shooter = false, onChange = () => {} } = {}) {
   const box = el('div', { class: 'sound-pack', title: '효과음 세트' });
+  const packs = SOUND_PACKS.filter((pack) => shooter || !pack.shooterOnly);
 
   function choose(id) {
-    ctx.updateSettings({ soundPack: id, sound: true });
+    ctx.updateSettings({ [settingKey]: id, sound: true });
+    setSoundPack(id);
     previewPack(id);
     render();
+    onChange(id);
   }
 
   function render() {
-    const { soundPack, sound } = ctx.settings();
+    const { sound } = ctx.settings();
+    const soundPack = ctx.settings()[settingKey];
     box.replaceChildren(
-      ...SOUND_PACKS.map((pack) =>
+      ...packs.map((pack) =>
         el('button', {
           type: 'button',
           tabindex: '-1',
@@ -26,6 +34,7 @@ export function createSoundPackControl(ctx) {
     );
   }
 
+  setSoundPack(ctx.settings()[settingKey]);
   render();
   return box;
 }
