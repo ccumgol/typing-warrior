@@ -1,0 +1,51 @@
+/* Games: 산성비 and 전선 작전. */
+.game { padding: 10px; gap: 10px; }
+.rain-stage, .shooter-stage {
+  position: relative; flex: 1; min-height: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+}
+.rain-stage {
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, #1c2541 0%, #3a506b 70%, #5bc0be 140%);
+}
+:root[data-theme='light'] .rain-stage { background: linear-gradient(180deg, #cfe3f7 0%, #e9f1fb 100%); }
+.rain-field { position: relative; flex: 1; }
+.game-hud {
+  padding: 8px 0; text-align: center; background: rgba(0, 0, 0, 0.15);
+  font-size: 13px; font-weight: 700; color: rgba(255, 255, 255, 0.85); white-space: pre;
+}
+:root[data-theme='light'] .game-hud { color: #33415c; }
+.drop {
+  position: absolute; top: 0; padding: 4px 10px; border-radius: 8px; white-space: nowrap;
+  font-size: clamp(16px, 2.6vh, 22px); font-weight: 700; color: #fff;
+  background: rgba(15, 20, 35, 0.6); border: 1px solid rgba(255, 255, 255, 0.2);
+}
+:root[data-theme='light'] .drop { background: rgba(255, 255, 255, 0.85); color: #1d2130; border-color: #c4ccdc; }
+.drop.bomb { background: #b7791f; color: #fff; box-shadow: 0 0 14px #f6ad55; }
+.drop.freeze { background: #2b6cb0; color: #fff; box-shadow: 0 0 14px #63b3ed; }
+.drop.pop { animation: pop 0.35s forwards; }
+.drop.splash { animation: splash 0.35s forwards; background: var(--bad); }
+@keyframes pop { to { transform: scale(1.6); opacity: 0; } }
+@keyframes splash { to { opacity: 0; transform: scaleX(1.6) scaleY(0.3); } }
+.rain-ground { display: flex; gap: 3px; height: 22px; padding: 3px; background: #2d2a26; }
+.brick { flex: 1; border-radius: 3px; background: #a0785a; box-shadow: inset 0 -3px rgba(0, 0, 0, 0.25); }
+.brick.broken { background: transparent; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); }
+
+.shooter-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.game-overlay {
+  position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; background: rgba(5, 8, 15, 0.6); color: #fff; text-align: center; padding: 20px;
+}
+.game-overlay h2 { font-size: clamp(32px, 7vh, 60px); margin: 0 0 10px; }
+.game-overlay p { margin: 4px 0; font-size: 16px; opacity: 0.9; }
+
+.game-input-row { display: flex; justify-content: center; }
+.game-input {
+  min-width: min(480px, 90vw); min-height: 50px; padding: 10px 20px; border-radius: 12px; text-align: center;
+  font-size: 24px; font-weight: 700; background: var(--surface); border: 2px solid var(--border); white-space: pre;
+}
+.game-input.empty::after { content: attr(data-placeholder); color: var(--pending); font-size: 15px; font-weight: 500; }
+.game-input[data-state='hit'] { animation: inputHit 0.3s; }
+.game-input[data-state='miss'] { animation: inputMiss 0.35s; }
+@keyframes inputHit { 30% { border-color: var(--good); } }
+@keyframes inputMiss { 30% { border-color: var(--bad); transform: translateX(-6px); } 60% { transform: translateX(6px); } }

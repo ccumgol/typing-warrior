@@ -1,0 +1,40 @@
+{
+  "name": "typing-warrior",
+  "productName": "Typing Warrior",
+  "version": "1.0.0",
+  "description": "한글/영문 타자연습 - 자소, 단어, 문장, 게임, 단축키",
+  "main": "src/main/main.cjs",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.js",
+    "serve": "node tools/serve.mjs",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.typingwarrior.app",
+    "productName": "Typing Warrior",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.education"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    }
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  }
+}

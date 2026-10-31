@@ -1,0 +1,89 @@
+/* Practice modes: jamo, words, sentences, shortcuts, records. */
+.mode { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.mode-toolbar { padding: 10px 16px 0; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.pill {
+  padding: 5px 12px; border-radius: 999px; font-size: 13px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+}
+.pill:hover { color: var(--text); }
+.pill.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+.practice-area {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2.5vh; padding: 16px 4vw; min-height: 0;
+}
+.practice-desc { color: var(--muted); font-size: 14px; text-align: center; }
+
+/* Jamo */
+.jamo-track { display: flex; align-items: center; gap: clamp(8px, 1.5vw, 20px); }
+.jamo-cell {
+  display: grid; place-items: center; font-weight: 700; border-radius: 18px;
+  width: clamp(48px, 8vh, 80px); height: clamp(48px, 8vh, 80px); font-size: clamp(26px, 4.5vh, 44px);
+  color: var(--pending); transition: all 0.15s;
+}
+.jamo-cell.past { color: var(--good); opacity: 0.45; }
+.jamo-cell.current {
+  width: clamp(110px, 22vh, 220px); height: clamp(110px, 22vh, 220px); font-size: clamp(64px, 14vh, 140px);
+  background: var(--surface); border: 2px solid var(--accent); color: var(--text); box-shadow: var(--shadow);
+  position: relative;
+}
+.jamo-sub { position: absolute; bottom: 8px; font-size: 14px; color: var(--muted); font-weight: 500; }
+.shake { animation: shake 0.3s; }
+@keyframes shake { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+
+/* Typing lines (words, sentences) */
+.typing-line { display: flex; flex-wrap: wrap; justify-content: center; font-weight: 600; line-height: 1.45; }
+.ch { position: relative; white-space: pre; transition: color 0.1s; }
+.ch.pending { color: var(--pending); }
+.ch.correct { color: var(--good); }
+.ch.wrong { color: var(--bad); text-decoration: underline wavy var(--bad); }
+.ch.wrong.space { background: rgba(248, 113, 113, 0.3); }
+.ch.composing { color: var(--accent); }
+.ch.cursor::before {
+  content: ''; position: absolute; left: -1px; top: 12%; bottom: 12%; width: 2px;
+  background: var(--accent); animation: blink 1s steps(1) infinite;
+}
+.ch.composing.cursor::before { display: none; }
+.ch.composing { border-bottom: 3px solid var(--accent); }
+@keyframes blink { 50% { opacity: 0; } }
+
+.typed-box {
+  min-width: min(60vw, 520px); max-width: 90%; min-height: 1.8em; padding: 8px 18px; text-align: center;
+  border-radius: 12px; background: var(--surface); border: 1px solid var(--border);
+  font-size: clamp(20px, 3.4vh, 30px); white-space: pre-wrap;
+}
+.typed-box.empty::after { content: '여기에 입력됩니다'; color: var(--pending); font-size: 0.7em; }
+
+.word-current .typing-line { font-size: clamp(48px, 10vh, 104px); }
+.word-upcoming { display: flex; gap: 14px; color: var(--pending); font-size: clamp(16px, 2.6vh, 24px); }
+
+.sentence-source { color: var(--muted); font-size: 15px; }
+.sentence-target .typing-line { font-size: clamp(24px, 4.6vh, 44px); max-width: min(1100px, 92vw); }
+.sentence-typed { font-size: clamp(18px, 3vh, 28px); width: min(1100px, 92vw); }
+.sentence-next { color: var(--pending); font-size: 14px; max-width: min(1000px, 90vw); text-align: center; }
+
+/* Shortcuts */
+.shortcut-category { color: var(--muted); font-size: 15px; }
+.shortcut-action { font-size: clamp(36px, 8vh, 76px); font-weight: 800; }
+.keycaps { display: flex; align-items: center; gap: 8px; min-height: 64px; }
+.keycaps.placeholder { color: var(--pending); font-size: 18px; }
+.keycaps kbd {
+  min-width: 52px; padding: 10px 14px; border-radius: 10px; text-align: center; font-family: var(--font);
+  font-size: 24px; font-weight: 700; background: var(--surface); border: 1px solid var(--border); border-bottom-width: 4px;
+}
+.shortcut-table-wrap { overflow: auto; max-height: 100%; width: min(900px, 100%); }
+.ref-title { margin: 0; }
+.shortcut-table, .record-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.shortcut-table td, .record-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); }
+.shortcut-table .keycaps { min-height: 0; gap: 4px; }
+.shortcut-table kbd { min-width: 28px; padding: 3px 8px; font-size: 13px; border-bottom-width: 2px; }
+.shortcut-table tr.system td { color: var(--muted); }
+
+/* Records */
+.records { overflow: auto; padding: 24px max(24px, 8vw); gap: 8px; }
+.record-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.record-card { padding: 18px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); display: grid; gap: 4px; }
+.record-card b { font-size: 28px; }
+.record-card span, .muted { color: var(--muted); }
+.records h3 { margin: 18px 0 6px; }
