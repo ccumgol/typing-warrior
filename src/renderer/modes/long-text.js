@@ -1,4 +1,5 @@
 // 긴 글 연습: 시편을 한 편씩, 한 절씩 이어서 칩니다. 글마다 어디까지 쳤는지 저장해 다음에 이어서 합니다.
+// 연습 언어(한/EN)에 맞는 글만 보여 줍니다.
 import { PSALMS as KO_PSALMS, PSALMS_TRANSLATION as KO_TRANSLATION } from '../data/psalms.js';
 import { PSALMS as KJV_PSALMS, PSALMS_TRANSLATION as KJV_TRANSLATION } from '../data/psalms-kjv.js';
 import { applyKey, createTarget, typedText, detectLang } from '../core/typing-input.js';
@@ -9,14 +10,16 @@ import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 
 const TEXTS = Object.freeze([
-  { id: 'psalms', chapters: KO_PSALMS, translation: KO_TRANSLATION },
-  { id: 'psalms-kjv', chapters: KJV_PSALMS, translation: KJV_TRANSLATION },
+  { id: 'psalms', lang: 'ko', chapters: KO_PSALMS, translation: KO_TRANSLATION },
+  { id: 'psalms-kjv', lang: 'en', chapters: KJV_PSALMS, translation: KJV_TRANSLATION },
 ]);
-const findText = (id) => TEXTS.find((text) => text.id === id) || TEXTS[0];
+const textsFor = (lang) => TEXTS.filter((text) => text.lang === lang);
+/** The last text practiced if it matches the practice language, otherwise the first text in that language. */
+const pickText = (id, lang) => textsFor(lang).find((text) => text.id === id) || textsFor(lang)[0];
 
 export function createLongTextMode(ctx) {
   const session = createSession();
-  let text = findText(ctx.settings().longTextId);
+  let text = pickText(ctx.settings().longTextId, ctx.settings().lang);
   let chapter = 1;
   let verse = 0; // index of the verse being typed
   let typed = [];
@@ -54,7 +57,7 @@ export function createLongTextMode(ctx) {
 
   function switchText(id) {
     if (id === text.id) return;
-    text = findText(id);
+    text = TEXTS.find((item) => item.id === id);
     ctx.updateSettings({ longTextId: text.id });
     resume();
   }
@@ -82,7 +85,7 @@ export function createLongTextMode(ctx) {
       chapters().map((p) => el('option', { value: p.chapter, selected: p.chapter === chapter }, `${done.includes(doneId(p.chapter)) ? '✓ ' : ''}${t('long.chapter', { chapter: p.chapter })}`)));
     const step = (label, tip, delta) => el('button', { class: 'pill', type: 'button', tabindex: '-1', title: tip, onclick: () => openChapter(chapter + delta) }, label);
     toolbar.replaceChildren(
-      pills(TEXTS.map((item) => ({ value: item.id, label: t('long.psalms', { translation: item.translation }) })), text.id, switchText),
+      pills(textsFor(text.lang).map((item) => ({ value: item.id, label: t('long.psalms', { translation: item.translation }) })), text.id, switchText),
       el('div', { class: 'level-stepper' }, step('◀', t('long.prev'), -1), picker, step('▶', t('long.nextBtn'), 1)),
       el('span', { class: 'practice-desc' }, t('long.completed', { count: doneCount, total: chapters().length })),
     );
@@ -157,7 +160,9 @@ export function createLongTextMode(ctx) {
   resume();
   return {
     onKeyDown,
-    onLangChange() {}, // language follows the text
+    onLangChange(nextLang) {
+      if (text.lang !== nextLang) switchText(pickText(ctx.settings().longTextId, nextLang).id);
+    },
     tick,
     destroy() {},
   };

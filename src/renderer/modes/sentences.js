@@ -1,4 +1,4 @@
-// 문장 연습: 명언 / 성경 암송 / 영어 문장. Enter로 다음 문장.
+// 문장 연습: 명언 / 성경 암송 / 영어 문장. Enter로 다음 문장. 연습 언어(한/EN)에 맞는 글만 보여 줍니다.
 import { KO_QUOTES, EN_SENTENCES } from '../data/quotes.js';
 import { BIBLE_VERSES, BIBLE_TRANSLATION } from '../data/bible.js';
 import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION, EN_BIBLE_NOTICE } from '../data/bible-en.js';
@@ -11,15 +11,18 @@ import { createSession, statusFrom, finishSession } from './session.js';
 
 const SENTENCES_PER_ROUND = 5;
 const SOURCES = Object.freeze({
-  quotes: { label: () => t('src.quotes'), items: KO_QUOTES },
-  bible: { label: () => t('src.bible', { translation: BIBLE_TRANSLATION }), items: BIBLE_VERSES },
-  'bible-en': { label: () => t('src.bibleEn', { translation: EN_BIBLE_TRANSLATION }), items: EN_BIBLE_VERSES, notice: EN_BIBLE_NOTICE },
-  english: { label: () => t('src.english'), items: EN_SENTENCES },
+  quotes: { lang: 'ko', label: () => t('src.quotes'), items: KO_QUOTES },
+  bible: { lang: 'ko', label: () => t('src.bible', { translation: BIBLE_TRANSLATION }), items: BIBLE_VERSES },
+  english: { lang: 'en', label: () => t('src.english'), items: EN_SENTENCES },
+  'bible-en': { lang: 'en', label: () => t('src.bibleEn', { translation: EN_BIBLE_TRANSLATION }), items: EN_BIBLE_VERSES, notice: EN_BIBLE_NOTICE },
 });
+
+/** Source ids for a practice language, in toolbar order. */
+const sourcesFor = (lang) => Object.keys(SOURCES).filter((id) => SOURCES[id].lang === lang);
 
 export function createSentencesMode(ctx) {
   const session = createSession();
-  let source = ctx.settings().lang === 'en' ? 'english' : 'quotes';
+  let source = sourcesFor(ctx.settings().lang)[0];
   let queue = [];
   let index = 0;
   let typed = [];
@@ -54,7 +57,7 @@ export function createSentencesMode(ctx) {
   }
 
   function render() {
-    const options = Object.entries(SOURCES).map(([value, s]) => ({ value, label: s.label() }));
+    const options = sourcesFor(SOURCES[source].lang).map((value) => ({ value, label: SOURCES[value].label() }));
     toolbar.replaceChildren(pills(options, source, restart));
     sourceLine.textContent = `— ${queue[index].source}  (${index + 1}/${queue.length})`;
     notice.textContent = SOURCES[source].notice || '';
@@ -117,7 +120,9 @@ export function createSentencesMode(ctx) {
   restart();
   return {
     onKeyDown,
-    onLangChange() {}, // language follows the sentence
+    onLangChange(nextLang) {
+      if (SOURCES[source].lang !== nextLang) restart(sourcesFor(nextLang)[0]);
+    },
     tick,
     destroy() {},
   };
