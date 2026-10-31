@@ -74,3 +74,6 @@
 .game-input[data-state='miss'] { animation: inputMiss 0.35s; }
 @keyframes inputHit { 30% { border-color: var(--good); } }
 @keyframes inputMiss { 30% { border-color: var(--bad); transform: translateX(-6px); } 60% { transform: translateX(6px); } }
+.level-stepper { display: flex; align-items: center; gap: 6px; }
+.level-stepper b { min-width: 76px; text-align: center; font-variant-numeric: tabular-nums; }
+.level-stepper .pill:disabled { opacity: 0.35; cursor: default; }

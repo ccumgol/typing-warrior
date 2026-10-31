@@ -18,6 +18,8 @@ export const DEFAULT_SETTINGS = Object.freeze({
   soundPack: 'classic',
   shooterSoundPack: 'warzone',
   shortcutPlatform: null,
+  acidMode: 'endless', // 산성비: endless | stage
+  acidCleared: 0, // highest 산성비 stage level cleared
   completedStages: [],
 });
 
@@ -57,6 +59,8 @@ export function loadSettings() {
     soundPack: pick('soundPack', (v) => ['calm', 'classic', 'dopamine'].includes(v)),
     shooterSoundPack: pick('shooterSoundPack', (v) => ['calm', 'classic', 'dopamine', 'warzone'].includes(v)),
     shortcutPlatform: pick('shortcutPlatform', (v) => v === 'mac' || v === 'win'),
+    acidMode: pick('acidMode', (v) => v === 'endless' || v === 'stage'),
+    acidCleared: pick('acidCleared', (v) => Number.isInteger(v) && v >= 0 && v <= 100),
     completedStages: pick('completedStages', (v) => Array.isArray(v) && v.every((s) => typeof s === 'string')),
   });
 }

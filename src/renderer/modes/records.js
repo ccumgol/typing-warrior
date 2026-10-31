@@ -7,7 +7,7 @@ import { t, getUiLang } from '../core/i18n.js';
 // Record modes in display order; names come from the UI dictionary (rec.<mode>).
 const MODES = Object.freeze([
   'jamo-ko', 'jamo-en', 'words-ko', 'words-en', 'sentences-quotes', 'sentences-bible', 'sentences-english',
-  'acid-rain', 'shooter', 'shortcuts-mac', 'shortcuts-win',
+  'acid-rain', 'acid-stage', 'shooter', 'shortcuts-mac', 'shortcuts-win',
 ]);
 
 const dayKey = (time) => new Date(time).toLocaleDateString('sv-SE');
