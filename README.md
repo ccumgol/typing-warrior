@@ -54,7 +54,7 @@ npm run dist:win   # Windows 설치본 + 포터블 .exe
 
 - `src/renderer/data/bible.js`는 `tools/build-bible.py`로 로컬 성경 DB에서 생성했습니다. 개역한글은 저작권이 만료된 번역본이라 기본값으로 사용합니다.
   다른 번역본으로 바꾸려면: `python3 tools/build-bible.py 개역개정` (개인 연습용으로만 사용하세요).
-- 영어 성경 구절과 시편도 같은 스크립트로 만듭니다: `python3 tools/build-bible.py english ESV`, `python3 tools/build-bible.py psalms`. KJV 시편은 로컬 DB의 KJV에 표제가 잘리고 아포스트로피가 빠진 곳이 있어, 구텐베르크 프로젝트의 공개 KJV(eBook #10, `pg10.txt`)에서 만듭니다: `python3 tools/build-bible.py psalms-kjv pg10.txt`.
+- 영어 성경 구절과 시편도 같은 스크립트로 만듭니다: `python3 tools/build-bible.py english ESV`, `python3 tools/build-bible.py psalms`. KJV 시편: `python3 tools/build-bible.py psalms KJV` (이탤릭 표시 [ ]는 빼고 단어만 남깁니다). 로컬 DB의 KJV는 CrossWire KJV(eBible.org, 1769년판 기준)로 교체한 본문입니다.
 - **ESV 사용 조건**: Crossway 기준(500구절 이하, 앱 전체 글의 25% 미만, 비상업, 저작권 문구 표시)에 맞춰 넣었습니다. 시편을 함께 넣어 ESV 비중은 약 9.5%이고, `tests/content.test.js`가 25%를 넘지 않는지 검사합니다. 앱을 판매하거나 광고를 넣으려면 Crossway의 정식 허락이 필요합니다.
   > Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.
 - 단어·명언·단축키는 `src/renderer/data/`의 파일을 고치면 바로 반영됩니다.
