@@ -87,15 +87,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* On-screen keyboard */
 .keyboard-dock { padding: 6px 12px 10px; display: flex; flex-direction: column; align-items: center; }
+.keyboard-dock { --kb-h: clamp(26px, 5.2vh, 46px); }
 .kb { width: min(900px, 100%); display: flex; flex-direction: column; gap: 4px; }
 .kb-row { display: flex; gap: 4px; }
+.kb-wrap { width: min(1180px, 100%); display: flex; gap: 14px; }
+.kb-wrap .kb { width: auto; flex: 15 1 0; min-width: 0; }
+.kb-wrap .kb-nav { flex: 3.3 1 0; }
+.kb-gap { flex: 1 1 0; height: var(--kb-h); }
 .kb-key {
-  position: relative; flex: 1 1 0; height: clamp(26px, 5.2vh, 46px); min-width: 0;
+  position: relative; flex: 1 1 0; height: var(--kb-h); min-width: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--surface); border: 1px solid var(--border); border-bottom-width: 3px; border-radius: 7px;
   font-size: clamp(11px, 1.9vh, 17px); transition: transform 0.06s, background 0.15s;
 }
 .kb-main { font-weight: 600; }
+.kb-key.small .kb-main { font-size: 0.72em; font-weight: 500; white-space: nowrap; }
+.kb-key.small .kb-sub { font-size: 10px; }
 .kb-sub { position: absolute; left: 5px; top: 2px; font-size: 9px; color: var(--muted); }
 .kb-shift { position: absolute; right: 5px; top: 2px; font-size: 10px; color: var(--muted); }
 .kb-key.home::after {

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { charStates } from '../src/renderer/ui/typing-line.js';
 import { createTarget, detectLang } from '../src/renderer/core/typing-input.js';
-import { matchesCombo, comboLabels } from '../src/renderer/data/shortcuts.js';
+import { SHORTCUTS, SHORTCUT_STAGES, matchesCombo, comboLabels, comboCodes } from '../src/renderer/data/shortcuts.js';
 import { decompose } from '../src/renderer/core/hangul.js';
 
 const states = (target, typed) => charStates(target, [...typed]).map((s) => s.state).join(',');
@@ -38,4 +38,19 @@ test('matches shortcut combos exactly', () => {
   assert.equal(matchesCombo('F5', { ...base, code: 'F5' }), true);
   assert.deepEqual(comboLabels('Meta+Shift+KeyZ', 'mac'), ['⌘', '⇧', 'Z']);
   assert.deepEqual(comboLabels('Control+KeyY', 'win'), ['Ctrl', 'Y']);
+});
+
+test('comboCodes lights modifiers on the hand opposite the main key', () => {
+  assert.deepEqual(comboCodes('Meta+KeyC', 'mac'), ['MetaRight', 'KeyC']);
+  assert.deepEqual(comboCodes('Meta+KeyL', 'mac'), ['MetaLeft', 'KeyL']);
+  assert.deepEqual(comboCodes('Control+Tab', 'mac'), ['ControlLeft', 'Tab']);
+  assert.deepEqual(comboCodes('Control+Shift+KeyS', 'win'), ['ControlRight', 'ShiftRight', 'KeyS']);
+  assert.deepEqual(comboCodes('Control+End', 'win'), ['ControlLeft', 'End']);
+});
+
+test('every practice shortcut belongs to a stage', () => {
+  const levels = new Set(SHORTCUT_STAGES.map((st) => st.level));
+  const practice = SHORTCUTS.filter((sc) => !sc.system);
+  assert.ok(practice.every((sc) => levels.has(sc.level)));
+  for (const level of levels) assert.ok(practice.some((sc) => sc.level === level), `level ${level} is empty`);
 });

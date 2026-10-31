@@ -32,12 +32,13 @@ let activeDef = MODES[0];
 let active = null;
 let isFullscreen = false;
 
-const keyboard = createKeyboardView($('keyboard-dock'));
+const keyboard = createKeyboardView($('keyboard-dock'), { platform });
 
 function updateSettings(patch) {
   settings = Object.freeze({ ...settings, ...patch });
   saveSettings(settings);
   applySettings();
+  active?.onSettingsChange?.(settings);
 }
 
 function applySettings() {
