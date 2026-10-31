@@ -47,7 +47,7 @@ body {
 button { font: inherit; color: inherit; cursor: pointer; }
 [hidden] { display: none !important; }
 
-.app { display: grid; grid-template-rows: auto 1fr auto auto; height: 100vh; }
+.app { display: grid; grid-template-rows: auto 1fr auto auto; grid-template-columns: minmax(0, 1fr); height: 100vh; }
 
 /* Top bar: deliberately slim so the practice area gets the space. */
 .topbar {
@@ -58,7 +58,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .topbar button { -webkit-app-region: no-drag; }
 .brand { font-weight: 800; white-space: nowrap; font-size: 14px; }
-.mode-nav { display: flex; gap: 2px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.mode-nav { display: flex; gap: 2px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .nav-item {
   border: 0; background: none; padding: 6px 12px; border-radius: 8px;
   color: var(--muted); font-size: 14px; white-space: nowrap;

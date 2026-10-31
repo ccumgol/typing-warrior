@@ -5,10 +5,11 @@ import { strokeCount, decompose } from '../core/hangul.js';
 import { formatTime } from '../core/stats.js';
 import { el, pickRandom } from '../ui/dom.js';
 import { createGameInput } from '../ui/game-input.js';
+import { createTextSizeControl } from '../ui/text-size-control.js';
 import { isTypable } from '../core/keyboard-layout.js';
 import { sounds } from '../core/sound.js';
 import { createSession, finishSession } from './session.js';
-import { project, drawScene, drawEnemy, drawCrosshair, drawTracer, drawWeapon, drawDamage } from './shooter-render.js';
+import { GAME_FONT, project, drawScene, drawEnemy, drawCrosshair, drawTracer, drawWeapon, drawDamage } from './shooter-render.js';
 
 const MAX_HP = 100;
 const MAGAZINE = 8;
@@ -42,7 +43,7 @@ export function createShooterMode(ctx) {
   const canvas = el('canvas', { class: 'shooter-canvas' });
   const overlay = el('div', { class: 'game-overlay' });
   const stage = el('div', { class: 'shooter-stage' }, canvas, overlay);
-  ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, input.el)));
+  ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, input.el, createTextSizeControl(ctx, () => state !== 'playing' && draw()))));
   ctx.keyboard.highlight(null);
   const g = canvas.getContext('2d');
 
@@ -133,45 +134,51 @@ export function createShooterMode(ctx) {
     drawScene(g, width, height, light);
     if (!game) return;
     const locked = lockedEnemy();
+    // Labels keep one readable size regardless of distance; it follows the window height and the user's setting.
+    const labelSize = Math.round(Math.min(30, Math.max(18, height * 0.03)) * ctx.settings().gameTextScale);
     [...game.enemies].sort((a, b) => b.z - a.z).forEach((e) => {
-      drawEnemy(g, e, project(e, width, height), e === locked, input.text().length);
+      drawEnemy(g, e, project(e, width, height), e === locked, input.text().length, labelSize);
     });
     game.tracers.forEach((t) => drawTracer(g, width, height, t));
     const aim = locked ? project(locked, width, height) : null;
     drawCrosshair(g, aim ? aim.x : width / 2, aim ? aim.y - 40 * aim.scale * 1.4 : height * 0.55, Boolean(locked));
     drawWeapon(g, width, height, game.recoil);
     drawDamage(g, width, height, game.damage);
-    drawHud(width, height);
+    drawHud(width, height, labelSize);
   }
 
-  function drawHud(width, height) {
+  function drawHud(width, height, labelSize) {
+    const hudSize = Math.round(labelSize * 0.8);
+    const line = hudSize * 1.5; // vertical spacing between HUD lines
+    const top = 16 + hudSize; // baseline of the first row
     g.save();
-    g.font = 'bold 15px system-ui, sans-serif';
+    g.font = `600 ${hudSize}px ${GAME_FONT}`;
+    g.textBaseline = 'alphabetic';
     g.fillStyle = 'rgba(0,0,0,.45)';
-    g.fillRect(16, 16, 204, 18);
+    g.fillRect(16, top - hudSize * 0.8, 204, hudSize * 0.9);
     g.fillStyle = game.hp > 30 ? '#4ade80' : '#f87171';
-    g.fillRect(18, 18, 200 * (game.hp / MAX_HP), 14);
+    g.fillRect(18, top - hudSize * 0.8 + 2, 200 * (game.hp / MAX_HP), hudSize * 0.9 - 4);
     g.fillStyle = '#fff';
-    g.fillText(`HP ${game.hp}`, 228, 30);
+    g.fillText(`HP ${game.hp}`, 230, top);
     g.textAlign = 'right';
-    g.fillText(`WAVE ${game.wave}  ·  ${game.score.toLocaleString()}점`, width - 18, 30);
+    g.fillText(`WAVE ${game.wave}  ·  ${game.score.toLocaleString()}점`, width - 18, top);
     g.textAlign = 'left';
     const bullets = '▮'.repeat(game.ammo) + '▯'.repeat(MAGAZINE - game.ammo);
-    g.fillText(`탄약 ${bullets}`, 18, height - 22);
+    g.fillText(`탄약 ${bullets}`, 18, height - 18);
     if (game.ammo === 0) {
       g.fillStyle = '#fbbf24';
-      g.fillText(`탄약 없음! "${COMMANDS[lang].reload}" 입력`, 18, height - 44);
+      g.fillText(`탄약 없음! "${COMMANDS[lang].reload}" 입력`, 18, height - 18 - line);
     }
     g.fillStyle = '#93c5fd';
-    if (game.airstrikes) g.fillText(`✈ 공습 ${game.airstrikes}회 — "${COMMANDS[lang].airstrike}" 입력`, 18, height - 66);
+    if (game.airstrikes) g.fillText(`✈ 공습 ${game.airstrikes}회 — "${COMMANDS[lang].airstrike}" 입력`, 18, height - 18 - line * 2);
     if (game.streak >= 3) {
       g.textAlign = 'center';
       g.fillStyle = '#fde047';
-      g.fillText(`${game.streak} 연속 명중!`, width / 2, 60);
+      g.fillText(`${game.streak} 연속 명중!`, width / 2, top + line);
     }
     if (game.banner) {
       g.textAlign = 'center';
-      g.font = 'bold 44px system-ui, sans-serif';
+      g.font = `800 ${labelSize * 2}px ${GAME_FONT}`;
       g.fillStyle = `rgba(255,255,255,${Math.min(1, game.banner.life)})`;
       g.fillText(game.banner.text, width / 2, height * 0.3);
     }

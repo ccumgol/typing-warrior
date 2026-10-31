@@ -42,6 +42,7 @@ function updateSettings(patch) {
 
 function applySettings() {
   document.documentElement.dataset.theme = settings.theme;
+  document.documentElement.style.setProperty('--game-scale', String(settings.gameTextScale));
   setSoundEnabled(settings.sound);
   const dock = $('keyboard-dock');
   dock.hidden = !(settings.showKeyboard && activeDef.keyboard);

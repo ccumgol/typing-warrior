@@ -3,6 +3,7 @@ import { KO_WORD_SETS, EN_WORD_SETS } from '../data/words.js';
 import { strokeCount } from '../core/hangul.js';
 import { el, pickRandom } from '../ui/dom.js';
 import { createGameInput } from '../ui/game-input.js';
+import { createTextSizeControl } from '../ui/text-size-control.js';
 import { sounds } from '../core/sound.js';
 import { createSession, finishSession } from './session.js';
 import { formatTime } from '../core/stats.js';
@@ -22,7 +23,7 @@ export function createAcidRainMode(ctx) {
   const overlay = el('div', { class: 'game-overlay' });
   const hud = el('div', { class: 'game-hud' });
   ctx.root.replaceChildren(
-    el('section', { class: 'mode game acid-rain' }, el('div', { class: 'rain-stage' }, hud, field, ground, overlay), el('div', { class: 'game-input-row' }, input.el)),
+    el('section', { class: 'mode game acid-rain' }, el('div', { class: 'rain-stage' }, hud, field, ground, overlay), el('div', { class: 'game-input-row' }, input.el, createTextSizeControl(ctx))),
   );
   ctx.keyboard.highlight(null);
 
@@ -103,7 +104,7 @@ export function createAcidRainMode(ctx) {
     const height = field.clientHeight;
     for (const drop of drops) {
       drop.y += speed * dt;
-      drop.node.style.transform = `translateY(${drop.y * (height - 28)}px)`;
+      drop.node.style.transform = `translateY(${drop.y * (height - drop.node.offsetHeight)}px)`;
       if (drop.y >= 1) {
         removeDrop(drop, 'splash');
         hp -= 1;

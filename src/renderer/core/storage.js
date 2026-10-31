@@ -4,12 +4,16 @@ const SETTINGS_KEY = 'tw.settings.v1';
 const RECORDS_KEY = 'tw.records.v1';
 const MAX_HISTORY = 200;
 
+/** Text size multipliers offered for the games. */
+export const GAME_TEXT_SCALES = Object.freeze([1, 1.25, 1.5, 1.75, 2]);
+
 export const DEFAULT_SETTINGS = Object.freeze({
   theme: 'dark',
   lang: 'ko',
   showKeyboard: true,
   showFingers: true,
   sound: true,
+  gameTextScale: 1.25,
   shortcutPlatform: null,
   completedStages: [],
 });
@@ -45,6 +49,7 @@ export function loadSettings() {
     showKeyboard: pick('showKeyboard', isBool),
     showFingers: pick('showFingers', isBool),
     sound: pick('sound', isBool),
+    gameTextScale: pick('gameTextScale', (v) => GAME_TEXT_SCALES.includes(v)),
     shortcutPlatform: pick('shortcutPlatform', (v) => v === 'mac' || v === 'win'),
     completedStages: pick('completedStages', (v) => Array.isArray(v) && v.every((s) => typeof s === 'string')),
   });

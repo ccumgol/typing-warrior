@@ -1,6 +1,7 @@
 // Canvas drawing for the 전선 작전 shooter (pure drawing, no game rules).
 
 export const HORIZON = 0.38;
+export const GAME_FONT = "'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif";
 
 /** Screen position/scale of an enemy at depth z (1 = far, 0 = at the player). */
 export function project(enemy, width, height) {
@@ -45,7 +46,7 @@ export function drawScene(g, width, height, light) {
   }
 }
 
-export function drawEnemy(g, enemy, pos, locked, typedLength) {
+export function drawEnemy(g, enemy, pos, locked, typedLength, labelSize) {
   const { x, y, scale } = pos;
   const s = 40 * scale;
   g.save();
@@ -72,26 +73,29 @@ export function drawEnemy(g, enemy, pos, locked, typedLength) {
     g.fill();
   }
   g.restore();
-  drawLabel(g, enemy.text, x, y - s * 2.75, locked, typedLength, enemy.kind);
+  drawLabel(g, enemy.text, x, y - s * 2.75, locked, typedLength, enemy.kind, labelSize);
 }
 
-function drawLabel(g, text, x, y, locked, typedLength, kind) {
+function drawLabel(g, text, x, y, locked, typedLength, kind, labelSize) {
+  const size = Math.round(kind === 'boss' ? labelSize * 1.2 : labelSize);
+  const padX = size * 0.6;
+  const boxH = size * 1.55;
   g.save();
-  g.font = `${kind === 'boss' ? 'bold 22px' : 'bold 17px'} system-ui, sans-serif`;
-  const width = g.measureText(text).width + 18;
+  g.font = `500 ${size}px ${GAME_FONT}`;
+  const width = g.measureText(text).width + padX * 2;
   g.fillStyle = locked ? 'rgba(200,30,30,.92)' : kind === 'boss' ? 'rgba(90,10,10,.9)' : 'rgba(10,12,16,.82)';
   g.strokeStyle = locked ? '#ffd2d2' : 'rgba(255,255,255,.25)';
   g.beginPath();
-  g.roundRect(x - width / 2, y - 26, width, 28, 6);
+  g.roundRect(x - width / 2, y - boxH, width, boxH, size * 0.3);
   g.fill();
   g.stroke();
   g.textAlign = 'left';
   g.textBaseline = 'middle';
   const chars = [...text];
-  let cx = x - width / 2 + 9;
+  let cx = x - width / 2 + padX;
   chars.forEach((ch, i) => {
     g.fillStyle = locked && i < typedLength ? '#ffe066' : '#fff';
-    g.fillText(ch, cx, y - 12);
+    g.fillText(ch, cx, y - boxH / 2);
     cx += g.measureText(ch).width;
   });
   g.restore();
