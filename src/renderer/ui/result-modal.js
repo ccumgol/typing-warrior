@@ -1,6 +1,7 @@
 // Result / encouragement dialog shown when a stage or game ends.
 import { el } from './dom.js';
 import { cheerMessage, bonusVerse } from '../core/cheer.js';
+import { t } from '../core/i18n.js';
 
 const CONFETTI_COLORS = ['#ff6b6b', '#ffd93d', '#6bcB77', '#4d96ff', '#c77dff'];
 
@@ -74,7 +75,7 @@ export function showResult({ title, stats, accuracy, isBest = false, actions }) 
     'div',
     { class: 'modal', role: 'dialog', 'aria-modal': 'true' },
     el('div', { class: 'modal-title' }, title),
-    isBest ? el('div', { class: 'badge-best' }, '🎉 최고 기록 갱신!') : null,
+    isBest ? el('div', { class: 'badge-best' }, t('modal.best')) : null,
     el('p', { class: 'modal-cheer' }, cheerMessage(accuracy)),
     el('div', { class: 'modal-stats' }, stats.map((s) => el('div', { class: 'stat' }, el('b', {}, s.value), el('span', {}, s.label)))),
     el('p', { class: 'modal-verse' }, bonusVerse()),
@@ -83,7 +84,7 @@ export function showResult({ title, stats, accuracy, isBest = false, actions }) 
       { class: 'modal-actions' },
       actions.map((a) => el('button', { class: a.primary ? 'btn primary' : 'btn', type: 'button', onclick: () => run(a) }, a.label)),
     ),
-    el('div', { class: 'modal-keys' }, 'Enter: 계속 · Esc: 닫기'),
+    el('div', { class: 'modal-keys' }, t('modal.keys')),
   );
   root.replaceChildren(el('div', { class: 'modal-backdrop' }, dialog));
   if (accuracy >= 90) confetti(root);

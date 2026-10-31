@@ -9,7 +9,8 @@ export const GAME_TEXT_SCALES = Object.freeze([1, 1.25, 1.5, 1.75, 2]);
 
 export const DEFAULT_SETTINGS = Object.freeze({
   theme: 'dark',
-  lang: 'ko',
+  lang: 'ko', // practice language
+  uiLang: null, // display language; null = follow the system language
   showKeyboard: true,
   showFingers: true,
   sound: true,
@@ -48,6 +49,7 @@ export function loadSettings() {
   return Object.freeze({
     theme: pick('theme', (v) => v === 'light' || v === 'dark'),
     lang: pick('lang', (v) => v === 'ko' || v === 'en'),
+    uiLang: pick('uiLang', (v) => v === 'ko' || v === 'en'),
     showKeyboard: pick('showKeyboard', isBool),
     showFingers: pick('showFingers', isBool),
     sound: pick('sound', isBool),

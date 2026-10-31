@@ -2,6 +2,7 @@
 import { loadSettings, saveSettings } from './core/storage.js';
 import { isLangToggle } from './core/typing-input.js';
 import { setSoundEnabled } from './core/sound.js';
+import { t, setUiLang, getUiLang, detectUiLang } from './core/i18n.js';
 import { el } from './ui/dom.js';
 import { createKeyboardView } from './ui/keyboard-view.js';
 import { isModalOpen, closeModal } from './ui/result-modal.js';
@@ -14,13 +15,13 @@ import { createShortcutsMode } from './modes/shortcuts.js';
 import { createRecordsMode } from './modes/records.js';
 
 const MODES = Object.freeze([
-  { id: 'jamo', label: '자리 연습', create: createJamoMode, keyboard: true },
-  { id: 'words', label: '단어', create: createWordsMode, keyboard: true },
-  { id: 'sentences', label: '문장', create: createSentencesMode, keyboard: true, fixedLang: true },
-  { id: 'acid', label: '☔ 산성비', create: createAcidRainMode, keyboard: false },
-  { id: 'shooter', label: '🎖️ 전선 작전', create: createShooterMode, keyboard: false },
-  { id: 'shortcuts', label: '단축키', create: createShortcutsMode, keyboard: true, fixedLang: true },
-  { id: 'records', label: '📊 기록', create: createRecordsMode, keyboard: false },
+  { id: 'jamo', create: createJamoMode, keyboard: true },
+  { id: 'words', create: createWordsMode, keyboard: true },
+  { id: 'sentences', create: createSentencesMode, keyboard: true, fixedLang: true },
+  { id: 'acid', create: createAcidRainMode, keyboard: false },
+  { id: 'shooter', create: createShooterMode, keyboard: false },
+  { id: 'shortcuts', create: createShortcutsMode, keyboard: true, fixedLang: true },
+  { id: 'records', create: createRecordsMode, keyboard: false },
 ]);
 
 const $ = (id) => document.getElementById(id);
@@ -43,6 +44,8 @@ function updateSettings(patch) {
 
 function applySettings() {
   document.documentElement.dataset.theme = settings.theme;
+  setUiLang(settings.uiLang ?? detectUiLang(navigator.language));
+  document.documentElement.lang = getUiLang();
   document.documentElement.style.setProperty('--game-scale', String(settings.gameTextScale));
   setSoundEnabled(settings.sound);
   const dock = $('keyboard-dock');
@@ -60,8 +63,8 @@ function toast(message) {
 function renderStatus({ cpm, accuracy, time, progress }) {
   const item = (label, value) => el('span', { class: 'st' }, el('em', {}, label), el('b', {}, value));
   $('statusbar').replaceChildren(
-    el('div', { class: 'st-group' }, item('타수', cpm), item('정확도', typeof accuracy === 'number' ? `${accuracy}%` : accuracy), item('시간', time), item('진행', progress)),
-    el('div', { class: 'st-help' }, 'F2 키보드 · F3 손가락 · Shift+Space 한/영 · F11 전체화면 · Esc 일시정지'),
+    el('div', { class: 'st-group' }, item(t('status.cpm'), cpm), item(t('status.accuracy'), typeof accuracy === 'number' ? `${accuracy}%` : accuracy), item(t('status.time'), time), item(t('status.progress'), progress)),
+    el('div', { class: 'st-help' }, t('status.help')),
   );
 }
 
@@ -70,18 +73,19 @@ const iconButton = (label, title, active, onClick) =>
 
 function renderTools() {
   $('tools').replaceChildren(
-    iconButton(settings.lang === 'ko' ? '한' : 'EN', '한/영 전환 (Shift+Space)', false, toggleLang),
-    iconButton('⌨', '키보드 보이기/감추기 (F2)', settings.showKeyboard, () => updateSettings({ showKeyboard: !settings.showKeyboard })),
-    iconButton('🖐', '손가락 색상 (F3)', settings.showFingers, () => updateSettings({ showFingers: !settings.showFingers })),
-    iconButton(settings.sound ? '🔊' : '🔇', '효과음', settings.sound, () => updateSettings({ sound: !settings.sound })),
-    iconButton(settings.theme === 'dark' ? '🌙' : '☀️', '라이트/다크 모드', false, () => updateSettings({ theme: settings.theme === 'dark' ? 'light' : 'dark' })),
-    iconButton(isFullscreen ? '🗗' : '⛶', '전체화면/창 모드 (F11)', isFullscreen, toggleFullscreen),
+    iconButton(`🌐 ${getUiLang().toUpperCase()}`, t('tool.uiLang'), false, toggleUiLang),
+    iconButton(settings.lang === 'ko' ? '한' : 'EN', t('tool.practiceLang'), false, toggleLang),
+    iconButton('⌨', t('tool.keyboard'), settings.showKeyboard, () => updateSettings({ showKeyboard: !settings.showKeyboard })),
+    iconButton('🖐', t('tool.fingers'), settings.showFingers, () => updateSettings({ showFingers: !settings.showFingers })),
+    iconButton(settings.sound ? '🔊' : '🔇', t('tool.sound'), settings.sound, () => updateSettings({ sound: !settings.sound })),
+    iconButton(settings.theme === 'dark' ? '🌙' : '☀️', t('tool.theme'), false, () => updateSettings({ theme: settings.theme === 'dark' ? 'light' : 'dark' })),
+    iconButton(isFullscreen ? '🗗' : '⛶', t('tool.fullscreen'), isFullscreen, toggleFullscreen),
   );
 }
 
 function renderNav() {
   $('mode-nav').replaceChildren(
-    ...MODES.map((def) => el('button', { class: `nav-item${def === activeDef ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: () => switchMode(def) }, def.label)),
+    ...MODES.map((def) => el('button', { class: `nav-item${def === activeDef ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: () => switchMode(def) }, t(`mode.${def.id}`))),
   );
 }
 
@@ -90,7 +94,15 @@ function toggleLang() {
   updateSettings({ lang: settings.lang === 'ko' ? 'en' : 'ko' });
   if (!activeDef.fixedLang) keyboard.setLang(settings.lang);
   active?.onLangChange(settings.lang);
-  toast(settings.lang === 'ko' ? '한글 모드' : 'English mode');
+  toast(t(settings.lang === 'ko' ? 'toast.practiceKo' : 'toast.practiceEn'));
+}
+
+/** Display language is separate from the practice language; rebuild the screen in the new language. */
+function toggleUiLang() {
+  closeModal();
+  updateSettings({ uiLang: getUiLang() === 'ko' ? 'en' : 'ko' });
+  switchMode(activeDef);
+  toast(t('toast.uiLang'));
 }
 
 async function toggleFullscreen() {
@@ -104,7 +116,7 @@ async function toggleFullscreen() {
     }
   } catch (error) {
     console.warn('Fullscreen toggle failed.', error);
-    toast('전체화면 전환에 실패했어요');
+    toast(t('toast.fullscreenFail'));
   }
   renderTools();
 }

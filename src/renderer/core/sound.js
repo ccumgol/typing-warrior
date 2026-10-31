@@ -1,12 +1,12 @@
 // Synthesized sound effects (no audio files) in selectable packs:
-// calm (잔잔) → classic (아케이드) → dopamine (도파민), plus warzone (전장) for 전선 작전.
+// calm → classic (arcade) → dopamine, plus warzone for 전선 작전. Labels live in i18n (pack.<id>).
 import { createWarzonePack } from './sound-warzone.js';
 
 export const SOUND_PACKS = Object.freeze([
-  { id: 'calm', label: '🔈 잔잔', desc: '부드럽고 작은 소리' },
-  { id: 'classic', label: '🔉 아케이드', desc: '레트로 게임기 소리' },
-  { id: 'dopamine', label: '🔊 도파민', desc: '연속 명중할수록 음이 올라가요' },
-  { id: 'warzone', label: '🎖️ 전장', desc: '실전 같은 총성과 포격, 심장박동 배경음', shooterOnly: true },
+  { id: 'calm' },
+  { id: 'classic' },
+  { id: 'dopamine' },
+  { id: 'warzone', shooterOnly: true },
 ]);
 export const DEFAULT_PACK = 'classic';
 

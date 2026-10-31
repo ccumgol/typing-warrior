@@ -47,11 +47,6 @@ export const ROWS = Object.freeze([
 
 export const HOME_KEYS = Object.freeze(['KeyF', 'KeyJ']);
 
-export const FINGER_NAMES = Object.freeze({
-  L5: '왼손 새끼', L4: '왼손 약지', L3: '왼손 중지', L2: '왼손 검지',
-  R2: '오른손 검지', R3: '오른손 중지', R4: '오른손 약지', R5: '오른손 새끼', T: '엄지',
-});
-
 const CHAR_KEYS = ROWS.flat().filter((key) => !key.special);
 const BY_CODE = new Map(ROWS.flat().map((key) => [key.code, key]));
 

@@ -1,9 +1,10 @@
 // "가− 125% 가+" control for the games' text size (saved in settings).
 import { GAME_TEXT_SCALES } from '../core/storage.js';
 import { el } from './dom.js';
+import { t } from '../core/i18n.js';
 
 export function createTextSizeControl(ctx, onChange = () => {}) {
-  const box = el('div', { class: 'text-size', title: '게임 글자 크기' });
+  const box = el('div', { class: 'text-size', title: t('textSize.title') });
 
   function step(direction) {
     const index = GAME_TEXT_SCALES.indexOf(ctx.settings().gameTextScale);
@@ -19,9 +20,9 @@ export function createTextSizeControl(ctx, onChange = () => {}) {
     const atMin = scale === GAME_TEXT_SCALES[0];
     const atMax = scale === GAME_TEXT_SCALES[GAME_TEXT_SCALES.length - 1];
     box.replaceChildren(
-      el('button', { type: 'button', tabindex: '-1', disabled: atMin, onclick: () => step(-1), 'aria-label': '글자 작게' }, '가−'),
+      el('button', { type: 'button', tabindex: '-1', disabled: atMin, onclick: () => step(-1), 'aria-label': t('textSize.smaller') }, t('textSize.minus')),
       el('span', {}, `${Math.round(scale * 100)}%`),
-      el('button', { type: 'button', tabindex: '-1', disabled: atMax, onclick: () => step(1), 'aria-label': '글자 크게' }, '가+'),
+      el('button', { type: 'button', tabindex: '-1', disabled: atMax, onclick: () => step(1), 'aria-label': t('textSize.larger') }, t('textSize.plus')),
     );
   }
 

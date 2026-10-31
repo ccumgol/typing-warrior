@@ -4,10 +4,11 @@ import { applyKey, createTarget, typedText } from '../core/typing-input.js';
 import { el, pills, shuffle } from '../ui/dom.js';
 import { renderTypingLine } from '../ui/typing-line.js';
 import { sounds } from '../core/sound.js';
+import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 
 const WORDS_PER_ROUND = 25;
-const ALL = '전체';
+const ALL = 'all';
 const setsFor = (lang) => (lang === 'ko' ? KO_WORD_SETS : EN_WORD_SETS);
 
 function buildQueue(lang, setName) {
@@ -31,7 +32,7 @@ export function createWordsMode(ctx) {
   const input = el('div', { class: 'typed-box' });
   const upcoming = el('div', { class: 'word-upcoming' });
   ctx.root.replaceChildren(
-    el('section', { class: 'mode words' }, toolbar, el('div', { class: 'practice-area' }, current, input, upcoming, el('div', { class: 'practice-desc' }, 'Space 또는 Enter로 다음 단어'))),
+    el('section', { class: 'mode words' }, toolbar, el('div', { class: 'practice-area' }, current, input, upcoming, el('div', { class: 'practice-desc' }, t('words.desc')))),
   );
 
   function restart(nextSet = setName) {
@@ -47,7 +48,7 @@ export function createWordsMode(ctx) {
 
   function render() {
     const names = [ALL, ...Object.keys(setsFor(lang))];
-    toolbar.replaceChildren(pills(names.map((n) => ({ value: n, label: n.replace('_', '·') })), setName, restart));
+    toolbar.replaceChildren(pills(names.map((n) => ({ value: n, label: n === ALL ? t('words.all') : t(`wordset.${n}`) })), setName, restart));
     renderWord();
   }
 
@@ -84,13 +85,13 @@ export function createWordsMode(ctx) {
     renderWord();
     finishSession({
       mode: `words-${lang}`,
-      label: `단어 · ${setName}`,
-      title: '단어 연습 완료!',
+      label: t('words.label', { set: setName === ALL ? t('words.all') : t(`wordset.${setName}`) }),
+      title: t('words.done'),
       snap,
-      extraStats: [{ label: '맞은 단어', value: `${queue.length - missed}/${queue.length}` }],
+      extraStats: [{ label: t('words.correct'), value: `${queue.length - missed}/${queue.length}` }],
       actions: [
-        { label: '새 단어로 계속', primary: true, onClick: () => restart() },
-        { label: '닫기', onClick: () => restart() },
+        { label: t('words.continue'), primary: true, onClick: () => restart() },
+        { label: t('action.close'), onClick: () => restart() },
       ],
     });
   }

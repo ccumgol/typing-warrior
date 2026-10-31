@@ -5,6 +5,7 @@ import { decompose } from '../core/hangul.js';
 import { hasCommandModifier } from '../core/typing-input.js';
 import { el, pills, pickRandom } from '../ui/dom.js';
 import { sounds } from '../core/sound.js';
+import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 
 const MIX = 'mix';
@@ -30,6 +31,7 @@ export function createJamoMode(ctx) {
   ctx.root.replaceChildren(el('section', { class: 'mode jamo' }, toolbar, el('div', { class: 'practice-area' }, track, desc)));
 
   const currentStage = () => stagesFor(lang).find((s) => s.id === stageId);
+  const titleOf = (stage) => t(`stage.${stage.id}`);
 
   function restart(nextStageId = stageId) {
     stageId = nextStageId;
@@ -43,8 +45,8 @@ export function createJamoMode(ctx) {
   function renderToolbar() {
     const done = ctx.settings().completedStages;
     const options = [
-      ...stagesFor(lang).map((s) => ({ value: s.id, label: `${done.includes(s.id) ? '✓ ' : ''}${s.title}` })),
-      { value: MIX, label: lang === 'ko' ? '🔀 혼합' : '🔀 Mixed' },
+      ...stagesFor(lang).map((s) => ({ value: s.id, label: `${done.includes(s.id) ? '✓ ' : ''}${titleOf(s)}` })),
+      { value: MIX, label: t('jamo.mix') },
     ];
     toolbar.replaceChildren(pills(options, stageId, (value) => restart(value)));
   }
@@ -61,7 +63,7 @@ export function createJamoMode(ctx) {
         return el('div', { class: `jamo-cell ${cls}` }, ch, progress);
       }),
     );
-    desc.textContent = stageId === MIX ? (lang === 'ko' ? '모든 단계의 글자가 섞여 나와요.' : 'All keys mixed together.') : currentStage().desc;
+    desc.textContent = t(stageId === MIX ? 'jamo.mixDesc' : `stage.${stageId}.desc`);
     updateGuide();
   }
 
@@ -80,12 +82,12 @@ export function createJamoMode(ctx) {
     if (stageId !== MIX) ctx.markStageDone(stageId);
     finishSession({
       mode: `jamo-${lang}`,
-      label: stageId === MIX ? '자리 연습 · 혼합' : currentStage().title,
-      title: stageId === MIX ? '혼합 연습 완료!' : `${currentStage().title} 완료!`,
+      label: stageId === MIX ? t('jamo.mixLabel') : titleOf(currentStage()),
+      title: stageId === MIX ? t('jamo.mixDone') : t('action.done', { title: titleOf(currentStage()) }),
       snap,
       actions: [
-        next ? { label: `다음: ${next.title}`, primary: true, onClick: () => restart(next.id) } : { label: '혼합 연습 하기', primary: true, onClick: () => restart(MIX) },
-        { label: '다시 하기', onClick: () => restart() },
+        next ? { label: t('action.next', { title: titleOf(next) }), primary: true, onClick: () => restart(next.id) } : { label: t('jamo.playMix'), primary: true, onClick: () => restart(MIX) },
+        { label: t('action.retry'), onClick: () => restart() },
       ],
     });
   }

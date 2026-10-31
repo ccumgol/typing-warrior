@@ -1,8 +1,9 @@
 // Text box used by the games: composes Hangul from key presses, Enter/Space submits.
 import { applyKey, typedText } from '../core/typing-input.js';
 import { el } from './dom.js';
+import { t } from '../core/i18n.js';
 
-export function createGameInput({ placeholder = '단어를 입력하고 Enter', spaceSubmits = true } = {}) {
+export function createGameInput({ placeholder = t('input.word'), spaceSubmits = true } = {}) {
   let tokens = [];
   const box = el('div', { class: 'game-input empty', 'data-placeholder': placeholder });
 

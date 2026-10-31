@@ -7,6 +7,7 @@ import { el, pickRandom } from '../ui/dom.js';
 import { createGameInput } from '../ui/game-input.js';
 import { createTextSizeControl } from '../ui/text-size-control.js';
 import { createSoundPackControl } from '../ui/sound-pack-control.js';
+import { t } from '../core/i18n.js';
 import { createAmbience } from '../core/ambience.js';
 import { isTypable } from '../core/keyboard-layout.js';
 import { sounds } from '../core/sound.js';
@@ -41,13 +42,13 @@ function wordPool(lang) {
 
 export function createShooterMode(ctx) {
   const session = createSession();
-  const input = createGameInput({ placeholder: '적의 단어를 입력하고 Enter', spaceSubmits: false });
+  const input = createGameInput({ placeholder: t('shooter.input'), spaceSubmits: false });
   const canvas = el('canvas', { class: 'shooter-canvas' });
   const overlay = el('div', { class: 'game-overlay' });
   const stage = el('div', { class: 'shooter-stage' }, canvas, overlay);
   ctx.root.replaceChildren(el('section', { class: 'mode game shooter' }, stage, el('div', { class: 'game-input-row' }, createSoundPackControl(ctx, { settingKey: 'shooterSoundPack', shooter: true, onChange: syncAmbience }), input.el, createTextSizeControl(ctx, () => state !== 'playing' && draw()))));
   ctx.keyboard.highlight(null);
-  ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: 'Enter로 시작' });
+  ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: t('game.pressEnter') });
   const g = canvas.getContext('2d');
   const ambience = createAmbience();
 
@@ -173,20 +174,20 @@ export function createShooterMode(ctx) {
     g.fillStyle = '#fff';
     g.fillText(`HP ${game.hp}`, 230, top);
     g.textAlign = 'right';
-    g.fillText(`WAVE ${game.wave}  ·  ${game.score.toLocaleString()}점`, width - 18, top);
+    g.fillText(t('shooter.score', { wave: game.wave, score: game.score.toLocaleString() }), width - 18, top);
     g.textAlign = 'left';
     const bullets = '▮'.repeat(game.ammo) + '▯'.repeat(MAGAZINE - game.ammo);
-    g.fillText(`탄약 ${bullets}`, 18, height - 18);
+    g.fillText(t('shooter.ammo', { count: bullets }), 18, height - 18);
     if (game.ammo === 0) {
       g.fillStyle = '#fbbf24';
-      g.fillText(`탄약 없음! "${COMMANDS[lang].reload}" 입력`, 18, height - 18 - line);
+      g.fillText(t('shooter.empty', { command: COMMANDS[lang].reload }), 18, height - 18 - line);
     }
     g.fillStyle = '#93c5fd';
-    if (game.airstrikes) g.fillText(`✈ 공습 ${game.airstrikes}회 — "${COMMANDS[lang].airstrike}" 입력`, 18, height - 18 - line * 2);
+    if (game.airstrikes) g.fillText(t('shooter.airstrikes', { count: game.airstrikes, command: COMMANDS[lang].airstrike }), 18, height - 18 - line * 2);
     if (game.streak >= 3) {
       g.textAlign = 'center';
       g.fillStyle = '#fde047';
-      g.fillText(`${game.streak} 연속 명중!`, width / 2, top + line);
+      g.fillText(t('shooter.streak', { count: game.streak }), width / 2, top + line);
     }
     if (game.banner) {
       g.textAlign = 'center';
@@ -209,7 +210,7 @@ export function createShooterMode(ctx) {
     if (text === commands.reload) {
       game.ammo = MAGAZINE;
       sounds.reload();
-      ctx.toast('🔄 재장전 완료');
+      ctx.toast(t('shooter.reloaded'));
       return;
     }
     if (text === commands.airstrike && game.airstrikes > 0) {
@@ -217,7 +218,7 @@ export function createShooterMode(ctx) {
       game.kills += game.enemies.length;
       game.score += game.enemies.length * 50;
       game.enemies = [];
-      game.banner = { text: '✈ 공습!', life: 1.5 };
+      game.banner = { text: t('shooter.airstrike'), life: 1.5 };
       sounds.special();
       return;
     }
@@ -246,7 +247,7 @@ export function createShooterMode(ctx) {
     game.bestStreak = Math.max(game.bestStreak, game.streak);
     if (game.streak % STREAK_FOR_AIRSTRIKE === 0) {
       game.airstrikes += 1;
-      ctx.toast(`✈ ${game.streak}연속 명중! 공습 지원 획득`);
+      ctx.toast(t('shooter.airstrikeEarned', { count: game.streak }));
     }
     const bonus = 1 + Math.min(game.streak, 10) * 0.1;
     game.score += Math.round(strokeCount(text) * 10 * KINDS[target.kind].points * bonus);
@@ -288,7 +289,7 @@ export function createShooterMode(ctx) {
       state = 'paused';
       pausedAt = performance.now();
       cancelAnimationFrame(frame);
-      showOverlay('일시정지', ['Esc를 누르면 계속합니다']);
+      showOverlay(t('game.pause'), [t('game.resume')]);
       syncAmbience();
     } else if (state === 'paused') {
       session.excludePause(performance.now() - pausedAt);
@@ -305,15 +306,15 @@ export function createShooterMode(ctx) {
     syncAmbience();
     cancelAnimationFrame(frame);
     draw();
-    showOverlay('작전 실패', ['Enter를 눌러 재출격']);
+    showOverlay(t('shooter.failed'), [t('shooter.redeploy')]);
     finishSession({
       mode: 'shooter',
-      label: '전선 작전',
-      title: `작전 종료 · WAVE ${game.wave}`,
+      label: t('shooter.label'),
+      title: t('shooter.result', { wave: game.wave }),
       snap: session.snapshot(),
       score: game.score,
-      extraStats: [{ label: '점수', value: game.score.toLocaleString() }, { label: '처치', value: game.kills }, { label: '최고 연속', value: game.bestStreak }],
-      actions: [{ label: '재출격', primary: true, onClick: start }, { label: '닫기', onClick: () => {} }],
+      extraStats: [{ label: t('result.score'), value: game.score.toLocaleString() }, { label: t('shooter.kills'), value: game.kills }, { label: t('shooter.bestStreak'), value: game.bestStreak }],
+      actions: [{ label: t('shooter.again'), primary: true, onClick: start }, { label: t('action.close'), onClick: () => {} }],
     });
   }
 
@@ -335,16 +336,16 @@ export function createShooterMode(ctx) {
   const tick = () => {
     if (state !== 'playing') return;
     const snap = session.snapshot();
-    ctx.status({ cpm: snap.cpm, accuracy: snap.accuracy, time: formatTime(snap.ms), progress: `WAVE ${game.wave} · ${game.score.toLocaleString()}점` });
+    ctx.status({ cpm: snap.cpm, accuracy: snap.accuracy, time: formatTime(snap.ms), progress: t('shooter.progress', { wave: game.wave, score: game.score.toLocaleString() }) });
   };
 
   resize();
   draw();
   const cmd = COMMANDS[lang];
-  showOverlay('🎖️ 전선 작전', [
-    '다가오는 적 위의 단어를 입력하고 Enter로 사격!',
-    `탄약 ${MAGAZINE}발 · 다 쓰면 "${cmd.reload}" 입력 · ${STREAK_FOR_AIRSTRIKE}연속 명중 시 "${cmd.airstrike}" 사용 가능`,
-    '5웨이브마다 지휘관(긴 문장) 등장 · Enter로 출격 · Esc 일시정지',
+  showOverlay(t('shooter.title'), [
+    t('shooter.intro1'),
+    t('shooter.intro2', { magazine: MAGAZINE, reload: cmd.reload, streak: STREAK_FOR_AIRSTRIKE, airstrike: cmd.airstrike }),
+    t('shooter.intro3'),
   ]);
   return {
     onKeyDown,

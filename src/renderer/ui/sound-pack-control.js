@@ -1,13 +1,14 @@
 // Sound pack picker for the games (plays a short preview). Each game remembers its own pack.
 import { SOUND_PACKS, previewPack, setSoundPack } from '../core/sound.js';
 import { el } from './dom.js';
+import { t } from '../core/i18n.js';
 
 /**
  * @param {object} ctx
  * @param {{settingKey?:string, shooter?:boolean, onChange?:Function}} [options]
  */
 export function createSoundPackControl(ctx, { settingKey = 'soundPack', shooter = false, onChange = () => {} } = {}) {
-  const box = el('div', { class: 'sound-pack', title: '효과음 세트' });
+  const box = el('div', { class: 'sound-pack', title: t('pack.title') });
   const packs = SOUND_PACKS.filter((pack) => shooter || !pack.shooterOnly);
 
   function choose(id) {
@@ -27,9 +28,9 @@ export function createSoundPackControl(ctx, { settingKey = 'soundPack', shooter 
           type: 'button',
           tabindex: '-1',
           class: pack.id === soundPack && sound ? 'active' : '',
-          title: pack.desc,
+          title: t(`pack.${pack.id}.desc`),
           onclick: () => choose(pack.id),
-        }, pack.label),
+        }, t(`pack.${pack.id}`)),
       ),
     );
   }

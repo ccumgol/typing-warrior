@@ -6,6 +6,7 @@ import { createGameInput } from '../ui/game-input.js';
 import { createTextSizeControl } from '../ui/text-size-control.js';
 import { createSoundPackControl } from '../ui/sound-pack-control.js';
 import { sounds } from '../core/sound.js';
+import { t } from '../core/i18n.js';
 import { createSession, finishSession } from './session.js';
 import { formatTime } from '../core/stats.js';
 
@@ -27,7 +28,7 @@ export function createAcidRainMode(ctx) {
     el('section', { class: 'mode game acid-rain' }, el('div', { class: 'rain-stage' }, hud, field, ground, overlay), el('div', { class: 'game-input-row' }, createSoundPackControl(ctx), input.el, createTextSizeControl(ctx))),
   );
   ctx.keyboard.highlight(null);
-  ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: 'Enter로 시작' });
+  ctx.status({ cpm: 0, accuracy: 100, time: formatTime(0), progress: t('game.pressEnter') });
 
   let state = 'ready'; // ready | playing | paused | over
   let drops = [];
@@ -90,9 +91,9 @@ export function createAcidRainMode(ctx) {
   }
 
   function renderHud() {
-    hud.textContent = `LEVEL ${level}   ·   점수 ${score.toLocaleString()}   ·   ${cleared}개 처리${slowUntil > performance.now() ? '   ·   ❄️ 감속 중' : ''}`;
+    hud.textContent = t('acid.hud', { level, score: score.toLocaleString(), cleared }) + (slowUntil > performance.now() ? t('acid.slow') : '');
     const snap = session.snapshot();
-    ctx.status({ cpm: snap.cpm, accuracy: snap.accuracy, time: formatTime(snap.ms), progress: `Lv.${level} · ${score.toLocaleString()}점` });
+    ctx.status({ cpm: snap.cpm, accuracy: snap.accuracy, time: formatTime(snap.ms), progress: t('acid.progress', { level, score: score.toLocaleString() }) });
   }
 
   function loop(now) {
@@ -144,7 +145,7 @@ export function createAcidRainMode(ctx) {
     if (cleared % WORDS_PER_LEVEL === 0) {
       level += 1;
       sounds.levelUp();
-      ctx.toast(`🌧️ LEVEL ${level}! 비가 더 거세집니다`);
+      ctx.toast(t('acid.levelUp', { level }));
     }
     renderHud();
   }
@@ -164,7 +165,7 @@ export function createAcidRainMode(ctx) {
       state = 'paused';
       pausedAt = performance.now();
       cancelAnimationFrame(frame);
-      showOverlay('일시정지', ['Esc를 누르면 계속합니다']);
+      showOverlay(t('game.pause'), [t('game.resume')]);
     } else if (state === 'paused') {
       const pausedMs = performance.now() - pausedAt;
       session.excludePause(pausedMs);
@@ -179,15 +180,15 @@ export function createAcidRainMode(ctx) {
   function gameOver() {
     state = 'over';
     cancelAnimationFrame(frame);
-    showOverlay('GAME OVER', ['Enter를 눌러 다시 시작']);
+    showOverlay('GAME OVER', [t('acid.gameOver')]);
     finishSession({
       mode: 'acid-rain',
-      label: '산성비',
-      title: `산성비 게임 종료 · ${score.toLocaleString()}점`,
+      label: t('acid.label'),
+      title: t('acid.result', { score: score.toLocaleString() }),
       snap: session.snapshot(),
       score,
-      extraStats: [{ label: '점수', value: score.toLocaleString() }, { label: '레벨', value: level }],
-      actions: [{ label: '다시 도전', primary: true, onClick: start }, { label: '닫기', onClick: () => {} }],
+      extraStats: [{ label: t('result.score'), value: score.toLocaleString() }, { label: t('acid.level'), value: level }],
+      actions: [{ label: t('acid.again'), primary: true, onClick: start }, { label: t('action.close'), onClick: () => {} }],
     });
   }
 
@@ -207,7 +208,7 @@ export function createAcidRainMode(ctx) {
   }
 
   reset();
-  showOverlay('☔ 산성비', ['떨어지는 단어를 입력하고 Enter 또는 Space!', '💣 금색 단어: 화면 정리 · ❄️ 파란 단어: 5초 감속', 'Enter로 시작 · Esc 일시정지']);
+  showOverlay(t('acid.title'), [t('acid.intro1'), t('acid.intro2'), t('acid.intro3')]);
   return {
     onKeyDown,
     onLangChange() {}, // the running game keeps its language; the next game uses the new one

@@ -2,12 +2,13 @@
 import { loadRecords } from '../core/storage.js';
 import { formatTime } from '../core/stats.js';
 import { el } from '../ui/dom.js';
+import { t, getUiLang } from '../core/i18n.js';
 
-const MODE_NAMES = {
-  'jamo-ko': '자리 연습 (한글)', 'jamo-en': '자리 연습 (영문)', 'words-ko': '단어 (한글)', 'words-en': '단어 (영문)',
-  'sentences-quotes': '문장 · 명언', 'sentences-bible': '문장 · 성경', 'sentences-english': '문장 · English',
-  'acid-rain': '산성비 (점수)', shooter: '전선 작전 (점수)', 'shortcuts-mac': '단축키 macOS (정확도)', 'shortcuts-win': '단축키 Windows (정확도)',
-};
+// Record modes in display order; names come from the UI dictionary (rec.<mode>).
+const MODES = Object.freeze([
+  'jamo-ko', 'jamo-en', 'words-ko', 'words-en', 'sentences-quotes', 'sentences-bible', 'sentences-english',
+  'acid-rain', 'shooter', 'shortcuts-mac', 'shortcuts-win',
+]);
 
 const dayKey = (time) => new Date(time).toLocaleDateString('sv-SE');
 
@@ -27,7 +28,7 @@ export function createRecordsMode(ctx) {
   const records = loadRecords();
   const totalMs = records.reduce((sum, r) => sum + r.ms, 0);
   const todayMs = records.filter((r) => dayKey(r.at) === dayKey(Date.now())).reduce((sum, r) => sum + r.ms, 0);
-  const best = Object.keys(MODE_NAMES)
+  const best = MODES
     .map((mode) => {
       const list = records.filter((r) => r.mode === mode);
       return list.length ? { mode, best: Math.max(...list.map((r) => r.score)), count: list.length } : null;
@@ -39,20 +40,20 @@ export function createRecordsMode(ctx) {
     el(
       'section',
       { class: 'mode records' },
-      el('div', { class: 'record-cards' }, card(`${streakDays(records)}일`, '연속 연습'), card(formatTime(todayMs), '오늘 연습'), card(formatTime(totalMs), '총 연습 시간'), card(records.length, '완료한 연습')),
-      el('h3', {}, '🏆 모드별 최고 기록'),
+      el('div', { class: 'record-cards' }, card(t('rec.days', { count: streakDays(records) }), t('rec.streak')), card(formatTime(todayMs), t('rec.today')), card(formatTime(totalMs), t('rec.total')), card(records.length, t('rec.count'))),
+      el('h3', {}, t('rec.best')),
       best.length
-        ? el('table', { class: 'record-table' }, el('tbody', {}, best.map((b) => el('tr', {}, el('td', {}, MODE_NAMES[b.mode]), el('td', {}, b.best.toLocaleString()), el('td', {}, `${b.count}회`)))))
-        : el('p', { class: 'muted' }, '아직 기록이 없어요. 첫 연습을 시작해 볼까요?'),
-      el('h3', {}, '🕘 최근 기록'),
+        ? el('table', { class: 'record-table' }, el('tbody', {}, best.map((b) => el('tr', {}, el('td', {}, t(`rec.${b.mode}`)), el('td', {}, b.best.toLocaleString()), el('td', {}, t('rec.times', { count: b.count }))))))
+        : el('p', { class: 'muted' }, t('rec.empty')),
+      el('h3', {}, t('rec.recent')),
       el(
         'table',
         { class: 'record-table' },
-        el('tbody', {}, records.slice(0, 15).map((r) => el('tr', {}, el('td', {}, new Date(r.at).toLocaleString('ko-KR')), el('td', {}, r.label || r.mode), el('td', {}, r.score.toLocaleString()), el('td', {}, `${r.accuracy}%`)))),
+        el('tbody', {}, records.slice(0, 15).map((r) => el('tr', {}, el('td', {}, new Date(r.at).toLocaleString(getUiLang() === 'ko' ? 'ko-KR' : 'en-US')), el('td', {}, r.label || r.mode), el('td', {}, r.score.toLocaleString()), el('td', {}, `${r.accuracy}%`)))),
       ),
     ),
   );
   ctx.keyboard.highlight(null);
-  ctx.status({ cpm: '-', accuracy: '-', time: formatTime(totalMs), progress: '기록' });
+  ctx.status({ cpm: '-', accuracy: '-', time: formatTime(totalMs), progress: t('rec.status') });
   return { onKeyDown: () => false, onLangChange() {}, tick() {}, destroy() {}, hidesKeyboard: true };
 }

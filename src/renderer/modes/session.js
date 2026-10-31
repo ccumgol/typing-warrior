@@ -2,6 +2,7 @@
 import { createStats, recordStroke, recordItem, strokesPerMinute, accuracy, elapsedMs, formatTime } from '../core/stats.js';
 import { addRecord } from '../core/storage.js';
 import { showResult } from '../ui/result-modal.js';
+import { t } from '../core/i18n.js';
 
 /** Holds the (immutable) stats of the running session; the clock starts at the first key stroke. */
 export function createSession() {
@@ -53,9 +54,9 @@ export function finishSession({ mode, label, title, snap, score = snap.cpm, extr
     isBest,
     accuracy: snap.accuracy,
     stats: [
-      { label: '타수 (분당)', value: snap.cpm },
-      { label: '정확도', value: `${snap.accuracy}%` },
-      { label: '시간', value: formatTime(snap.ms) },
+      { label: t('result.cpm'), value: snap.cpm },
+      { label: t('result.accuracy'), value: `${snap.accuracy}%` },
+      { label: t('result.time'), value: formatTime(snap.ms) },
       ...extraStats,
     ],
     actions,

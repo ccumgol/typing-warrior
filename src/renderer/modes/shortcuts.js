@@ -2,10 +2,11 @@
 import { SHORTCUTS, SHORTCUT_STAGES, comboLabels, comboCodes, matchesCombo } from '../data/shortcuts.js';
 import { el, pills, shuffle } from '../ui/dom.js';
 import { sounds } from '../core/sound.js';
+import { t, loc } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 
 const MODIFIER_CODES = new Set(['MetaLeft', 'MetaRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'ShiftLeft', 'ShiftRight', 'CapsLock', 'Fn', 'FnLock', 'ContextMenu']);
-const PLATFORM_LABEL = { mac: ' macOS', win: ' Windows' };
+const PLATFORM_LABEL = { mac: 'macOS', win: 'Windows' };
 const HINT_AFTER_MISSES = 2;
 const MIX = 'sc-mix';
 
@@ -33,7 +34,7 @@ export function createShortcutsMode(ctx) {
   ctx.root.replaceChildren(el('section', { class: 'mode shortcuts' }, toolbar, area));
 
   const currentStage = () => SHORTCUT_STAGES.find((st) => st.id === stageId);
-  const stageTitle = () => currentStage()?.title || '🔀 전체';
+  const stageTitle = () => t(currentStage()?.id || 'sc.mix');
 
   function restart(nextStageId = stageId) {
     stageId = nextStageId;
@@ -53,21 +54,21 @@ export function createShortcutsMode(ctx) {
         restart();
       }),
       pills(
-        [...SHORTCUT_STAGES.map((st) => ({ value: st.id, label: `${done.includes(st.id) ? '✓ ' : ''}${st.title}` })), { value: MIX, label: '🔀 전체' }],
+        [...SHORTCUT_STAGES.map((st) => ({ value: st.id, label: `${done.includes(st.id) ? '✓ ' : ''}${t(st.id)}` })), { value: MIX, label: t('sc.mix') }],
         showReference ? null : stageId,
         (value) => {
           showReference = false;
           restart(value);
         },
       ),
-      el('button', { class: `pill${showReference ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: () => { showReference = !showReference; render(); } }, '📋 단축키 표'),
+      el('button', { class: `pill${showReference ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: () => { showReference = !showReference; render(); } }, t('sc.table')),
     );
   }
 
   function renderReference() {
     const byStage = [...SHORTCUTS].sort((a, b) => (a.system ? 9 : a.level) - (b.system ? 9 : b.level));
     const rows = byStage.map((s) =>
-      el('tr', { class: s.system ? 'system' : '' }, el('td', {}, s.category), el('td', {}, s.action), el('td', {}, keycaps(s[platform], platform)), el('td', {}, s.system ? '시스템' : `${s.level}단계`)),
+      el('tr', { class: s.system ? 'system' : '' }, el('td', {}, t(`sc.cat.${s.category}`)), el('td', {}, loc(s.action)), el('td', {}, keycaps(s[platform], platform)), el('td', {}, s.system ? t('sc.system') : t('sc.level', { level: s.level }))),
     );
     return el('div', { class: 'shortcut-table-wrap' }, el('table', { class: 'shortcut-table' }, el('tbody', {}, rows)));
   }
@@ -77,21 +78,19 @@ export function createShortcutsMode(ctx) {
     ctx.keyboard.setPlatform(platform);
     if (showReference) {
       ctx.keyboard.highlight(null);
-      area.replaceChildren(el('h2', { class: 'ref-title' }, `${PLATFORM_LABEL[platform]} 단축키 모음`), renderReference());
+      area.replaceChildren(el('h2', { class: 'ref-title' }, t('sc.tableTitle', { platform: PLATFORM_LABEL[platform] })), renderReference());
       return;
     }
     const item = queue[index];
     const combo = item[platform];
     // Keyboard shown: see the answer and press it. Keyboard hidden (F2): recall it from memory.
     const reveal = keyboardShown() || misses >= HINT_AFTER_MISSES;
-    const desc = keyboardShown()
-      ? '키보드를 보며 눌러 보세요 · F2로 키보드를 감추면 외워서 누르기'
-      : `외워서 눌러 보세요 · ${HINT_AFTER_MISSES}번 틀리면 정답을 보여 드려요 · F2로 키보드 보이기`;
+    const desc = keyboardShown() ? t('sc.withKeyboard') : t('sc.fromMemory', { count: HINT_AFTER_MISSES });
     area.replaceChildren(
-      el('div', { class: 'shortcut-category' }, `${stageTitle()} · ${item.category} · ${index + 1}/${queue.length}`),
-      el('div', { class: 'shortcut-action' }, item.action),
-      reveal ? keycaps(combo, platform) : el('div', { class: 'keycaps placeholder' }, '단축키를 눌러 보세요'),
-      el('div', { class: 'practice-desc' }, `${currentStage()?.desc || '모든 단계가 섞여 나와요'} ·${PLATFORM_LABEL[platform]} 기준`),
+      el('div', { class: 'shortcut-category' }, `${stageTitle()} · ${t(`sc.cat.${item.category}`)} · ${index + 1}/${queue.length}`),
+      el('div', { class: 'shortcut-action' }, loc(item.action)),
+      reveal ? keycaps(combo, platform) : el('div', { class: 'keycaps placeholder' }, t('sc.placeholder')),
+      el('div', { class: 'practice-desc' }, `${currentStage() ? t(`${stageId}.desc`) : t('sc.mixDesc')} · ${t('sc.basis', { platform: PLATFORM_LABEL[platform] })}`),
       el('div', { class: 'practice-desc' }, desc),
     );
     if (keyboardShown()) ctx.keyboard.highlightKeys(comboCodes(combo), comboLabels(combo, platform).join(' + '));
@@ -129,17 +128,17 @@ export function createShortcutsMode(ctx) {
     const next = SHORTCUT_STAGES[SHORTCUT_STAGES.findIndex((st) => st.id === stageId) + 1];
     finishSession({
       mode: `shortcuts-${platform}`,
-      label: `단축키 ·${PLATFORM_LABEL[platform]} · ${stageTitle()}`,
-      title: stageId === MIX ? '단축키 마스터!' : `${stageTitle()} 완료!`,
+      label: t('sc.label', { platform: PLATFORM_LABEL[platform], stage: stageTitle() }),
+      title: stageId === MIX ? t('sc.master') : t('action.done', { title: stageTitle() }),
       snap: session.snapshot(),
       score: Math.round(session.snapshot().accuracy),
       actions: [
         stageId === MIX
-          ? { label: '한 번 더', primary: true, onClick: () => restart() }
+          ? { label: t('sc.oneMore'), primary: true, onClick: () => restart() }
           : next
-            ? { label: `다음: ${next.title}`, primary: true, onClick: () => restart(next.id) }
-            : { label: '🔀 전체 섞어서 하기', primary: true, onClick: () => restart(MIX) },
-        { label: '다시 하기', onClick: () => restart() },
+            ? { label: t('action.next', { title: t(next.id) }), primary: true, onClick: () => restart(next.id) }
+            : { label: t('sc.mixAgain'), primary: true, onClick: () => restart(MIX) },
+        { label: t('action.retry'), onClick: () => restart() },
       ],
     });
     return true;

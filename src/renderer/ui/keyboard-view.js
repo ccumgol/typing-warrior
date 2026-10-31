@@ -1,7 +1,8 @@
 // On-screen keyboard with finger colours and next-key highlighting.
-import { ROWS, HOME_KEYS, FINGER_NAMES } from '../core/keyboard-layout.js';
+import { ROWS, HOME_KEYS } from '../core/keyboard-layout.js';
 import { bottomRow, FUNCTION_ROW, NAV_ROWS } from '../core/keyboard-extras.js';
 import { el } from './dom.js';
+import { t } from '../core/i18n.js';
 
 const CHAR_ROWS = ROWS.slice(0, 4); // the Space row comes from bottomRow(platform)
 
@@ -65,8 +66,8 @@ export function createKeyboardView(container, { platform: initialPlatform = 'win
 
   function highlight(next) {
     if (!next) return mark([], '');
-    const shiftText = next.shiftCode ? ` + ${next.shiftCode === 'ShiftLeft' ? '왼쪽' : '오른쪽'} Shift` : '';
-    const text = next.code === 'Backspace' ? '틀린 글자를 지워 주세요 (⌫)' : `${FINGER_NAMES[next.finger] || ''}${shiftText}`;
+    const shiftText = next.shiftCode ? t(next.shiftCode === 'ShiftLeft' ? 'kb.shiftLeft' : 'kb.shiftRight') : '';
+    const text = next.code === 'Backspace' ? t('kb.backspace') : `${next.finger ? t(`finger.${next.finger}`) : ''}${shiftText}`;
     return mark([next.code, next.shiftCode].filter(Boolean), text);
   }
 

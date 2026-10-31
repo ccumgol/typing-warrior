@@ -5,13 +5,14 @@ import { applyKey, createTarget, typedText, detectLang } from '../core/typing-in
 import { el, pills, shuffle } from '../ui/dom.js';
 import { renderTypingLine } from '../ui/typing-line.js';
 import { sounds } from '../core/sound.js';
+import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 
 const SENTENCES_PER_ROUND = 5;
 const SOURCES = Object.freeze({
-  quotes: { label: '💬 명언 100', items: KO_QUOTES },
-  bible: { label: `📖 성경 암송 100 (${BIBLE_TRANSLATION})`, items: BIBLE_VERSES },
-  english: { label: '🔤 English', items: EN_SENTENCES },
+  quotes: { label: () => t('src.quotes'), items: KO_QUOTES },
+  bible: { label: () => t('src.bible', { translation: BIBLE_TRANSLATION }), items: BIBLE_VERSES },
+  english: { label: () => t('src.english'), items: EN_SENTENCES },
 });
 
 export function createSentencesMode(ctx) {
@@ -29,7 +30,7 @@ export function createSentencesMode(ctx) {
   const input = el('div', { class: 'typed-box sentence-typed' });
   const next = el('div', { class: 'sentence-next' });
   ctx.root.replaceChildren(
-    el('section', { class: 'mode sentences' }, toolbar, el('div', { class: 'practice-area' }, sourceLine, line, input, next, el('div', { class: 'practice-desc' }, 'Enter로 다음 문장 · 틀린 글자는 ⌫로 고칠 수 있어요'))),
+    el('section', { class: 'mode sentences' }, toolbar, el('div', { class: 'practice-area' }, sourceLine, line, input, next, el('div', { class: 'practice-desc' }, t('sentences.desc')))),
   );
 
   function restart(nextSource = source) {
@@ -50,12 +51,12 @@ export function createSentencesMode(ctx) {
   }
 
   function render() {
-    const options = Object.entries(SOURCES).map(([value, s]) => ({ value, label: s.label }));
+    const options = Object.entries(SOURCES).map(([value, s]) => ({ value, label: s.label() }));
     toolbar.replaceChildren(pills(options, source, restart));
     sourceLine.textContent = `— ${queue[index].source}  (${index + 1}/${queue.length})`;
     renderTyping();
     const upcoming = queue[index + 1];
-    next.textContent = upcoming ? `다음: ${upcoming.text}` : '';
+    next.textContent = upcoming ? t('sentences.next', { text: upcoming.text }) : '';
   }
 
   function renderTyping() {
@@ -66,7 +67,7 @@ export function createSentencesMode(ctx) {
     tick();
   }
 
-  const tick = () => ctx.status(statusFrom(session.snapshot(), `${index}/${queue.length} 문장`));
+  const tick = () => ctx.status(statusFrom(session.snapshot(), t('sentences.progress', { index, total: queue.length })));
 
   function submit() {
     if (typed.length === 0) return;
@@ -81,12 +82,12 @@ export function createSentencesMode(ctx) {
     }
     finishSession({
       mode: `sentences-${source}`,
-      label: SOURCES[source].label,
-      title: '문장 연습 완료!',
+      label: SOURCES[source].label(),
+      title: t('sentences.done'),
       snap: session.snapshot(),
       actions: [
-        { label: '다음 문장들', primary: true, onClick: () => restart() },
-        { label: '닫기', onClick: () => restart() },
+        { label: t('sentences.more'), primary: true, onClick: () => restart() },
+        { label: t('action.close'), onClick: () => restart() },
       ],
     });
   }
