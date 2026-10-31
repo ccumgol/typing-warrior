@@ -1,6 +1,7 @@
 // 문장 연습: 명언 / 성경 암송 / 영어 문장. Enter로 다음 문장.
 import { KO_QUOTES, EN_SENTENCES } from '../data/quotes.js';
 import { BIBLE_VERSES, BIBLE_TRANSLATION } from '../data/bible.js';
+import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION, EN_BIBLE_NOTICE } from '../data/bible-en.js';
 import { applyKey, createTarget, typedText, detectLang } from '../core/typing-input.js';
 import { el, pills, shuffle } from '../ui/dom.js';
 import { renderTypingLine } from '../ui/typing-line.js';
@@ -12,6 +13,7 @@ const SENTENCES_PER_ROUND = 5;
 const SOURCES = Object.freeze({
   quotes: { label: () => t('src.quotes'), items: KO_QUOTES },
   bible: { label: () => t('src.bible', { translation: BIBLE_TRANSLATION }), items: BIBLE_VERSES },
+  'bible-en': { label: () => t('src.bibleEn', { translation: EN_BIBLE_TRANSLATION }), items: EN_BIBLE_VERSES, notice: EN_BIBLE_NOTICE },
   english: { label: () => t('src.english'), items: EN_SENTENCES },
 });
 
@@ -29,8 +31,9 @@ export function createSentencesMode(ctx) {
   const line = el('div', { class: 'sentence-target' });
   const input = el('div', { class: 'typed-box sentence-typed' });
   const next = el('div', { class: 'sentence-next' });
+  const notice = el('div', { class: 'bible-notice' }); // copyright notice required for the ESV
   ctx.root.replaceChildren(
-    el('section', { class: 'mode sentences' }, toolbar, el('div', { class: 'practice-area' }, sourceLine, line, input, next, el('div', { class: 'practice-desc' }, t('sentences.desc')))),
+    el('section', { class: 'mode sentences' }, toolbar, el('div', { class: 'practice-area' }, sourceLine, line, input, next, el('div', { class: 'practice-desc' }, t('sentences.desc')), notice)),
   );
 
   function restart(nextSource = source) {
@@ -54,6 +57,7 @@ export function createSentencesMode(ctx) {
     const options = Object.entries(SOURCES).map(([value, s]) => ({ value, label: s.label() }));
     toolbar.replaceChildren(pills(options, source, restart));
     sourceLine.textContent = `— ${queue[index].source}  (${index + 1}/${queue.length})`;
+    notice.textContent = SOURCES[source].notice || '';
     renderTyping();
     const upcoming = queue[index + 1];
     next.textContent = upcoming ? t('sentences.next', { text: upcoming.text }) : '';

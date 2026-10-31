@@ -121,13 +121,28 @@ export const EN = Object.freeze({
 
   // Sentences
   'src.quotes': '💬 100 Korean quotes',
-  'src.bible': '📖 100 Bible verses ({translation})',
+  'src.bible': '📖 100 Korean Bible verses ({translation})',
+  'src.bibleEn': '📖 100 Bible verses ({translation})',
   'src.english': '🔤 English sentences',
   'sentences.desc': 'Enter for the next sentence · fix mistakes with ⌫',
   'sentences.next': 'Next: {text}',
   'sentences.progress': '{index}/{total} sentences',
   'sentences.done': 'Sentence drill complete!',
   'sentences.more': 'More sentences',
+
+  // Long texts
+  'mode.longtext': '📜 Long texts',
+  'long.psalms': '📖 Psalms ({translation})',
+  'long.chapter': 'Psalm {chapter}',
+  'long.progress': 'Psalm {chapter} · verse {verse}/{total}',
+  'long.desc': 'Enter for the next verse · your place is saved automatically',
+  'long.done': 'Psalm {chapter} complete!',
+  'long.next': 'Next: Psalm {chapter}',
+  'long.prev': 'Previous psalm',
+  'long.nextBtn': 'Next psalm',
+  'long.pick': 'Choose a psalm',
+  'long.completed': '{count}/{total} done',
+  'rec.longtext-psalms': 'Long texts · Psalms',
 
   // Acid Rain
   'acid.title': '☔ Acid Rain',
@@ -225,6 +240,7 @@ export const EN = Object.freeze({
   'rec.words-en': 'Words (English)',
   'rec.sentences-quotes': 'Sentences · Korean quotes',
   'rec.sentences-bible': 'Sentences · Bible',
+  'rec.sentences-bible-en': 'Sentences · Bible (English)',
   'rec.sentences-english': 'Sentences · English',
   'rec.acid-rain': 'Acid Rain (score)',
   'rec.acid-stage': 'Acid Rain stages (best level)',

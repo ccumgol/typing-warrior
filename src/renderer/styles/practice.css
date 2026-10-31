@@ -87,3 +87,13 @@
 .record-card b { font-size: 28px; }
 .record-card span, .muted { color: var(--muted); }
 .records h3 { margin: 18px 0 6px; }
+.bible-notice { max-width: min(900px, 90vw); font-size: 11px; line-height: 1.4; color: var(--muted); text-align: center; }
+.bible-notice:empty { display: none; }
+
+/* Long texts */
+.long-title { margin: 0; font-size: clamp(20px, 3vh, 28px); }
+.long-context { max-width: min(1100px, 92vw); color: var(--pending); font-size: 15px; text-align: center; min-height: 1.4em; }
+.long-picker {
+  height: 32px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 13px;
+}

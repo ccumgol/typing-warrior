@@ -9,6 +9,7 @@ import { isModalOpen, closeModal } from './ui/result-modal.js';
 import { createJamoMode } from './modes/jamo.js';
 import { createWordsMode } from './modes/words.js';
 import { createSentencesMode } from './modes/sentences.js';
+import { createLongTextMode } from './modes/long-text.js';
 import { createAcidRainMode } from './modes/acid-rain.js';
 import { createShooterMode } from './modes/shooter.js';
 import { createShortcutsMode } from './modes/shortcuts.js';
@@ -18,6 +19,7 @@ const MODES = Object.freeze([
   { id: 'jamo', create: createJamoMode, keyboard: true },
   { id: 'words', create: createWordsMode, keyboard: true },
   { id: 'sentences', create: createSentencesMode, keyboard: true, fixedLang: true },
+  { id: 'longtext', create: createLongTextMode, keyboard: true, fixedLang: true },
   { id: 'acid', create: createAcidRainMode, keyboard: false },
   { id: 'shooter', create: createShooterMode, keyboard: false },
   { id: 'shortcuts', create: createShortcutsMode, keyboard: true, fixedLang: true },

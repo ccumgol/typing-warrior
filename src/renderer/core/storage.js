@@ -20,6 +20,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   shortcutPlatform: null,
   acidMode: 'endless', // 산성비: endless | stage
   acidCleared: 0, // highest 산성비 stage level cleared
+  longTextProgress: {}, // 긴 글: { psalms: { chapter, verse } }
   completedStages: [],
 });
 
@@ -43,6 +44,11 @@ function writeJson(key, value) {
   }
 }
 
+const isPosInt = (v) => Number.isInteger(v) && v >= 0;
+const isProgress = (v) =>
+  Boolean(v) && typeof v === 'object' && !Array.isArray(v) &&
+  Object.values(v).every((p) => p && isPosInt(p.chapter) && p.chapter >= 1 && isPosInt(p.verse));
+
 export function loadSettings() {
   const stored = readJson(SETTINGS_KEY);
   if (!stored || typeof stored !== 'object') return DEFAULT_SETTINGS;
@@ -60,6 +66,7 @@ export function loadSettings() {
     shooterSoundPack: pick('shooterSoundPack', (v) => ['calm', 'classic', 'dopamine', 'warzone'].includes(v)),
     shortcutPlatform: pick('shortcutPlatform', (v) => v === 'mac' || v === 'win'),
     acidMode: pick('acidMode', (v) => v === 'endless' || v === 'stage'),
+    longTextProgress: pick('longTextProgress', isProgress),
     acidCleared: pick('acidCleared', (v) => Number.isInteger(v) && v >= 0 && v <= 100),
     completedStages: pick('completedStages', (v) => Array.isArray(v) && v.every((s) => typeof s === 'string')),
   });

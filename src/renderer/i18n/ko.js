@@ -122,12 +122,27 @@ export const KO = Object.freeze({
   // 문장
   'src.quotes': '💬 명언 100',
   'src.bible': '📖 성경 암송 100 ({translation})',
+  'src.bibleEn': '📖 영어 성경 암송 100 ({translation})',
   'src.english': '🔤 영어 문장',
   'sentences.desc': 'Enter로 다음 문장 · 틀린 글자는 ⌫로 고칠 수 있어요',
   'sentences.next': '다음: {text}',
   'sentences.progress': '{index}/{total} 문장',
   'sentences.done': '문장 연습 완료!',
   'sentences.more': '다음 문장들',
+
+  // 긴 글
+  'mode.longtext': '📜 긴 글',
+  'long.psalms': '📖 시편 ({translation})',
+  'long.chapter': '시편 {chapter}편',
+  'long.progress': '{chapter}편 {verse}/{total}절',
+  'long.desc': 'Enter로 다음 절 · 어디까지 쳤는지 자동으로 저장돼요',
+  'long.done': '시편 {chapter}편 완료!',
+  'long.next': '다음: 시편 {chapter}편',
+  'long.prev': '이전 편',
+  'long.nextBtn': '다음 편',
+  'long.pick': '편 고르기',
+  'long.completed': '완료 {count}/{total}편',
+  'rec.longtext-psalms': '긴 글 · 시편',
 
   // 산성비
   'acid.title': '☔ 산성비',
@@ -225,6 +240,7 @@ export const KO = Object.freeze({
   'rec.words-en': '단어 (영문)',
   'rec.sentences-quotes': '문장 · 명언',
   'rec.sentences-bible': '문장 · 성경',
+  'rec.sentences-bible-en': '문장 · 영어 성경',
   'rec.sentences-english': '문장 · 영어',
   'rec.acid-rain': '산성비 (점수)',
   'rec.acid-stage': '산성비 단계 (최고 레벨)',
