@@ -94,7 +94,7 @@ export function createShortcutsMode(ctx) {
       el('div', { class: 'practice-desc' }, `${currentStage()?.desc || '모든 단계가 섞여 나와요'} ·${PLATFORM_LABEL[platform]} 기준`),
       el('div', { class: 'practice-desc' }, desc),
     );
-    if (keyboardShown()) ctx.keyboard.highlightKeys(comboCodes(combo, platform), comboLabels(combo, platform).join(' + '));
+    if (keyboardShown()) ctx.keyboard.highlightKeys(comboCodes(combo), comboLabels(combo, platform).join(' + '));
     else ctx.keyboard.highlight(null);
     tick();
   }

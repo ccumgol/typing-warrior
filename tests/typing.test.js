@@ -40,12 +40,11 @@ test('matches shortcut combos exactly', () => {
   assert.deepEqual(comboLabels('Control+KeyY', 'win'), ['Ctrl', 'Y']);
 });
 
-test('comboCodes lights modifiers on the hand opposite the main key', () => {
-  assert.deepEqual(comboCodes('Meta+KeyC', 'mac'), ['MetaRight', 'KeyC']);
-  assert.deepEqual(comboCodes('Meta+KeyL', 'mac'), ['MetaLeft', 'KeyL']);
-  assert.deepEqual(comboCodes('Control+Tab', 'mac'), ['ControlLeft', 'Tab']);
-  assert.deepEqual(comboCodes('Control+Shift+KeyS', 'win'), ['ControlRight', 'ShiftRight', 'KeyS']);
-  assert.deepEqual(comboCodes('Control+End', 'win'), ['ControlLeft', 'End']);
+test('comboCodes lights the left-hand modifier keys', () => {
+  assert.deepEqual(comboCodes('Meta+KeyC'), ['MetaLeft', 'KeyC']);
+  assert.deepEqual(comboCodes('Meta+Shift+KeyL'), ['MetaLeft', 'ShiftLeft', 'KeyL']);
+  assert.deepEqual(comboCodes('Control+Shift+KeyS'), ['ControlLeft', 'ShiftLeft', 'KeyS']);
+  assert.deepEqual(comboCodes('Alt+ArrowRight'), ['AltLeft', 'ArrowRight']);
 });
 
 test('every practice shortcut belongs to a stage', () => {

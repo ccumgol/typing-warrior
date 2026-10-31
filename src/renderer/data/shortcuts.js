@@ -1,8 +1,6 @@
 // 맥/윈도우 기본 단축키. combo 형식: "Meta+Shift+KeyZ" (KeyboardEvent.code 기준).
 // level: 연습 단계(1~3). system: true 인 항목은 운영체제가 가로채므로 직접 누르는 연습 대신 참고표로만 보여줍니다.
 
-import { getKey } from '../core/keyboard-layout.js';
-
 const s = (level, category, action, mac, win, system = false) => Object.freeze({ level, category, action, mac, win, system });
 
 // 연습 단계: 자주 쓰는 기본 → 문서·브라우저 → 텍스트 이동(조합이 긴 것)
@@ -84,13 +82,9 @@ export function matchesCombo(combo, event) {
 }
 
 /**
- * Physical keys to light up for a combo. Modifiers go on the hand opposite the main key,
- * except where the platform has no right-hand key (Mac keyboards have only a left control).
+ * Physical keys to light up for a combo. Shortcuts are usually pressed with the left hand
+ * holding the modifiers, so modifiers always use the left-hand keys.
  */
-export function comboCodes(combo, platform) {
-  const parts = combo.split('+');
-  const key = parts.find((p) => !MODIFIERS.includes(p));
-  const side = getKey(key)?.finger.startsWith('L') ? 'Right' : 'Left';
-  const leftOnly = platform === 'mac' ? ['Control'] : [];
-  return parts.map((p) => (MODIFIERS.includes(p) ? `${p}${leftOnly.includes(p) ? 'Left' : side}` : p));
+export function comboCodes(combo) {
+  return combo.split('+').map((p) => (MODIFIERS.includes(p) ? `${p}Left` : p));
 }
