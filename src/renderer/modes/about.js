@@ -46,7 +46,7 @@ export function createAboutMode(ctx) {
       el('h3', {}, about.creatorTitle),
       el('div', { class: 'about-creator' },
         el('p', { class: 'about-version' }, `Typing Warrior ${APP_VERSION}`),
-        el('dl', {}, about.creator.map((row) => [
+        el('dl', {}, about.creator.filter((row) => !(row.donate && window.desktop?.isMacAppStore)).map((row) => [
           el('dt', {}, row.label),
           el('dd', {}, row.text ? `${row.text} ` : null, row.link ? externalLink(row.link) : null),
         ])),

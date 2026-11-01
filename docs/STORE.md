@@ -38,6 +38,34 @@ Learn Korean and English typing by copying Scripture and poetry line by line: th
 - Per-user records, ranking and badges; display and practice languages chosen separately
 - Free, no ads. If it helps you, you can buy me a coffee.
 
+## 맥: 서명과 공증 (GitHub에서 받는 dmg)
+
+- 인증서: 키체인의 **Developer ID Application: Gihyun Park (QYB6DPBR6X)**
+- 공증 암호: `xcrun notarytool store-credentials "typing-warrior" …`로 키체인에 저장한 프로필 `typing-warrior`
+- 빌드: `npm run dist:mac-notarized` → `dist/`에 서명·공증된 dmg (Hardened Runtime, `build/entitlements.mac.plist`)
+- 확인: `spctl -a -vvv -t exec "dist/mac-arm64/Typing Warrior.app"` → `source=Notarized Developer ID`
+
+## Mac App Store 등록 순서
+
+1. **Bundle ID 등록**: developer.apple.com → Certificates, IDs & Profiles → Identifiers → **+** → App IDs → App → Bundle ID `com.typingwarrior.app` (Explicit). App Groups 기능을 켜고 `QYB6DPBR6X.com.typingwarrior.app`를 씁니다.
+2. **인증서 두 개**: Xcode → Settings → Accounts → Manage Certificates → **+** → **Apple Distribution**, **Mac Installer Distribution**
+3. **프로비저닝 프로파일**: Profiles → **+** → Distribution → **Mac App Store Connect** → 위 App ID → Apple Distribution 인증서 → 내려받아 `build/embedded.provisionprofile`로 저장 (Git에는 올리지 않음)
+4. **App Store Connect**: appstoreconnect.apple.com → 앱 → **+** 새로운 앱 → macOS, 이름 Typing Warrior, 기본 언어 한국어, Bundle ID 선택, SKU `typing-warrior`
+5. **빌드와 업로드**: `npm run dist:mas` → `dist/mas-universal/Typing Warrior-<버전>-universal.pkg` → **Transporter** 앱으로 업로드
+6. **스토어 정보**: 위 설명·URL·분류, 스크린샷(1280×800 이상, 16:10), 개인정보 "수집하지 않음", 수출 규정은 "HTTPS만 사용"(Info.plist의 `ITSAppUsesNonExemptEncryption = false`) → 심사 제출
+
+스토어 빌드(`process.mas`)는 소개 페이지의 후원 줄을 자동으로 뺍니다(심사 지침 3.1.1). 샌드박스 권한은 `build/entitlements.mas.plist`: 네트워크(API.Bible), 사용자가 고른 파일 읽기·쓰기(글 불러오기, 배지 카드 저장).
+
+## Microsoft Store 등록 순서
+
+1. **개발자 계정**: partner.microsoft.com → Microsoft Store 개발자 계정(개인) 가입
+2. **앱 이름 예약**: Partner Center → 앱 및 게임 → **새 제품** → MSIX 또는 PWA 앱 → 이름 `Typing Warrior`
+3. **패키지 ID 확인**: 제품 → 제품 관리 → **제품 ID**에서 `Package/Identity/Name`, `Package/Identity/Publisher`(CN=…), `Package/Properties/PublisherDisplayName` 세 값을 복사 → `package.json`의 `build.appx`에 넣음
+4. **빌드**: MSIX(.appx)는 윈도우에서만 만들 수 있어 GitHub Actions에서 만듦. 스토어가 서명하므로 코드 서명 인증서는 필요 없음
+5. **제출**: 패키지 업로드, 스토어 설명·스크린샷(1366×768 이상), 연령 등급 설문, 개인정보 URL → 제출
+
+스토어 타일 이미지는 `build/appx/`(앱 아이콘에서 만듦)에 있습니다.
+
 ## 후원 링크 주의
 
 - **Microsoft Store**: 설명과 앱 안 소개 페이지에 후원 링크를 넣어도 됩니다.

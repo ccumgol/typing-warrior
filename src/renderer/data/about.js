@@ -137,7 +137,7 @@ export const ABOUT = Object.freeze({
       { label: '홈페이지', link: link('jesusiswith.us', HOMEPAGE) },
       { label: '버그·오타 신고, 개선 제안', text: 'GitHub 이슈에 남겨 주세요.', link: link('Issues', `${REPO_URL}/issues`) },
       { label: '소스 코드', text: 'MIT 라이선스로 공개합니다.', link: link('GitHub', REPO_URL) },
-      { label: '후원', text: '무료 프로그램입니다. 도움이 되셨다면 커피 한 잔으로 응원해 주세요.', link: link('☕ Buy Me a Coffee', DONATE_URL) },
+      { label: '후원', donate: true, text: '무료 프로그램입니다. 도움이 되셨다면 커피 한 잔으로 응원해 주세요.', link: link('☕ Buy Me a Coffee', DONATE_URL) },
     ],
     otherTitle: '그 밖의 정보',
     other: [
@@ -277,7 +277,7 @@ export const ABOUT = Object.freeze({
       { label: 'Homepage', link: link('jesusiswith.us', HOMEPAGE) },
       { label: 'Bugs, typos and ideas', text: 'Please open a GitHub issue.', link: link('Issues', `${REPO_URL}/issues`) },
       { label: 'Source code', text: 'Open source under the MIT licence.', link: link('GitHub', REPO_URL) },
-      { label: 'Support', text: 'Typing Warrior is free. If it helps you, you can buy me a coffee.', link: link('☕ Buy Me a Coffee', DONATE_URL) },
+      { label: 'Support', donate: true, text: 'Typing Warrior is free. If it helps you, you can buy me a coffee.', link: link('☕ Buy Me a Coffee', DONATE_URL) },
     ],
     otherTitle: 'Other information',
     other: [

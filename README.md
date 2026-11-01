@@ -38,9 +38,9 @@
 | Windows 10/11 (64비트) | `Typing-Warrior-1.1.0-win-x64-setup.exe` | 실행해서 설치합니다. 바탕화면과 시작 메뉴에 아이콘이 생깁니다. 지울 때는 '설정 → 앱'에서 제거합니다 |
 | Windows (설치 없이) | `Typing-Warrior-1.1.0-win-x64.zip` | 압축을 풀고 폴더 안의 `Typing Warrior.exe`를 실행합니다 |
 
-**처음 열 때 경고가 나오면** (아직 개발자 인증서로 서명하지 않은 앱이라 그렇습니다)
-- macOS: 앱을 **오른쪽 클릭 → 열기 → 열기**. 또는 '시스템 설정 → 개인정보 보호 및 보안'에서 '그래도 열기'.
-- Windows: "Windows의 PC 보호" 창에서 **추가 정보 → 실행**.
+**맥 버전은 Apple 공증을 받아** 경고 없이 바로 열립니다.
+
+**윈도우에서 처음 열 때 경고가 나오면** (윈도우 버전은 아직 코드 서명 전입니다): "Windows의 PC 보호" 창에서 **추가 정보 → 실행**.
 
 ## 처음 시작하기
 
@@ -150,6 +150,8 @@ npm start          # 데스크톱 앱 실행 (Electron)
 npm run serve      # 브라우저 미리보기: http://127.0.0.1:5173
 npm test           # 단위 테스트
 npm run dist:mac      # macOS .dmg (Apple Silicon, 인텔) → dist/
+npm run dist:mac-notarized  # 서명·공증한 macOS .dmg (docs/STORE.md 참고)
+npm run dist:mas      # Mac App Store용 .pkg (프로비저닝 프로파일 필요)
 npm run dist:win      # Windows 설치 파일(.exe)·zip (윈도우에서)
 npm run dist:win-installer  # Windows 설치 파일만 (윈도우에서)
 npm run dist:win-zip  # Apple Silicon 맥에서 Windows zip만 만들 때
