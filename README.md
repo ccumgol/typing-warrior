@@ -2,7 +2,7 @@
 
 **말씀과 문학을 손끝으로 새기는 한글·영문 타자 연습** — macOS · Windows
 
-성경 전권과 김소월·윤동주·한용운의 시, 셰익스피어와 디킨슨, 옛 찬송가를 한 줄씩 따라 치며 타자를 익힙니다. 지칠 때는 두 가지 게임(단어블록게임, 전선 작전)으로 즐겁게 손을 풀 수 있습니다.
+성경 전권과 김소월·윤동주·한용운의 시, 셰익스피어와 디킨슨, 옛 찬송가를 한 줄씩 따라 치며 타자를 익힙니다. 지칠 때는 두 가지 게임(단어블록게임, 전선작전게임)으로 즐겁게 손을 풀 수 있습니다.
 
 - 버전 **1.0.2** · [바뀐 내용](CHANGELOG.md) · [버그·오타 신고와 개선 제안](https://github.com/ccumgol/typing-warrior/issues)
 - 만든 사람: 박기현 · 홈페이지 <https://jesusiswith.us> (후원 안내도 홈페이지에 있습니다)
@@ -42,8 +42,8 @@
 
 ## 처음 시작하기
 
-1. 오른쪽 위 **🌐 KO/EN**으로 화면 언어를, **한/EN**으로 연습 언어를 고릅니다. 둘은 따로라서 영어 화면으로 한글을 연습할 수도 있습니다.
-2. 위쪽 메뉴에서 연습할 것을 고릅니다. 처음이라면 **자리 연습 → 1단계**부터 시작하세요.
+1. 처음 실행하면 **환영 창**이 뜹니다. 내 이름, **화면 언어**(한국어·English), **연습 언어**(한글·영문)를 고르고 **시작하기**를 누릅니다. 화면 언어와 연습 언어는 따로라서 영어 화면으로 한글을 연습할 수도 있습니다. 나중에 오른쪽 위 **🌐 KO/EN**, **한/EN** 버튼으로 바꿀 수 있습니다.
+2. 위쪽 메인 메뉴(**타자연습 · 게임 · 단축키 · 기록 · 소개**)를 누르면 그 아래에 하위 메뉴가 나옵니다. 처음이라면 **타자연습 → 자리 연습 → 1단계**부터 시작하세요.
 3. 아래 화면 키보드가 다음에 칠 키를 밝혀 줍니다. **F2**로 키보드를 감추고, **F3**로 손가락 색상을 켜고 끌 수 있습니다.
 4. 맨 아래 상태바에 타수(분당 타수), 정확도, 시간, 진행이 작게 나옵니다.
 
@@ -51,15 +51,23 @@
 
 ## 메뉴별 사용법
 
+| 메인 메뉴 | 하위 메뉴 |
+|---|---|
+| **타자연습** | 자리 연습 · 단어 · 문장 · 주제별 말씀 · 긴 글 |
+| **게임** | 단어블록게임 · 전선작전게임 |
+| **단축키** · **기록** · **소개** | (하위 메뉴 없음) |
+
+메인 메뉴를 다시 누르면 그 안에서 마지막으로 본 하위 메뉴가 열립니다.
+
 | 메뉴 | 하는 일 | 사용법 |
 |---|---|---|
 | **자리 연습** | 손가락 자리 익히기 | 한글 7단계(기본자리 → 윗줄 → 아랫줄 → 쌍자음 → 쌍모음 → 복모음 → 숫자·기호), 영문 6단계, 혼합. 큰 글자를 차례로 칩니다. 끝낸 단계에는 ✓ |
 | **단어** | 낱말 치기 | 주제(일상·자연·음식·신앙 등)를 고르고, 단어를 친 뒤 Space나 Enter |
 | **문장** | 한 문장씩 치기 | 📅 오늘의 말씀, 명언 100, 성경 암송 365(개역한글 / KJV), 영어 문장. 다 치면 Enter. 틀린 글자는 ⌫로 고칩니다 |
-| **말씀** | 주제별 암송 구절 표 | 365구절이 15개 주제(사랑, 믿음, 기도, 위로·평안…)로 정리되어 있습니다. **이 주제로 연습**을 누르면 문장 연습으로 이어집니다 |
+| **주제별 말씀** | 주제별 암송 구절 표 | 365구절이 15개 주제(사랑, 믿음, 기도, 위로·평안…)로 정리되어 있습니다. **이 주제로 연습**을 누르면 문장 연습으로 이어집니다 |
 | **긴 글** | 성경·시집을 이어서 치기 | 위쪽에서 작품을, 그 옆에서 책·장(편)을 고릅니다. 한 줄(절)을 치고 Enter. 어디까지 쳤는지 저장되어 다음에 이어집니다 |
 | **단어블록게임** | 떨어지는 단어 막기 | Enter로 시작, 단어를 치고 Enter/Space. 💣 금색 블록은 화면 정리, ❄️ 파란 블록은 5초 감속. **연속 모드**(점점 빨라짐)와 **단계 모드**(LEVEL 1~20, 단어 20개를 막으면 통과, 레벨 10 = 분당 200타) |
-| **전선 작전** | 1인칭 타자 게임 | 다가오는 적 위의 단어를 치고 Enter로 사격. 탄약이 떨어지면 "장전"(영문: reload), 연속 명중으로 "공습". 효과음 세트 4가지 |
+| **전선작전게임** | 1인칭 타자 게임 | 다가오는 적 위의 단어를 치고 Enter로 사격. 탄약이 떨어지면 "장전"(영문: reload), 연속 명중으로 "공습". 효과음 세트 4가지 |
 | **단축키** | 기본 단축키 익히기 | macOS/Windows와 1~3단계를 고릅니다. 키보드를 보이면 정답 키가 밝혀지고, **F2**로 감추면 외워서 누르기. 윈도우에서 맥 단축키를 연습할 때는 맥 왼쪽 키 순서대로 Ctrl=control, Win=option, Alt=command |
 | **기록** | 내 기록·순위·배지 | 내 기록, 이 컴퓨터 사용자 전체 순위, 긴 글 배지. **기록 초기화**로 내 기록을 지웁니다 |
 | **소개** | 프로그램 정보 | 기능, 꼭 알아 둘 키, 모든 연습 글의 출처와 저작권, 만든 사람 |
@@ -98,7 +106,7 @@ API.Bible 약관에 따라 받은 본문은 **30일마다 다시 받아야** 하
 
 ## 사용자·기록·배지
 
-- **사용자**: 오른쪽 위 **👤 이름** 버튼 → 사용자 추가, 바꾸기, 이름 바꾸기, 기록 초기화, 지우기. 기록·진행 위치·배지가 사람마다 따로 저장됩니다(화면 설정은 함께 씁니다).
+- **사용자**: 오른쪽 위 **👤 이름** 버튼 → 사용자 추가, 바꾸기, 이름 바꾸기, 기록 초기화, 지우기. 사용자를 추가하면 설정 창에서 그 사람의 화면 언어와 연습 언어를 고릅니다. 기록·진행 위치·배지·**화면 언어·연습 언어**가 사람마다 따로 저장되어, 사용자를 바꾸면 그 사람의 환경으로 바뀝니다(테마·효과음 같은 화면 설정은 함께 씁니다).
 - **순위**: 기록 → **전체 사용자 순위**에서 이 컴퓨터 사용자들의 총 연습 시간과 모드별 최고 기록을 비교합니다.
 - **배지**: 긴 글에서 성경 한 권, 시집·찬송가 한 작품을 끝내거나 성경 10·50·100·300장, 전권을 치면 받습니다. 기록 → **배지**에서 **이미지 저장**이나 **복사**로 배지 카드를 메신저·SNS에 나눌 수 있습니다.
 
@@ -177,9 +185,10 @@ GitHub Pages로 이 설명서를 웹 페이지로 보이려면: 리포지토리 
 
 ## English
 
-**Typing Warrior** is a Korean and English typing tutor for macOS and Windows, built around Scripture and literature: the whole Bible (Korean 개역한글 and KJV), the poetry of Kim Sowol, Yun Dong-ju and Han Yong-un, Shakespeare's sonnets, Emily Dickinson and old hymns — typed line by line, with your place saved. Two games, **Word Blocks** and **Frontline**, make practice fun.
+**Typing Warrior** is a Korean and English typing tutor for macOS and Windows, built around Scripture and literature: the whole Bible (Korean 개역한글 and KJV), the poetry of Kim Sowol, Yun Dong-ju and Han Yong-un, Shakespeare's sonnets, Emily Dickinson and old hymns — typed line by line, with your place saved. Two games, **Word Blocks** and **Frontline Game**, make practice fun.
 
-- Menus: Key Drills, Words, Sentences (verse of the day, 365 memory verses), Verses (by topic), Long texts, Word Blocks, Frontline, Shortcuts, Records, About.
+- Menus: **Typing** (Key Drills, Words, Sentences with the verse of the day and 365 memory verses, Verses by topic, Long texts), **Games** (Word Blocks, Frontline Game), **Shortcuts**, **Records**, **About**.
+- On first run a welcome window asks for your name, display language and practice language; each user keeps their own languages.
 - Display language and practice language are separate, so you can learn Korean typing with an English interface.
 - Open your own text files or a whole-Bible file (CSV, XML: Zefania/OSIS/OpenSong/Beblia, TXT), or download English and Korean Bibles from API.Bible with your own key.
 - Several users per computer, a local ranking, and shareable badge cards. Everything stays on your computer; only "Get from API.Bible" uses the internet.

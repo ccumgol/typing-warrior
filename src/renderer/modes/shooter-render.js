@@ -1,4 +1,4 @@
-// Canvas drawing for the 전선 작전 shooter (pure drawing, no game rules).
+// Canvas drawing for the 전선작전게임 shooter (pure drawing, no game rules).
 
 export const HORIZON = 0.38;
 export const GAME_FONT = "'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif";

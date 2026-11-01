@@ -47,7 +47,7 @@ body {
 button { font: inherit; color: inherit; cursor: pointer; }
 [hidden] { display: none !important; }
 
-.app { display: grid; grid-template-rows: auto 1fr auto auto; grid-template-columns: minmax(0, 1fr); height: 100vh; }
+.app { display: grid; grid-template-rows: auto auto 1fr auto auto; grid-template-columns: minmax(0, 1fr); height: 100vh; }
 
 /* Top bar: deliberately slim so the practice area gets the space. */
 .topbar {
@@ -179,3 +179,16 @@ button { font: inherit; color: inherit; cursor: pointer; }
   background: var(--bg); color: var(--text); font: inherit;
 }
 .pill.danger { color: var(--bad); border-color: var(--bad); }
+
+/* Sub-menu: the items of the chosen main menu (e.g. 타자연습 → 자리 연습, 단어 …) */
+.sub-nav {
+  display: flex; gap: 4px; padding: 6px 14px; overflow-x: auto; scrollbar-width: none;
+  border-bottom: 1px solid var(--border); background: var(--surface);
+}
+.sub-nav[hidden] { display: none; }
+.sub-item {
+  border: 0; background: none; padding: 4px 12px; border-radius: 999px;
+  color: var(--muted); font-size: 13px; white-space: nowrap;
+}
+.sub-item:hover { background: var(--surface-2); color: var(--text); }
+.sub-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; }

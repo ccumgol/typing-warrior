@@ -7,6 +7,7 @@ import { el } from './ui/dom.js';
 import { createKeyboardView } from './ui/keyboard-view.js';
 import { isModalOpen, closeModal } from './ui/result-modal.js';
 import { openProfileDialog, isProfileDialogOpen } from './ui/profile-dialog.js';
+import { openProfileSetup } from './ui/profile-setup.js';
 import { loadProfiles, loadProfileData, saveProfileData, PROFILE_KEYS } from './core/profiles.js';
 import { createJamoMode } from './modes/jamo.js';
 import { createWordsMode } from './modes/words.js';
@@ -19,18 +20,21 @@ import { createShortcutsMode } from './modes/shortcuts.js';
 import { createRecordsMode } from './modes/records.js';
 import { createAboutMode } from './modes/about.js';
 
+// Menus: the top bar shows the groups; a group with several items shows them in the row underneath.
 const MODES = Object.freeze([
-  { id: 'jamo', create: createJamoMode, keyboard: true },
-  { id: 'words', create: createWordsMode, keyboard: true },
-  { id: 'sentences', create: createSentencesMode, keyboard: true, fixedLang: true },
-  { id: 'verses', create: createVersesMode, keyboard: false },
-  { id: 'longtext', create: createLongTextMode, keyboard: true, fixedLang: true },
-  { id: 'acid', create: createAcidRainMode, keyboard: false },
-  { id: 'shooter', create: createShooterMode, keyboard: false },
-  { id: 'shortcuts', create: createShortcutsMode, keyboard: true, fixedLang: true },
-  { id: 'records', create: createRecordsMode, keyboard: false },
-  { id: 'about', create: createAboutMode, keyboard: false },
+  { id: 'jamo', group: 'practice', create: createJamoMode, keyboard: true },
+  { id: 'words', group: 'practice', create: createWordsMode, keyboard: true },
+  { id: 'sentences', group: 'practice', create: createSentencesMode, keyboard: true, fixedLang: true },
+  { id: 'verses', group: 'practice', create: createVersesMode, keyboard: false },
+  { id: 'longtext', group: 'practice', create: createLongTextMode, keyboard: true, fixedLang: true },
+  { id: 'acid', group: 'games', create: createAcidRainMode, keyboard: false },
+  { id: 'shooter', group: 'games', create: createShooterMode, keyboard: false },
+  { id: 'shortcuts', group: 'shortcuts', create: createShortcutsMode, keyboard: true, fixedLang: true },
+  { id: 'records', group: 'records', create: createRecordsMode, keyboard: false },
+  { id: 'about', group: 'about', create: createAboutMode, keyboard: false },
 ]);
+const GROUPS = Object.freeze(['practice', 'games', 'shortcuts', 'records', 'about']);
+const lastInGroup = {}; // the item last opened in each group, reopened when the group is chosen again
 
 const $ = (id) => document.getElementById(id);
 const desktop = window.desktop; // undefined when opened in a plain browser
@@ -41,7 +45,7 @@ function composeSettings() {
   const global = loadSettings();
   const uiLang = global.uiLang ?? detectUiLang(navigator.language);
   const { activeId } = loadProfiles(uiLang === 'ko' ? '나' : 'Me');
-  return Object.freeze({ ...global, ...loadProfileData(activeId) });
+  return Object.freeze({ ...global, ...loadProfileData(activeId, global) }); // languages and progress belong to the profile
 }
 
 let settings = composeSettings();
@@ -109,10 +113,21 @@ function renderTools() {
   );
 }
 
+const navButton = (cls, active, label, onClick) =>
+  el('button', { class: `${cls}${active ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: onClick }, label);
+
+function openGroup(group) {
+  switchMode(lastInGroup[group] ?? MODES.find((def) => def.group === group));
+}
+
 function renderNav() {
-  $('mode-nav').replaceChildren(
-    ...MODES.map((def) => el('button', { class: `nav-item${def === activeDef ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: () => switchMode(def) }, t(`mode.${def.id}`))),
-  );
+  $('mode-nav').replaceChildren(...GROUPS.map((group) =>
+    navButton('nav-item', group === activeDef.group, t(`group.${group}`), () => openGroup(group))));
+  const items = MODES.filter((def) => def.group === activeDef.group);
+  const sub = $('sub-nav');
+  sub.hidden = items.length < 2;
+  sub.replaceChildren(...(items.length < 2 ? [] : items.map((def) =>
+    navButton('sub-item', def === activeDef, t(`mode.${def.id}`), () => switchMode(def)))));
 }
 
 function toggleLang() {
@@ -171,10 +186,11 @@ function switchMode(def, options = {}) {
   closeModal(); // its actions belong to the mode being destroyed
   active?.destroy();
   activeDef = def;
+  lastInGroup[def.group] = def;
   keyboard.setLang(settings.lang);
   keyboard.highlight(null);
+  applySettings(); // sets the display language first, so the menus below use it
   renderNav();
-  applySettings();
   active = def.create(ctx, options);
 }
 
@@ -212,3 +228,8 @@ setInterval(() => active?.tick(), 500);
 
 renderStatus({ cpm: 0, accuracy: 100, time: '00:00', progress: '-' });
 switchMode(MODES[0]);
+{
+  // First run (or a profile that has never been set up): ask for a name and the languages.
+  const { activeId, profiles } = loadProfiles();
+  if (!profiles.find((p) => p.id === activeId)?.setup) openProfileSetup({ profileId: activeId, first: true, onDone: onProfileChanged });
+}

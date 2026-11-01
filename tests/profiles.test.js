@@ -60,3 +60,22 @@ test('badges come from finished chapters and works', () => {
   assert.deepEqual(chapterProgress([...ruth, ...tenMore]), { done: 10, next: 50 });
   assert.ok(earnedBadges(Array.from({ length: 35 }, (_, i) => `hymns-${i + 1}`)).some((b) => b.id === 'work-hymns'));
 });
+
+test('languages belong to the profile; older installs keep their languages', () => {
+  const id = profiles.loadProfiles('나').activeId;
+  // A profile saved by 1.0.2 has no languages yet: they come from the app-wide settings.
+  store.set(`tw.profile.${id}`, JSON.stringify({ completedStages: [] }));
+  assert.equal(profiles.loadProfileData(id, { lang: 'en', uiLang: 'en' }).lang, 'en');
+  assert.equal(profiles.loadProfileData(id, { lang: 'en', uiLang: 'en' }).uiLang, 'en');
+  profiles.saveProfileData(id, { lang: 'ko', uiLang: 'ko' });
+  assert.equal(profiles.loadProfileData(id, { lang: 'en' }).lang, 'ko');
+  assert.equal(profiles.loadProfileData(id).uiLang, 'ko');
+  assert.equal(profiles.cleanProfileData({ uiLang: 'fr', lang: 'jp' }).lang, 'ko');
+});
+
+test('the setup window is shown until the profile is set up', () => {
+  const { activeId, profiles: list } = profiles.loadProfiles('나');
+  assert.equal(Boolean(list[0].setup), false);
+  profiles.markProfileSetup(activeId);
+  assert.equal(profiles.loadProfiles().profiles[0].setup, true);
+});

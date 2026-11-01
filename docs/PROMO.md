@@ -20,7 +20,7 @@
 영어로는 셰익스피어의 소네트와 에밀리 디킨슨의 시, 그리고 Amazing Grace와 Rock of Ages 같은 옛 찬송가를 원문 그대로 따라 칩니다. 오래 사랑받아 온 글들이 타자 연습의 교재가 됩니다.
 
 **지칠 때는 게임으로.**
-하늘에서 떨어지는 단어 블록을 땅에 닿기 전에 쳐서 없애는 **단어블록게임**, 다가오는 적 위의 단어를 쳐서 막아 내는 1인칭 **전선 작전**. 레벨이 오를수록 손가락도 빨라집니다. 레벨 10이면 분당 200타입니다.
+하늘에서 떨어지는 단어 블록을 땅에 닿기 전에 쳐서 없애는 **단어블록게임**, 다가오는 적 위의 단어를 쳐서 막아 내는 1인칭 **전선작전게임**. 레벨이 오를수록 손가락도 빨라집니다. 레벨 10이면 분당 200타입니다.
 
 **누구나, 함께.**
 - 한글 자리 연습부터 맥·윈도우 단축키까지 차근차근 배웁니다.
@@ -39,7 +39,7 @@
 
 말씀과 시를 따라 치며 배우는 타자 연습 🙏⌨️
 성경 전권(개역한글·KJV), 김소월·윤동주·한용운의 시, 셰익스피어와 옛 찬송가까지 한 줄씩.
-지칠 땐 단어블록게임과 전선 작전으로 재밌게! 맥·윈도우 무료.
+지칠 땐 단어블록게임과 전선작전게임으로 재밌게! 맥·윈도우 무료.
 👉 https://github.com/ccumgol/typing-warrior/releases
 
 ---
@@ -56,7 +56,7 @@ Words that slip past the eye settle in the heart as they pass through your finge
 
 Type the whole Bible — Korean 개역한글 and the KJV — chapter by chapter, with your place remembered. Practise the verse of the day and 365 memory verses arranged by topic. Then turn to poetry: Shakespeare's sonnets, Emily Dickinson, beloved old hymns like *Amazing Grace* and *Rock of Ages*, and the great Korean poets Kim Sowol, Yun Dong-ju and Han Yong-un.
 
-When you need a break, play **Word Blocks** — clear the falling words before they land — or **Frontline**, a first-person typing battle. Several users can share one computer, earn badges for finishing a book of the Bible, and share badge cards with friends.
+When you need a break, play **Word Blocks** — clear the falling words before they land — or **Frontline Game**, a first-person typing battle. Several users can share one computer, earn badges for finishing a book of the Bible, and share badge cards with friends.
 
 Free for macOS and Windows. Your records stay on your computer.
 Download: https://github.com/ccumgol/typing-warrior/releases

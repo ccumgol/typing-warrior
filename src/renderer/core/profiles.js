@@ -6,8 +6,9 @@ const LEGACY_RECORDS_KEY = 'tw.records.v1';
 const LEGACY_SETTINGS_KEY = 'tw.settings.v1';
 const MAX_NAME = 20;
 
-export const PROFILE_KEYS = Object.freeze(['completedStages', 'longTextProgress', 'longTextId', 'acidCleared']);
-export const PROFILE_DEFAULTS = Object.freeze({ completedStages: [], longTextProgress: {}, longTextId: 'bible-ko', acidCleared: 0 });
+export const PROFILE_KEYS = Object.freeze(['lang', 'uiLang', 'completedStages', 'longTextProgress', 'longTextId', 'acidCleared']);
+// uiLang null = follow the operating system's language
+export const PROFILE_DEFAULTS = Object.freeze({ lang: 'ko', uiLang: null, completedStages: [], longTextProgress: {}, longTextId: 'bible-ko', acidCleared: 0 });
 
 export const recordsKey = (id) => `tw.records.${id}`;
 const dataKey = (id) => `tw.profile.${id}`;
@@ -33,7 +34,10 @@ function write(key, value) {
 }
 
 const isPosInt = (v) => Number.isInteger(v) && v >= 0;
+const isLang = (v) => v === 'ko' || v === 'en';
 const VALID = {
+  lang: isLang,
+  uiLang: (v) => v === null || isLang(v),
   completedStages: (v) => Array.isArray(v) && v.every((s) => typeof s === 'string'),
   longTextProgress: (v) => Boolean(v) && typeof v === 'object' && !Array.isArray(v) &&
     Object.values(v).every((p) => p && isPosInt(p.chapter) && p.chapter >= 1 && isPosInt(p.verse)),
@@ -41,10 +45,18 @@ const VALID = {
   acidCleared: (v) => isPosInt(v) && v <= 100,
 };
 
-/** Keep only valid per-profile values, filling in defaults. */
-export function cleanProfileData(data) {
+/**
+ * Keep only valid per-profile values. Missing values come from `fallback` (e.g. the app-wide settings of an
+ * earlier version) and then from the defaults.
+ */
+export function cleanProfileData(data, fallback = {}) {
   const source = data && typeof data === 'object' ? data : {};
-  return Object.freeze(Object.fromEntries(PROFILE_KEYS.map((key) => [key, VALID[key](source[key]) ? source[key] : PROFILE_DEFAULTS[key]])));
+  const pick = (key) => {
+    if (key in source && VALID[key](source[key])) return source[key];
+    if (fallback && key in fallback && VALID[key](fallback[key])) return fallback[key];
+    return PROFILE_DEFAULTS[key];
+  };
+  return Object.freeze(Object.fromEntries(PROFILE_KEYS.map((key) => [key, pick(key)])));
 }
 
 export const cleanName = (name) => String(name ?? '').replace(/\s+/g, ' ').trim().slice(0, MAX_NAME);
@@ -81,12 +93,18 @@ export function loadProfiles(defaultName = '나') {
 
 const saveProfiles = (state) => write(PROFILES_KEY, state);
 
-export const loadProfileData = (id) => cleanProfileData(read(dataKey(id)));
+export const loadProfileData = (id, fallback = {}) => cleanProfileData(read(dataKey(id)), fallback);
 export const saveProfileData = (id, data) => write(dataKey(id), cleanProfileData(data));
 
 export function setActiveProfile(id) {
   const state = loadProfiles();
   if (state.profiles.some((p) => p.id === id)) saveProfiles({ ...state, activeId: id });
+}
+
+/** The welcome / new-user window has been completed for this profile (name and languages chosen). */
+export function markProfileSetup(id) {
+  const state = loadProfiles();
+  return saveProfiles({ ...state, profiles: state.profiles.map((p) => (p.id === id ? { ...p, setup: true } : p)) });
 }
 
 /** Adds a profile and makes it active. Returns its id, or null for an empty name. */

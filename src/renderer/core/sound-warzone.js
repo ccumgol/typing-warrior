@@ -1,4 +1,4 @@
-// 🎖️ 전장 sound pack: gritty, realistic battlefield effects for 전선 작전.
+// 🎖️ 전장 sound pack: gritty, realistic battlefield effects for 전선작전게임.
 // Built from the shared synth primitives (tone / noise) passed in by sound.js.
 
 export function createWarzonePack({ tone, noise }) {

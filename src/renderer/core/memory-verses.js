@@ -1,4 +1,4 @@
-// 암송 365구절 본문: 기본(개역한글 · KJV)에 사용자가 올린 성경을 덮어씁니다. 문장 연습과 말씀 메뉴가 함께 씁니다.
+// 암송 365구절 본문: 기본(개역한글 · KJV)에 사용자가 올린 성경을 덮어씁니다. 문장 연습과 주제별 말씀 메뉴가 함께 씁니다.
 import { BIBLE_VERSES, BIBLE_TRANSLATION } from '../data/bible.js';
 import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION } from '../data/bible-en.js';
 import { loadUserBible } from './bible-store.js';

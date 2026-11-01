@@ -1,4 +1,4 @@
-// 문장 연습: 오늘의 말씀 / 명언 / 성경 암송 365 / 영어 문장 (말씀 메뉴에서 고른 주제도). Enter로 다음 문장. 연습 언어(한/EN)에 맞는 글만 보여 줍니다.
+// 문장 연습: 오늘의 말씀 / 명언 / 성경 암송 365 / 영어 문장 (주제별 말씀 메뉴에서 고른 주제도). Enter로 다음 문장. 연습 언어(한/EN)에 맞는 글만 보여 줍니다.
 import { KO_QUOTES, EN_SENTENCES } from '../data/quotes.js';
 import { BIBLE_VERSES } from '../data/bible.js';
 import { VERSE_TOPICS } from '../data/verse-topics.js';

@@ -1,4 +1,4 @@
-// 전선 작전: 다가오는 적의 단어를 입력해 사격하는 1인칭 전장 타자 게임.
+// 전선작전게임: 다가오는 적의 단어를 입력해 사격하는 1인칭 전장 타자 게임.
 import { KO_WORD_SETS, EN_WORD_SETS } from '../data/words.js';
 import { KO_QUOTES, EN_SENTENCES } from '../data/quotes.js';
 import { strokeCount, decompose } from '../core/hangul.js';

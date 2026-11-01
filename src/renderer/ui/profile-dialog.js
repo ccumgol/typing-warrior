@@ -2,6 +2,7 @@
 import { loadProfiles, setActiveProfile, addProfile, renameProfile, resetProfile, removeProfile } from '../core/profiles.js';
 import { t } from '../core/i18n.js';
 import { el } from './dom.js';
+import { openProfileSetup } from './profile-setup.js';
 
 let openDialog = null;
 
@@ -44,8 +45,11 @@ export function openProfileDialog(onChanged) {
     const newName = field(t('profile.newPlaceholder'));
     const rename = field(t('profile.renamePlaceholder'), current.name);
     const add = () => {
-      if (addProfile(newName.value)) changed();
-      else newName.focus();
+      const id = addProfile(newName.value);
+      if (!id) return newName.focus();
+      close();
+      onChanged();
+      return openProfileSetup({ profileId: id, onDone: onChanged }); // choose the new user's languages
     };
     newName.addEventListener('keydown', (e) => { if (e.key === 'Enter') add(); });
     box.replaceChildren(

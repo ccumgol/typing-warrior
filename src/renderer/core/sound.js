@@ -1,5 +1,5 @@
 // Synthesized sound effects (no audio files) in selectable packs:
-// calm → classic (arcade) → dopamine, plus warzone for 전선 작전. Labels live in i18n (pack.<id>).
+// calm → classic (arcade) → dopamine, plus warzone for 전선작전게임. Labels live in i18n (pack.<id>).
 import { createWarzonePack } from './sound-warzone.js';
 
 export const SOUND_PACKS = Object.freeze([
