@@ -81,3 +81,10 @@ test('verse of the day: one verse per date, including 29 February', async () => 
   assert.equal(verseOfDayIndex(new Date(2028, 1, 29)), verseOfDayIndex(new Date(2028, 1, 28)));
   assert.equal(verseOfDayIndex(new Date(2028, 2, 1)), verseOfDayIndex(new Date(2026, 2, 1)));
 });
+
+test('every memory verse belongs to exactly one topic', async () => {
+  const { VERSE_TOPICS } = await import('../src/renderer/data/verse-topics.js');
+  const refs = VERSE_TOPICS.flatMap((topic) => topic.refs);
+  assert.equal(refs.length, BIBLE_VERSES.length);
+  assert.deepEqual([...refs].sort(), BIBLE_VERSES.map((v) => v.source).sort());
+});

@@ -9,6 +9,7 @@ import { isModalOpen, closeModal } from './ui/result-modal.js';
 import { createJamoMode } from './modes/jamo.js';
 import { createWordsMode } from './modes/words.js';
 import { createSentencesMode } from './modes/sentences.js';
+import { createVersesMode } from './modes/verses.js';
 import { createLongTextMode } from './modes/long-text.js';
 import { createAcidRainMode } from './modes/acid-rain.js';
 import { createShooterMode } from './modes/shooter.js';
@@ -20,6 +21,7 @@ const MODES = Object.freeze([
   { id: 'jamo', create: createJamoMode, keyboard: true },
   { id: 'words', create: createWordsMode, keyboard: true },
   { id: 'sentences', create: createSentencesMode, keyboard: true, fixedLang: true },
+  { id: 'verses', create: createVersesMode, keyboard: false },
   { id: 'longtext', create: createLongTextMode, keyboard: true, fixedLang: true },
   { id: 'acid', create: createAcidRainMode, keyboard: false },
   { id: 'shooter', create: createShooterMode, keyboard: false },
@@ -134,12 +136,17 @@ const ctx = {
   status: renderStatus,
   toast,
   setKeyboardLang: (lang) => keyboard.setLang(lang),
+  openMode(id, options) {
+    const def = MODES.find((mode) => mode.id === id);
+    if (def) switchMode(def, options);
+  },
   markStageDone(id) {
     if (!settings.completedStages.includes(id)) updateSettings({ completedStages: [...settings.completedStages, id] });
   },
 };
 
-function switchMode(def) {
+/** `options` lets one menu open another with a preset, e.g. 말씀 → 문장 with a topic. */
+function switchMode(def, options = {}) {
   closeModal(); // its actions belong to the mode being destroyed
   active?.destroy();
   activeDef = def;
@@ -147,7 +154,7 @@ function switchMode(def) {
   keyboard.highlight(null);
   renderNav();
   applySettings();
-  active = def.create(ctx);
+  active = def.create(ctx, options);
 }
 
 const ALWAYS_PREVENT = new Set(['Space', 'Tab', 'Backspace', 'Quote', 'Slash']);

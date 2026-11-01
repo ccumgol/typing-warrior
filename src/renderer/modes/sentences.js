@@ -1,37 +1,17 @@
-// 문장 연습: 오늘의 말씀 / 명언 / 성경 암송 365 / 영어 문장. Enter로 다음 문장. 연습 언어(한/EN)에 맞는 글만 보여 줍니다.
+// 문장 연습: 오늘의 말씀 / 명언 / 성경 암송 365 / 영어 문장 (말씀 메뉴에서 고른 주제도). Enter로 다음 문장. 연습 언어(한/EN)에 맞는 글만 보여 줍니다.
 import { KO_QUOTES, EN_SENTENCES } from '../data/quotes.js';
-import { BIBLE_VERSES, BIBLE_TRANSLATION } from '../data/bible.js';
-import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION } from '../data/bible-en.js';
+import { BIBLE_VERSES } from '../data/bible.js';
+import { VERSE_TOPICS } from '../data/verse-topics.js';
 import { applyKey, createTarget, typedText, detectLang } from '../core/typing-input.js';
 import { el, pills, shuffle } from '../ui/dom.js';
 import { renderTypingLine } from '../ui/typing-line.js';
 import { sounds } from '../core/sound.js';
 import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
-import { loadUserBible } from '../core/bible-store.js';
-import { completeVerseText } from '../core/bible-source.js';
+import { loadMemoryVerses, DEFAULT_NAMES } from '../core/memory-verses.js';
 import { verseOfDayIndex } from '../core/verse-of-day.js';
 
 const SENTENCES_PER_ROUND = 5;
-const DEFAULT_NAMES = { ko: BIBLE_TRANSLATION, en: EN_BIBLE_TRANSLATION };
-const DEFAULT_VERSES = { ko: BIBLE_VERSES, en: EN_BIBLE_VERSES };
-
-
-/**
- * Memory verses for a language, using the Bible the user opened (긴 글 → 성경 파일 올리기) when there is one.
- * English verses share the Korean references by position.
- */
-async function loadMemoryVerses(lang) {
-  const user = await loadUserBible(lang);
-  if (!user) return { translation: DEFAULT_NAMES[lang], items: DEFAULT_VERSES[lang] };
-  // Verses missing from the user's file keep the default text and its translation name.
-  const items = DEFAULT_VERSES[lang].map((verse, i) => {
-    const text = completeVerseText(user.books, BIBLE_VERSES[i].source);
-    return text ? { text, source: `${verse.source.replace(/\s*\([^)]*\)$/, '')} (${user.name})` } : verse;
-  });
-  return { translation: user.name, items };
-}
-
 const today = (lang) => ({
   lang, ordered: true, label: () => t('src.today'),
   load: async (memory) => {
@@ -53,9 +33,21 @@ const SOURCES = Object.freeze({
 /** Source ids for a practice language, in toolbar order. */
 const sourcesFor = (lang) => Object.keys(SOURCES).filter((id) => SOURCES[id].lang === lang);
 
-export function createSentencesMode(ctx) {
+/** Memory verses of one topic (opened from the 말씀 menu). English verses share the Korean references by position. */
+const topicSource = (topicId, lang) => {
+  const refs = new Set(VERSE_TOPICS.find((topic) => topic.id === topicId)?.refs ?? []);
+  return {
+    lang, label: () => t('src.topic', { topic: t(`topic.${topicId}`) }),
+    load: async (memory) => (await memory(lang)).items.filter((_, i) => refs.has(BIBLE_VERSES[i].source)),
+  };
+};
+
+export function createSentencesMode(ctx, options = {}) {
   const session = createSession();
-  let source = sourcesFor(ctx.settings().lang)[0];
+  const topic = options.topic ? topicSource(options.topic, ctx.settings().lang) : null;
+  const sourceOf = (id) => (id === 'topic' ? topic : SOURCES[id]);
+  const listFor = (lang) => [...(topic?.lang === lang ? ['topic'] : []), ...sourcesFor(lang)];
+  let source = listFor(ctx.settings().lang)[0];
   let queue = [];
   let index = 0;
   let typed = [];
@@ -80,10 +72,10 @@ export function createSentencesMode(ctx) {
   async function restart(nextSource = source) {
     source = nextSource;
     const mine = ++request;
-    const items = await SOURCES[source].load(memory);
+    const items = await sourceOf(source).load(memory);
     for (const language of ['ko', 'en']) if (memo[language]) loadedNames[language] = (await memo[language]).translation;
     if (!alive || mine !== request) return;
-    queue = SOURCES[source].ordered ? items.slice(0, SENTENCES_PER_ROUND) : shuffle(items).slice(0, SENTENCES_PER_ROUND);
+    queue = sourceOf(source).ordered ? items.slice(0, SENTENCES_PER_ROUND) : shuffle(items).slice(0, SENTENCES_PER_ROUND);
     index = 0;
     session.reset();
     load();
@@ -98,7 +90,7 @@ export function createSentencesMode(ctx) {
   }
 
   function render() {
-    const options = sourcesFor(SOURCES[source].lang).map((value) => ({ value, label: SOURCES[value].label(translationName) }));
+    const options = listFor(sourceOf(source).lang).map((value) => ({ value, label: sourceOf(value).label(translationName) }));
     toolbar.replaceChildren(pills(options, source, restart));
     sourceLine.textContent = `— ${queue[index].source}  (${index + 1}/${queue.length})`;
     renderTyping();
@@ -129,7 +121,7 @@ export function createSentencesMode(ctx) {
     }
     finishSession({
       mode: `sentences-${source}`,
-      label: SOURCES[source].label(translationName),
+      label: sourceOf(source).label(translationName),
       title: t('sentences.done'),
       snap: session.snapshot(),
       actions: [
@@ -162,7 +154,7 @@ export function createSentencesMode(ctx) {
   return {
     onKeyDown,
     onLangChange(nextLang) {
-      if (SOURCES[source].lang !== nextLang) restart(sourcesFor(nextLang)[0]).catch((error) => console.error('Could not load the sentences.', error));
+      if (sourceOf(source).lang !== nextLang) restart(listFor(nextLang)[0]).catch((error) => console.error('Could not load the sentences.', error));
     },
     tick,
     destroy() {

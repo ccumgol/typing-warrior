@@ -137,3 +137,11 @@
 .about-creator dt { font-weight: 700; }
 .about-version { font-weight: 700; margin-bottom: 8px !important; }
 .sc-notice { max-width: 760px; padding: 8px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--text); }
+
+/* Verses (주제별 암송 말씀) */
+.verses-area { justify-content: flex-start; }
+.verse-table td { vertical-align: top; line-height: 1.55; }
+.verse-table .verse-ref { white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
+.verse-topic td { padding-top: 16px !important; border-bottom: 2px solid var(--accent) !important; }
+.verse-topic b { margin-right: 10px; color: var(--accent); }
+.verse-topic .pill { font-size: 12px; padding: 3px 10px; }
