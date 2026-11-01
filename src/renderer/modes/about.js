@@ -2,18 +2,16 @@
 import { ABOUT } from '../data/about.js';
 import { WORKS as KO_POETRY } from '../data/poetry-ko.js';
 import { WORKS as EN_POETRY } from '../data/poetry-en.js';
-import { esvShare } from '../data/content-share.js';
 import { getUiLang } from '../core/i18n.js';
 import { el } from '../ui/dom.js';
 
 const WORKS = [...KO_POETRY, ...EN_POETRY];
 
-/** Fill {count:id}, {modern:id} and {esvShare} with numbers from the actual data. */
+/** Fill {count:id} and {modern:id} with numbers from the actual data. */
 function fill(text) {
   return text
     .replace(/\{count:([\w-]+)\}/g, (_, id) => String(WORKS.find((w) => w.id === id)?.pieces.length ?? 0))
-    .replace(/\{modern:([\w-]+)\}/g, (_, id) => String(WORKS.find((w) => w.id === id)?.pieces.filter((p) => p.kind === 'modern').length ?? 0))
-    .replace(/\{esvShare\}/g, (esvShare() * 100).toFixed(1));
+    .replace(/\{modern:([\w-]+)\}/g, (_, id) => String(WORKS.find((w) => w.id === id)?.pieces.filter((p) => p.kind === 'modern').length ?? 0));
 }
 
 const externalLink = ({ label, url }) => el('a', { href: url, target: '_blank', rel: 'noopener noreferrer' }, label);

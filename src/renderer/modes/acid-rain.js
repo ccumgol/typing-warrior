@@ -1,4 +1,4 @@
-// 산성비 게임: 떨어지는 단어를 땅에 닿기 전에 입력해서 없앱니다.
+// 단어블록게임: 떨어지는 단어 블록을 땅에 닿기 전에 입력해서 없앱니다. (기록 호환을 위해 내부 id는 acid-rain 유지)
 // 연속 모드: 12단어마다 레벨이 오르며 끝까지 버팁니다. 단계 모드: 레벨마다 정해진 단어를 막으면 다음 레벨이 열립니다.
 import { KO_WORD_SETS, EN_WORD_SETS } from '../data/words.js';
 import { strokeCount } from '../core/hangul.js';
@@ -76,15 +76,16 @@ export function createAcidRainMode(ctx) {
     if (!isStage()) return toolbar.replaceChildren(modePills);
     const stepButton = (label, title, disabled, delta) =>
       el('button', { class: 'pill', type: 'button', tabindex: '-1', title, disabled, onclick: () => selectLevel(stageLevel + delta) }, label);
-    toolbar.replaceChildren(
+    const cleared = ctx.settings().acidCleared;
+    toolbar.replaceChildren(...[
       modePills,
       el('div', { class: 'level-stepper' },
         stepButton('◀', t('acid.prevLevel'), stageLevel <= 1, -1),
         el('b', {}, `LEVEL ${stageLevel}`),
         stepButton('▶', t('acid.nextLevelBtn'), stageLevel >= unlockedLevel(), 1),
       ),
-      ctx.settings().acidCleared > 0 ? el('span', { class: 'practice-desc' }, t('acid.bestCleared', { level: ctx.settings().acidCleared })) : null,
-    );
+      cleared > 0 && el('span', { class: 'practice-desc' }, t('acid.bestCleared', { level: cleared })),
+    ].filter(Boolean)); // replaceChildren would print a skipped item as the text "null"
   }
 
   /** Stop any running game and go back to the start screen with the new choice. */

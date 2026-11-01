@@ -1,4 +1,4 @@
-// 산성비 difficulty curve, defined by the typing speed each level asks for.
+// 단어블록게임 difficulty curve, defined by the typing speed each level asks for.
 // Required speed = words spawned per minute × average key strokes per word (Enter not counted).
 
 export const STAGE_LEVELS = 20; // levels in 단계 모드

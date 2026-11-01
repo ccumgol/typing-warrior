@@ -3,9 +3,6 @@
 
 const link = (label, url) => Object.freeze({ label, url });
 
-const ESV_NOTICE =
-  'Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, ' +
-  'a publishing ministry of Good News Publishers. Used by permission. All rights reserved.';
 
 export const ABOUT = Object.freeze({
   ko: {
@@ -17,9 +14,9 @@ export const ABOUT = Object.freeze({
     ],
     features: [
       ['자리 연습', '한글 7단계, 영문 6단계, 혼합 모드. 손가락 색상과 다음 키 표시'],
-      ['단어 · 문장', '주제별 단어, 명언, 성경 암송 구절(개역한글·ESV), 영어 문장'],
-      ['📜 긴 글', '시편(개역한글·KJV)과 시집을 한 줄씩 이어서 타이핑. 어디까지 쳤는지 저장'],
-      ['☔ 산성비', '연속 모드와 단계 모드(LEVEL 1~20, 레벨 10 = 분당 200타)'],
+      ['단어 · 문장', '주제별 단어, 명언, 성경 암송 구절(개역한글·KJV), 영어 문장'],
+      ['📜 긴 글', '시편(개역한글·KJV)과 시집을 한 줄씩 이어서 타이핑. 어디까지 쳤는지 저장. 내 텍스트 파일과 내 성경 본문 파일도 불러와 연습'],
+      ['🧱 단어블록게임', '연속 모드와 단계 모드(LEVEL 1~20, 레벨 10 = 분당 200타)'],
       ['🎖️ 전선 작전', '1인칭 전장 타자 게임. 효과음 세트 4종(전장 배경음 포함)'],
       ['단축키', 'macOS·Windows 기본 단축키 3단계. 키보드를 감추면 외워서 누르기'],
       ['📊 기록', '연속 연습일, 연습 시간, 모드별 최고 기록'],
@@ -41,16 +38,7 @@ export const ABOUT = Object.freeze({
         links: [link('대한성서공회 저작권 FAQ', 'https://www.bskorea.or.kr/bbs/board.php?bo_table=copyright_faq&wr_id=5')],
       },
       {
-        name: '성경 · ESV (영어 암송 100구절)',
-        lines: [
-          '저작권: Crossway. Crossway의 기준(500구절 이하, 작품 전체 글의 25% 미만, 주석서가 아닐 것, 저작권 문구 표시) 안에서 허락 없이 인용합니다.',
-          '이 프로그램에서 ESV가 차지하는 비중은 약 {esvShare}%이며, 자동 테스트로 25%를 넘지 않는지 확인합니다. 무료·광고 없는 비상업 프로그램이어야 하며, 판매하거나 광고를 넣으려면 Crossway의 정식 허락이 필요합니다.',
-          `저작권 문구: ${ESV_NOTICE}`,
-        ],
-        links: [link('Crossway 허락 안내', 'https://www.crossway.org/permissions/'), link('ESV.org', 'https://www.esv.org/')],
-      },
-      {
-        name: '성경 · KJV (시편 150편, 응원 구절)',
+        name: '성경 · KJV (영어 암송 100구절, 시편 150편, 응원 구절)',
         lines: [
           'King James Version(1769년 옥스퍼드 Blayney판 기준). CrossWire Bible Society가 1769년판 영인본과 대조해 만든 전자 본문을 eBible.org에서 받아 썼습니다.',
           '영국 밖에서는 퍼블릭 도메인입니다. 영국에서는 왕실 특허(Letters Patent)로 인쇄가 제한됩니다.',
@@ -123,6 +111,7 @@ export const ABOUT = Object.freeze({
     ],
     otherTitle: '그 밖의 정보',
     other: [
+      '긴 글의 「📂 내 글 불러오기」와 「📖 성경 본문 바꾸기」로 불러온 파일은 이 컴퓨터 안에만 저장되고 다른 곳으로 보내지 않습니다. 불러온 글의 저작권은 각 저작권자에게 있으며, 저작권이 있는 글(예: 개역개정)은 개인 연습용으로만 쓰세요. 파일 형식은 긴 글 화면의 「❔ 파일 형식」에서 볼 수 있습니다.',
       '효과음은 녹음 파일 없이 프로그램이 직접 합성합니다.',
       '설정과 연습 기록은 이 컴퓨터 안(앱 저장소)에만 저장되며 외부로 보내지 않습니다.',
       '데스크톱 앱은 Electron(MIT 라이선스)으로 만들었습니다.',
@@ -138,9 +127,9 @@ export const ABOUT = Object.freeze({
     ],
     features: [
       ['Key Drills', '7 Korean and 6 English steps plus a mixed mode, with finger colours and next-key hints'],
-      ['Words · Sentences', 'Themed words, Korean quotes, memory verses (Korean 개역한글 and ESV), English sentences'],
-      ['📜 Long texts', 'Psalms (Korean and KJV) and poetry books typed line by line; your place is saved'],
-      ['☔ Acid Rain', 'Endless mode and stage mode (LEVEL 1-20; level 10 = 200 strokes per minute)'],
+      ['Words · Sentences', 'Themed words, Korean quotes, memory verses (Korean 개역한글 and KJV), English sentences'],
+      ['📜 Long texts', 'Psalms (Korean and KJV) and poetry books typed line by line; your place is saved. You can also open your own text files and Bible text'],
+      ['🧱 Word Blocks', 'Endless mode and stage mode (LEVEL 1-20; level 10 = 200 strokes per minute)'],
       ['🎖️ Frontline', 'First-person typing shooter with four sound sets, including a battlefield ambience'],
       ['Shortcuts', 'macOS and Windows shortcuts in three steps; hide the keyboard to practise from memory'],
       ['📊 Records', 'Day streak, practice time and best results by mode'],
@@ -162,16 +151,7 @@ export const ABOUT = Object.freeze({
         links: [link('Korean Bible Society copyright FAQ', 'https://www.bskorea.or.kr/bbs/board.php?bo_table=copyright_faq&wr_id=5')],
       },
       {
-        name: 'Bible · ESV (100 English memory verses)',
-        lines: [
-          "Copyright: Crossway. Quoted without permission under Crossway's guidelines (up to 500 verses, less than 25% of the work, not a commentary, copyright notice shown).",
-          "The ESV makes up about {esvShare}% of this program's text, and an automated test checks it stays under 25%. The program must remain free and ad-free; selling it or adding ads requires a licence from Crossway.",
-          `Copyright notice: ${ESV_NOTICE}`,
-        ],
-        links: [link('Crossway permissions', 'https://www.crossway.org/permissions/'), link('ESV.org', 'https://www.esv.org/')],
-      },
-      {
-        name: 'Bible · KJV (150 Psalms, encouragement verses)',
+        name: 'Bible · KJV (100 English memory verses, 150 Psalms, encouragement verses)',
         lines: [
           'King James Version, 1769 Oxford (Blayney) text, from the CrossWire Bible Society e-text checked against a 1769 facsimile, downloaded from eBible.org.',
           'Public domain outside the United Kingdom; in the UK printing is restricted by the Crown Letters Patent.',
@@ -244,6 +224,7 @@ export const ABOUT = Object.freeze({
     ],
     otherTitle: 'Other information',
     other: [
+      'Files opened with 「📂 Open my text」 or 「📖 Use my Bible text」 in Long texts are stored only on this computer and never sent anywhere. Their copyright belongs to their owners; use copyrighted translations for personal practice only. The file format is shown under 「❔ File format」 on the Long texts screen.',
       'Sound effects are synthesized by the program; no audio files are used.',
       'Settings and records are stored only on this computer and never sent anywhere.',
       'The desktop app is built with Electron (MIT licence).',

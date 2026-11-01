@@ -18,8 +18,8 @@ export const DEFAULT_SETTINGS = Object.freeze({
   soundPack: 'classic',
   shooterSoundPack: 'warzone',
   shortcutPlatform: null,
-  acidMode: 'endless', // 산성비: endless | stage
-  acidCleared: 0, // highest 산성비 stage level cleared
+  acidMode: 'endless', // 단어블록게임: endless | stage
+  acidCleared: 0, // highest 단어블록게임 stage level cleared
   longTextProgress: {}, // 긴 글: { psalms: { chapter, verse }, 'psalms-kjv': … }
   longTextId: 'psalms', // 긴 글: last text practiced
   completedStages: [],

@@ -1,25 +1,18 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { BIBLE_VERSES } from '../src/renderer/data/bible.js';
-import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION, EN_BIBLE_NOTICE } from '../src/renderer/data/bible-en.js';
+import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION } from '../src/renderer/data/bible-en.js';
 import { PSALMS } from '../src/renderer/data/psalms.js';
 import { PSALMS as KJV_PSALMS } from '../src/renderer/data/psalms-kjv.js';
 import { WORKS as KO_POETRY } from '../src/renderer/data/poetry-ko.js';
 import { WORKS as EN_POETRY } from '../src/renderer/data/poetry-en.js';
-import { esvShare, ESV_SHARE_LIMIT } from '../src/renderer/data/content-share.js';
 import { ABOUT } from '../src/renderer/data/about.js';
 import { isTypable } from '../src/renderer/core/keyboard-layout.js';
 
-test('ESV verses stay well under 25% of all practice text', () => {
-  const share = esvShare();
-  assert.ok(share < ESV_SHARE_LIMIT, `ESV share is ${(share * 100).toFixed(1)}%`);
-});
-
-test('ESV text carries the required copyright notice', () => {
-  if (EN_BIBLE_TRANSLATION !== 'ESV') return;
-  assert.match(EN_BIBLE_NOTICE, /ESV® Bible/);
-  assert.match(EN_BIBLE_NOTICE, /Crossway/);
-  assert.ok(EN_BIBLE_VERSES.every((v) => v.source.endsWith('(ESV)')));
+test('English memory verses are KJV and typable', () => {
+  assert.equal(EN_BIBLE_TRANSLATION, 'KJV');
+  assert.ok(EN_BIBLE_VERSES.every((v) => v.source.endsWith('(KJV)') && !/[\[\]’]/.test(v.text)));
+  assert.equal(EN_BIBLE_VERSES.find((v) => v.source.startsWith('John 3:16')).text.slice(0, 26), 'For God so loved the world');
 });
 
 test('English verses match the Korean memory verses one to one', () => {

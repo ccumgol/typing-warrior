@@ -10,6 +10,8 @@ import { renderTypingLine } from '../ui/typing-line.js';
 import { sounds } from '../core/sound.js';
 import { t, loc } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
+import { createImportTools } from './long-text-import.js';
+import { loadUserTexts, removeUserText, loadUserBible, clearUserBible } from '../core/user-content.js';
 
 const psalms = (id, lang, chapters, translation) => ({
   id, lang, numbered: true,
@@ -24,19 +26,32 @@ const poetry = (work) => ({
   pieceLabel: (n, piece) => (piece.title ? `${n}. ${piece.title}` : t('long.sonnet', { n })),
 });
 
-const TEXTS = Object.freeze([
-  psalms('psalms', 'ko', KO_PSALMS, KO_TRANSLATION),
-  ...KO_POETRY.map(poetry),
-  psalms('psalms-kjv', 'en', KJV_PSALMS, KJV_TRANSLATION),
-  ...EN_POETRY.map(poetry),
-]);
-const textsFor = (lang) => TEXTS.filter((text) => text.lang === lang);
-/** The last text practiced if it matches the practice language, otherwise the first text in that language. */
-const pickText = (id, lang) => textsFor(lang).find((text) => text.id === id) || textsFor(lang)[0];
+const userWork = (work) => ({
+  id: work.id, lang: work.lang, numbered: false, pieces: work.pieces, user: true,
+  label: () => `📄 ${work.title}`,
+  pieceLabel: (n, piece) => (piece.title ? `${n}. ${piece.title}` : t('long.userPart', { n })),
+});
+
+/** All texts: built-in works, the user's Bible text in place of 개역한글/KJV Psalms, and the user's own files. */
+function buildTexts() {
+  const bible = loadUserBible();
+  const user = loadUserTexts().map(userWork);
+  const ko = bible.ko?.psalms ? psalms('psalms', 'ko', bible.ko.psalms, bible.ko.name) : psalms('psalms', 'ko', KO_PSALMS, KO_TRANSLATION);
+  const en = bible.en?.psalms ? psalms('psalms-kjv', 'en', bible.en.psalms, bible.en.name) : psalms('psalms-kjv', 'en', KJV_PSALMS, KJV_TRANSLATION);
+  return [
+    ko, ...KO_POETRY.map(poetry), ...user.filter((w) => w.lang === 'ko'),
+    en, ...EN_POETRY.map(poetry), ...user.filter((w) => w.lang === 'en'),
+  ];
+}
 
 export function createLongTextMode(ctx) {
   const session = createSession();
+  let texts = buildTexts();
+  const textsFor = (lang) => texts.filter((item) => item.lang === lang);
+  /** The last text practiced if it matches the practice language, otherwise the first text in that language. */
+  const pickText = (id, lang) => textsFor(lang).find((item) => item.id === id) || textsFor(lang)[0];
   let text = pickText(ctx.settings().longTextId, ctx.settings().lang);
+  let showHelp = false;
   let piece = 1; // 1-based piece number (psalm, sonnet, poem)
   let line = 0; // index of the line (verse) being typed
   let typed = [];
@@ -44,14 +59,24 @@ export function createLongTextMode(ctx) {
   let lang = 'ko';
 
   const toolbar = el('div', { class: 'mode-toolbar' });
+  const actions = el('div', { class: 'mode-toolbar long-actions' });
+  const help = el('div', { class: 'long-help', hidden: true });
+  const tools = createImportTools(ctx, {
+    onTextAdded(work) {
+      texts = buildTexts();
+      if (work.lang === text.lang) switchText(work.id);
+      else ctx.toast(t(work.lang === 'en' ? 'long.seeInEn' : 'long.seeInKo', { title: work.title }));
+    },
+    onBibleChanged: refreshBible,
+  });
   const title = el('h2', { class: 'long-title' });
   const previous = el('div', { class: 'long-context' });
   const current = el('div', { class: 'sentence-target' });
   const input = el('div', { class: 'typed-box sentence-typed' });
   const upcoming = el('div', { class: 'long-context' });
   ctx.root.replaceChildren(
-    el('section', { class: 'mode sentences long-text' }, toolbar,
-      el('div', { class: 'practice-area' }, title, previous, current, input, upcoming, el('div', { class: 'practice-desc' }, t('long.desc')))),
+    el('section', { class: 'mode sentences long-text' }, toolbar, actions, tools.input,
+      el('div', { class: 'practice-area' }, help, title, previous, current, input, upcoming, el('div', { class: 'practice-desc' }, t('long.desc')))),
   );
 
   const pieces = () => text.pieces;
@@ -75,9 +100,43 @@ export function createLongTextMode(ctx) {
 
   function switchText(id) {
     if (id === text.id) return;
-    text = TEXTS.find((item) => item.id === id);
+    text = texts.find((item) => item.id === id);
     ctx.updateSettings({ longTextId: text.id });
     resume();
+  }
+
+  /** The user's Bible text was added or cleared: rebuild the Psalms and reopen them if they are showing. */
+  function refreshBible(lang) {
+    texts = buildTexts();
+    const reopened = texts.find((item) => item.id === text.id);
+    if (reopened && reopened.lang === lang) {
+      text = reopened;
+      resume();
+    } else {
+      renderToolbar();
+    }
+  }
+
+  function resetBible() {
+    clearUserBible(text.lang);
+    ctx.toast(t('long.bibleReset'));
+    refreshBible(text.lang);
+  }
+
+  function removeText() {
+    if (!window.confirm(t('long.confirmRemove', { title: text.label().replace(/^📄 /, '') }))) return;
+    removeUserText(text.id);
+    texts = buildTexts();
+    text = textsFor(text.lang)[0];
+    ctx.updateSettings({ longTextId: text.id });
+    resume();
+  }
+
+  function toggleHelp() {
+    showHelp = !showHelp;
+    help.hidden = !showHelp;
+    help.replaceChildren(el('pre', {}, t('long.helpText')), el('pre', {}, t('long.helpBible')));
+    renderToolbar();
   }
 
   function openPiece(next) {
@@ -107,6 +166,15 @@ export function createLongTextMode(ctx) {
       el('div', { class: 'level-stepper' }, step('◀', t('long.prev'), -1), picker, step('▶', t('long.nextBtn'), 1)),
       el('span', { class: 'practice-desc' }, t('long.completed', { count: doneCount, total: pieces().length })),
     );
+    const button = (label, onClick, active = false) => el('button', { class: `pill${active ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: onClick }, label);
+    const hasUserBible = Boolean(loadUserBible()[text.lang]);
+    actions.replaceChildren(...[
+      button(t('long.importText'), tools.chooseText),
+      button(t('long.importBible'), tools.chooseBible),
+      hasUserBible && button(t('long.resetBible'), resetBible),
+      text.user && button(t('long.removeText'), removeText),
+      button(t('long.formatHelp'), toggleHelp, showHelp),
+    ].filter(Boolean)); // replaceChildren would print a skipped button as the text "null"
   }
 
   const contextLine = (index) => {
