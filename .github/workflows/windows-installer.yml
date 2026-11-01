@@ -1,0 +1,60 @@
+# Builds the Windows installer (NSIS .exe) on a Windows machine and adds it to the GitHub release.
+# NSIS needs Windows (or wine on an Intel Mac), so the Mac release builds cannot make it.
+# Runs when a release is published, or by hand (Actions → Windows installer → Run workflow) for an existing release.
+name: Windows installer
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to add the installer to (e.g. v1.1.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check the version matches the release tag
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "v$VERSION" != "$TAG" ]; then
+            echo "package.json version $VERSION does not match tag $TAG" >&2
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - run: npm test
+
+      - run: npm run dist:win-installer
+
+      - name: Upload the installer and update SHA256SUMS.txt
+        shell: bash
+        run: |
+          SETUP="Typing-Warrior-$VERSION-win-x64-setup.exe"
+          cd dist
+          test -f "$SETUP"
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern SHA256SUMS.txt || touch SHA256SUMS.txt
+          grep -v -- "-setup.exe" SHA256SUMS.txt > sums.tmp || true
+          sha256sum "$SETUP" >> sums.tmp
+          mv sums.tmp SHA256SUMS.txt
+          gh release upload "$TAG" "$SETUP" SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber

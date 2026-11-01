@@ -21,7 +21,8 @@
     "serve": "node tools/serve.mjs",
     "dist:mac": "electron-builder --mac",
     "dist:win": "electron-builder --win",
-    "dist:win-zip": "electron-builder --win zip --x64 -c.win.signAndEditExecutable=false"
+    "dist:win-zip": "electron-builder --win zip --x64 -c.win.signAndEditExecutable=false",
+    "dist:win-installer": "electron-builder --win nsis --x64 --publish never"
   },
   "build": {
     "appId": "com.typingwarrior.app",
@@ -51,17 +52,30 @@
           ]
         },
         {
-          "target": "portable",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
           "target": "zip",
           "arch": [
             "x64"
           ]
         }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "artifactName": "Typing-Warrior-${version}-win-x64-setup.${ext}",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Typing Warrior",
+      "uninstallDisplayName": "Typing Warrior",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "multiLanguageInstaller": true,
+      "installerLanguages": [
+        "ko_KR",
+        "en_US"
       ]
     },
     "directories": {
