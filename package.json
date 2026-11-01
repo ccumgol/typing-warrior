@@ -1,10 +1,19 @@
 {
   "name": "typing-warrior",
-  "productName": "Typing Warrior",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "한글/영문 타자연습 - 자소, 단어, 문장, 게임, 단축키",
   "main": "src/main/main.cjs",
   "type": "module",
+  "author": "Gihyun Park (박기현)",
+  "license": "MIT",
+  "homepage": "https://github.com/ccumgol/typing-warrior",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccumgol/typing-warrior.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ccumgol/typing-warrior/issues"
+  },
   "scripts": {
     "start": "electron .",
     "test": "node --test tests/*.test.js",
@@ -32,9 +41,9 @@
       ]
     }
   },
-  "license": "MIT",
   "devDependencies": {
     "electron": "^33.4.11",
     "electron-builder": "^25.1.8"
-  }
+  },
+  "productName": "Typing Warrior"
 }

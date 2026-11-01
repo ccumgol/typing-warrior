@@ -88,3 +88,9 @@ test('every memory verse belongs to exactly one topic', async () => {
   assert.equal(refs.length, BIBLE_VERSES.length);
   assert.deepEqual([...refs].sort(), BIBLE_VERSES.map((v) => v.source).sort());
 });
+
+test('the app version shown on the About page matches package.json', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { APP_VERSION } = await import('../src/renderer/version.js');
+  assert.equal(APP_VERSION, JSON.parse(readFileSync(new URL('../package.json', import.meta.url))).version);
+});
