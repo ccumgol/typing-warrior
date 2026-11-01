@@ -26,11 +26,20 @@ export function charStates(target, typedTokens) {
 export function renderTypingLine(target, typedTokens) {
   const states = charStates(target, typedTokens);
   const cursorIndex = states.findIndex((s) => s.state === 'pending' || s.state === 'composing');
-  return el(
-    'div',
-    { class: 'typing-line' },
-    states.map(({ ch, state }, i) =>
-      el('span', { class: `ch ${state}${i === cursorIndex ? ' cursor' : ''}${ch === ' ' ? ' space' : ''}` }, ch),
-    ),
-  );
+  const charNode = ({ ch, state }, i) =>
+    el('span', { class: `ch ${state}${i === cursorIndex ? ' cursor' : ''}${ch === ' ' ? ' space' : ''}` }, ch);
+  // Group letters into words so a line only wraps between words, never inside one.
+  const parts = [];
+  let word = [];
+  states.forEach((s, i) => {
+    if (s.ch === ' ') {
+      if (word.length) parts.push(el('span', { class: 'word' }, word));
+      word = [];
+      parts.push(charNode(s, i));
+    } else {
+      word.push(charNode(s, i));
+    }
+  });
+  if (word.length) parts.push(el('span', { class: 'word' }, word));
+  return el('div', { class: 'typing-line' }, parts);
 }

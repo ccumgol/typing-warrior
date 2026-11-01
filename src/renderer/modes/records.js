@@ -28,7 +28,15 @@ export function createRecordsMode(ctx) {
   const records = loadRecords();
   const totalMs = records.reduce((sum, r) => sum + r.ms, 0);
   const todayMs = records.filter((r) => dayKey(r.at) === dayKey(Date.now())).reduce((sum, r) => sum + r.ms, 0);
-  const best = MODES
+  // Long-text works are added as they are practiced; their names come from the saved record label.
+  const extraModes = [...new Set(records.map((r) => r.mode))].filter((m) => !MODES.includes(m) && m.startsWith('longtext-'));
+  const modeName = (mode) => {
+    const key = `rec.${mode}`;
+    if (t(key) !== key) return t(key);
+    const latest = records.find((r) => r.mode === mode);
+    return t('rec.longtext', { title: (latest?.label || mode).split(' · ')[0].replace(/^📖 /, '') });
+  };
+  const best = [...MODES, ...extraModes]
     .map((mode) => {
       const list = records.filter((r) => r.mode === mode);
       return list.length ? { mode, best: Math.max(...list.map((r) => r.score)), count: list.length } : null;
@@ -43,7 +51,7 @@ export function createRecordsMode(ctx) {
       el('div', { class: 'record-cards' }, card(t('rec.days', { count: streakDays(records) }), t('rec.streak')), card(formatTime(todayMs), t('rec.today')), card(formatTime(totalMs), t('rec.total')), card(records.length, t('rec.count'))),
       el('h3', {}, t('rec.best')),
       best.length
-        ? el('table', { class: 'record-table' }, el('tbody', {}, best.map((b) => el('tr', {}, el('td', {}, t(`rec.${b.mode}`)), el('td', {}, b.best.toLocaleString()), el('td', {}, t('rec.times', { count: b.count }))))))
+        ? el('table', { class: 'record-table' }, el('tbody', {}, best.map((b) => el('tr', {}, el('td', {}, modeName(b.mode)), el('td', {}, b.best.toLocaleString()), el('td', {}, t('rec.times', { count: b.count }))))))
         : el('p', { class: 'muted' }, t('rec.empty')),
       el('h3', {}, t('rec.recent')),
       el(

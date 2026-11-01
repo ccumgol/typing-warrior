@@ -1,5 +1,5 @@
 // Electron main process: creates the window and handles fullscreen toggling.
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
 const path = require('node:path');
 
 const isMac = process.platform === 'darwin';
@@ -38,7 +38,11 @@ function createWindow() {
   });
 
   // The app only ever shows its own local page.
-  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  // Links on the 소개 page open in the system browser; the app window itself never navigates away.
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    if (/^https:\/\//.test(url)) shell.openExternal(url).catch((error) => console.error('Could not open link:', error));
+    return { action: 'deny' };
+  });
   win.webContents.on('will-navigate', (event) => event.preventDefault());
 
   buildMenu(win);

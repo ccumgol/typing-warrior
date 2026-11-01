@@ -14,6 +14,7 @@ import { createAcidRainMode } from './modes/acid-rain.js';
 import { createShooterMode } from './modes/shooter.js';
 import { createShortcutsMode } from './modes/shortcuts.js';
 import { createRecordsMode } from './modes/records.js';
+import { createAboutMode } from './modes/about.js';
 
 const MODES = Object.freeze([
   { id: 'jamo', create: createJamoMode, keyboard: true },
@@ -24,6 +25,7 @@ const MODES = Object.freeze([
   { id: 'shooter', create: createShooterMode, keyboard: false },
   { id: 'shortcuts', create: createShortcutsMode, keyboard: true, fixedLang: true },
   { id: 'records', create: createRecordsMode, keyboard: false },
+  { id: 'about', create: createAboutMode, keyboard: false },
 ]);
 
 const $ = (id) => document.getElementById(id);
