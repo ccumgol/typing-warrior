@@ -62,7 +62,12 @@
           ]
         }
       ]
-    }
+    },
+    "directories": {
+      "buildResources": "build"
+    },
+    "icon": "build/icon.png",
+    "afterPack": "build/after-pack.cjs"
   },
   "devDependencies": {
     "electron": "^33.4.11",

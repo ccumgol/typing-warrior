@@ -150,6 +150,7 @@ npm run dist:win-zip  # Apple Silicon 맥에서 Windows zip만 만들 때
 - **화면 언어와 연습 언어 분리**: 화면 문구는 `src/renderer/i18n/ko.js`, `en.js`.
 - **저장**: 설정·사용자·기록은 localStorage, 올린 성경은 IndexedDB(`core/bible-store.js`), API 키는 Electron safeStorage.
 - **버전 관리**: `package.json`과 `src/renderer/version.js`를 함께 바꾸고 [CHANGELOG.md](CHANGELOG.md)에 적습니다.
+- **아이콘**: 원본은 `build/icon.svg`. 고친 뒤 `rsvg-convert -w 1024 -h 1024 build/icon.svg -o build/icon.png`, 윈도우용 `magick build/icon.png -define icon:auto-resize=256,128,64,48,32,16 build/icon.ico`, 앱 안 로고 `src/renderer/assets/icon-64.png`·`icon-512.png`도 같은 방법으로 만듭니다.
 
 ### 데이터 만들기
 - 성경: `python3 tools/build-bible.py`(암송 365, 개역한글), `english`(KJV), `full`, `full KJV`(전권). 암송 목록은 `tools/memory-verses.txt`, 주제 분류는 `src/renderer/data/verse-topics.js`.

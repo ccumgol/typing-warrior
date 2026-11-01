@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Typing Warrior app icon: a keycap (가 / A) with a gold bookmark ribbon on an indigo-to-teal tile.
+     build/icon.png (1024×1024) is rendered from this file: rsvg-convert -w 1024 -h 1024 build/icon.svg -o build/icon.png -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#312e81"/>
+      <stop offset="0.55" stop-color="#1e3a8a"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="capTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e8ecf4"/>
+    </linearGradient>
+    <linearGradient id="capSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b8c0d4"/>
+      <stop offset="1" stop-color="#8e98b3"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f59e0b"/>
+      <stop offset="0.5" stop-color="#fcd34d"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="26" stdDeviation="26" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- tile (macOS icon grid: 824px body inside a 1024px canvas) -->
+  <rect x="100" y="100" width="824" height="824" rx="186" fill="url(#tile)"/>
+  <rect x="100" y="100" width="824" height="824" rx="186" fill="url(#glow)"/>
+
+  <!-- keycap: side (depth) and top -->
+  <g filter="url(#shadow)">
+    <rect x="232" y="262" width="560" height="540" rx="96" fill="url(#capSide)"/>
+    <rect x="252" y="250" width="520" height="482" rx="84" fill="url(#capTop)"/>
+  </g>
+
+  <!-- bookmark ribbon hanging over the keycap -->
+  <path d="M640 222 h82 v250 l-41 -40 l-41 40 z" fill="url(#ribbon)"/>
+  <path d="M640 222 h82 v18 h-82 z" fill="#b45309" opacity="0.35"/>
+
+  <!-- letters -->
+  <text x="300" y="356" font-family="Helvetica Neue, Arial, sans-serif" font-size="78" font-weight="700" fill="#64748b">A</text>
+  <text x="500" y="640" text-anchor="middle" font-family="Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, sans-serif" font-size="300" font-weight="800" fill="#1e1b4b">가</text>
+  <!-- home-row bump -->
+  <rect x="456" y="676" width="88" height="14" rx="7" fill="#94a3b8"/>
+</svg>

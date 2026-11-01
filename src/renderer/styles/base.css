@@ -57,7 +57,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   -webkit-app-region: drag;
 }
 .topbar button { -webkit-app-region: no-drag; }
-.brand { font-weight: 800; white-space: nowrap; font-size: 14px; }
+.brand { display: flex; align-items: center; gap: 6px; font-weight: 800; white-space: nowrap; font-size: 14px; }
+.brand-icon { display: block; border-radius: 5px; }
 .mode-nav { display: flex; gap: 6px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
 /* Menu items are plain-text buttons (no icons) so every menu looks alike. */
 .nav-item {

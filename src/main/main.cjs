@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const isMac = process.platform === 'darwin';
+const APP_ICON = path.join(__dirname, '..', 'renderer', 'assets', 'icon-512.png');
 
 function buildMenu(win) {
   // Minimal menu: keeps shortcuts like Cmd+C/Cmd+Z free for shortcut practice.
@@ -28,6 +29,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 620,
     title: 'Typing Warrior',
+    icon: APP_ICON, // window / taskbar icon (Windows, Linux); the packaged app uses build/icon.png
     backgroundColor: '#11131a',
     autoHideMenuBar: true,
     webPreferences: {
@@ -102,6 +104,7 @@ ipcMain.handle('secret-set', (_event, name, value) => {
 });
 
 app.whenReady().then(() => {
+  if (isMac && !app.isPackaged) app.dock.setIcon(APP_ICON); // show the app icon while developing (npm start)
   createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
