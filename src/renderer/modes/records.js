@@ -6,7 +6,7 @@ import { t, getUiLang } from '../core/i18n.js';
 
 // Record modes in display order; names come from the UI dictionary (rec.<mode>).
 const MODES = Object.freeze([
-  'jamo-ko', 'jamo-en', 'words-ko', 'words-en', 'sentences-quotes', 'sentences-bible', 'sentences-bible-en', 'sentences-english', 'longtext-psalms', 'longtext-psalms-kjv',
+  'jamo-ko', 'jamo-en', 'words-ko', 'words-en', 'sentences-quotes', 'sentences-today', 'sentences-today-en', 'sentences-bible', 'sentences-bible-en', 'sentences-english', 'longtext-psalms', 'longtext-psalms-kjv',
   'acid-rain', 'acid-stage', 'shooter', 'shortcuts-mac', 'shortcuts-win',
 ]);
 

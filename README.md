@@ -25,9 +25,9 @@ npm run dist:win   # Windows 설치본 + 포터블 .exe
 |------|------|
 | 자리 연습 | 한글 7단계(기본자리 → 윗줄 → 아랫줄 → 쌍자음 → 쌍모음 → 복모음 → 숫자·기호), 영문 6단계, 🔀 혼합 모드 |
 | 단어 | 일상·자연·음식·쌍자음/겹받침·신앙 / English basic·everyday·advanced·faith |
-| 문장 | 명언 100개, 성경 암송 말씀 100구절(개역한글), 같은 구절의 영어 성경 100구절(KJV), 영어 문장 30개 |
-| 📜 긴 글 | 한 줄(절)씩 이어서 타이핑, 작품마다 진행 위치 저장. 한글: 시편(개역한글), 김소월 『진달래꽃』, 윤동주 『하늘과 바람과 별과 시』, 한용운 『님의 침묵』, 한국 근대시 모음 / 영문: 시편(KJV), 셰익스피어 소네트 154편, 에밀리 디킨슨 시집 |
-| 📂 내 글·내 성경 | 긴 글에서 텍스트 파일(.txt)을 불러와 연습하고, 내 성경 본문 파일로 개역한글·KJV(암송 100구절, 시편)를 바꿔 연습. 형식은 화면의 ❔ 파일 형식과 `docs/samples/` 예시 파일 참고 |
+| 문장 | 📅 오늘의 말씀(날짜별 암송 구절), 명언 100개, 성경 암송 365구절(개역한글), 같은 구절의 영어 성경 365구절(KJV), 영어 문장 30개 |
+| 📜 긴 글 | 한 줄(절)씩 이어서 타이핑, 작품마다 진행 위치 저장. 한글: 성경 전권(개역한글, 책→장), 김소월 『진달래꽃』, 윤동주 『하늘과 바람과 별과 시』, 한용운 『님의 침묵』, 한국 근대시 모음 / 영문: 성경 전권(KJV), 셰익스피어 소네트 154편, 에밀리 디킨슨 시집 |
+| 📂 내 글·내 성경 | 긴 글에서 텍스트 파일(.txt)을 불러와 연습. 성경 전권 파일(CSV, XML: Zefania·OSIS·OpenSong·Beblia, TXT)을 올리면 개역한글·KJV 대신 그 역본으로 성경 전권·암송 365구절을 연습. 형식은 화면의 ❔ 파일 형식과 `docs/samples/` 참고 |
 | ℹ️ 소개 | 프로그램 소개와 모든 연습 글의 출처·저작권 근거 |
 | 🧱 단어블록게임 | 떨어지는 단어 입력. ♾️ 연속 모드(12단어마다 레벨 상승) / 🎯 단계 모드(LEVEL 1~20, 단어 20개를 막으면 다음 레벨 열림). 레벨 10 = 분당 200타 기준. 💣 금색 단어 = 화면 정리, ❄️ 파란 단어 = 5초 감속 |
 | 🎖️ 전선 작전 | 1인칭 전장 타자 게임. 탄약·재장전("장전"), 7연속 명중 시 공습("공습"), 5웨이브마다 지휘관(긴 문장) |
@@ -56,7 +56,7 @@ npm run dist:win   # Windows 설치본 + 포터블 .exe
 
 - `src/renderer/data/bible.js`는 `tools/build-bible.py`로 로컬 성경 DB에서 생성했습니다. 개역한글은 저작권이 만료된 번역본이라 기본값으로 사용합니다.
   다른 번역본으로 바꾸려면: `python3 tools/build-bible.py 개역개정` (개인 연습용으로만 사용하세요).
-- 영어 성경 구절과 시편도 같은 스크립트로 만듭니다: `python3 tools/build-bible.py english`, `python3 tools/build-bible.py psalms`. KJV 시편: `python3 tools/build-bible.py psalms KJV` (이탤릭 표시 [ ]는 빼고 단어만 남깁니다). 로컬 DB의 KJV는 CrossWire KJV(eBible.org, 1769년판 기준)로 교체한 본문입니다.
+- 영어 성경 구절과 시편도 같은 스크립트로 만듭니다: `python3 tools/build-bible.py english`, 성경 전권: `python3 tools/build-bible.py full`, `python3 tools/build-bible.py full KJV`. 암송 365구절 목록은 `tools/memory-verses.txt`에 있습니다. 로컬 DB의 KJV는 CrossWire KJV(eBible.org, 1769년판 기준)로 교체한 본문입니다.
 - 시집 데이터는 `tools/build-poetry.py`로 만듭니다: `python3 tools/build-poetry.py fetch <폴더>`로 구텐베르크와 위키문헌에서 원문을 받고, `python3 tools/build-poetry.py build <폴더>`로 `poetry-ko.js`, `poetry-en.js`를 씁니다. 윤동주 초판의 한자는 `tools/hanja-readings.json`의 독음으로 바꿉니다.
 - 각 작품의 출처, 판본, 저작권 근거는 앱의 **ℹ️ 소개** 화면(`src/renderer/data/about.js`)에 정리했습니다. 위키문헌의 현대어 표기 본문은 CC BY-SA 4.0으로 다시 배포합니다.
 - 단어·명언·단축키는 `src/renderer/data/`의 파일을 고치면 바로 반영됩니다.

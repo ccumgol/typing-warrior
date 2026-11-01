@@ -2,8 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { BIBLE_VERSES } from '../src/renderer/data/bible.js';
 import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION } from '../src/renderer/data/bible-en.js';
-import { PSALMS } from '../src/renderer/data/psalms.js';
-import { PSALMS as KJV_PSALMS } from '../src/renderer/data/psalms-kjv.js';
+import { BIBLE_FULL as KRV } from '../src/renderer/data/bible-full-krv.js';
+import { BIBLE_FULL as KJV } from '../src/renderer/data/bible-full-kjv.js';
+import { verseText } from '../src/renderer/core/bible-source.js';
 import { WORKS as KO_POETRY } from '../src/renderer/data/poetry-ko.js';
 import { WORKS as EN_POETRY } from '../src/renderer/data/poetry-en.js';
 import { ABOUT } from '../src/renderer/data/about.js';
@@ -15,26 +16,34 @@ test('English memory verses are KJV and typable', () => {
   assert.equal(EN_BIBLE_VERSES.find((v) => v.source.startsWith('John 3:16')).text.slice(0, 26), 'For God so loved the world');
 });
 
-test('English verses match the Korean memory verses one to one', () => {
+test('365 memory verses, the same references in Korean and English', () => {
+  assert.equal(BIBLE_VERSES.length, 365);
+  assert.equal(new Set(BIBLE_VERSES.map((v) => v.source)).size, 365);
   assert.equal(EN_BIBLE_VERSES.length, BIBLE_VERSES.length);
   assert.ok(EN_BIBLE_VERSES.every((v) => v.text.length > 0));
+  // each memory verse matches the same reference in the whole-Bible data
+  for (const v of BIBLE_VERSES) assert.equal(verseText(KRV, v.source), v.text, v.source);
 });
 
-test('all 150 psalms are present in order with their verses', () => {
-  assert.equal(PSALMS.length, 150);
-  assert.ok(PSALMS.every((p, i) => p.chapter === i + 1 && p.verses.length > 0));
-  assert.equal(PSALMS[22].verses[0], '여호와는 나의 목자시니 내가 부족함이 없으리로다'); // 시 23:1
-  assert.equal(PSALMS[118].verses.length, 176); // 시 119 is the longest psalm
-});
-
-test('KJV psalms line up verse for verse with the Korean psalms', () => {
-  assert.equal(KJV_PSALMS.length, 150);
-  assert.ok(KJV_PSALMS.every((p, i) => p.chapter === i + 1 && p.verses.length === PSALMS[i].verses.length));
-  assert.equal(KJV_PSALMS[22].verses[0], 'The LORD is my shepherd; I shall not want.'); // Ps 23:1
-  assert.match(KJV_PSALMS[22].verses[2], /name's sake/); // apostrophes kept, normalized to '
+test('the whole Bible: 66 books, 1,189 chapters, 31,102 verses in both translations', () => {
+  for (const books of [KRV, KJV]) {
+    assert.equal(books.length, 66);
+    assert.equal(books.flat().length, 1189);
+    assert.equal(books.flat(2).length, 31102);
+    assert.ok(books.flat(2).every((v) => v.length > 0));
+  }
+  assert.equal(KRV[18][22][0], '여호와는 나의 목자시니 내가 부족함이 없으리로다'); // 시 23:1
+  assert.equal(KJV[18][22][0], 'The LORD is my shepherd; I shall not want.'); // Ps 23:1
+  assert.match(KJV[18][22][2], /name's sake/); // apostrophes normalized to '
+  assert.equal(KRV[18][118].length, 176); // 시 119
 });
 
 const untypable = (lines) => [...new Set(lines.join('').split('').filter((c) => !isTypable(c) && !/[가-힣]/.test(c)))];
+
+test('every Bible verse can be typed on the keyboard', () => {
+  assert.deepEqual(untypable(KRV.flat(2)), []);
+  assert.deepEqual(untypable(KJV.flat(2)), []);
+});
 
 test('every poetry line can be typed on the keyboard', () => {
   for (const work of [...KO_POETRY, ...EN_POETRY]) {

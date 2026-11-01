@@ -242,7 +242,7 @@ export const EN_BIBLE_VERSES = Object.freeze([
   "source": "John 16:33 (KJV)"
  },
  {
-  "text": "But ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be witnesses unto me both in Jerusalem, and in all Judæa, and in Samaria, and unto the uttermost part of the earth.",
+  "text": "But ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be witnesses unto me both in Jerusalem, and in all Judaea, and in Samaria, and unto the uttermost part of the earth.",
   "source": "Acts 1:8 (KJV)"
  },
  {
@@ -400,5 +400,1065 @@ export const EN_BIBLE_VERSES = Object.freeze([
  {
   "text": "Train up a child in the way he should go: and when he is old, he will not depart from it.",
   "source": "Prov 22:6 (KJV)"
+ },
+ {
+  "text": "So God created man in his own image, in the image of God created he him; male and female created he them.",
+  "source": "Gen 1:27 (KJV)"
+ },
+ {
+  "text": "Therefore shall a man leave his father and his mother, and shall cleave unto his wife: and they shall be one flesh.",
+  "source": "Gen 2:24 (KJV)"
+ },
+ {
+  "text": "And I will put enmity between thee and the woman, and between thy seed and her seed; it shall bruise thy head, and thou shalt bruise his heel.",
+  "source": "Gen 3:15 (KJV)"
+ },
+ {
+  "text": "And he believed in the LORD; and he counted it to him for righteousness.",
+  "source": "Gen 15:6 (KJV)"
+ },
+ {
+  "text": "And, behold, I am with thee, and will keep thee in all places whither thou goest, and will bring thee again into this land; for I will not leave thee, until I have done that which I have spoken to thee of.",
+  "source": "Gen 28:15 (KJV)"
+ },
+ {
+  "text": "But as for you, ye thought evil against me; but God meant it unto good, to bring to pass, as it is this day, to save much people alive.",
+  "source": "Gen 50:20 (KJV)"
+ },
+ {
+  "text": "And God said unto Moses, I AM THAT I AM: and he said, Thus shalt thou say unto the children of Israel, I AM hath sent me unto you.",
+  "source": "Ex 3:14 (KJV)"
+ },
+ {
+  "text": "The LORD shall fight for you, and ye shall hold your peace.",
+  "source": "Ex 14:14 (KJV)"
+ },
+ {
+  "text": "Thou shalt have no other gods before me.",
+  "source": "Ex 20:3 (KJV)"
+ },
+ {
+  "text": "Honour thy father and thy mother: that thy days may be long upon the land which the LORD thy God giveth thee.",
+  "source": "Ex 20:12 (KJV)"
+ },
+ {
+  "text": "And he said, My presence shall go with thee, and I will give thee rest.",
+  "source": "Ex 33:14 (KJV)"
+ },
+ {
+  "text": "Thou shalt not avenge, nor bear any grudge against the children of thy people, but thou shalt love thy neighbour as thyself: I am the LORD.",
+  "source": "Lev 19:18 (KJV)"
+ },
+ {
+  "text": "The LORD bless thee, and keep thee: The LORD make his face shine upon thee, and be gracious unto thee: The LORD lift up his countenance upon thee, and give thee peace.",
+  "source": "Num 6:24-26 (KJV)"
+ },
+ {
+  "text": "Know therefore that the LORD thy God, he is God, the faithful God, which keepeth covenant and mercy with them that love him and keep his commandments to a thousand generations;",
+  "source": "Deut 7:9 (KJV)"
+ },
+ {
+  "text": "And he humbled thee, and suffered thee to hunger, and fed thee with manna, which thou knewest not, neither did thy fathers know; that he might make thee know that man doth not live by bread only, but by every word that proceedeth out of the mouth of the LORD doth man live.",
+  "source": "Deut 8:3 (KJV)"
+ },
+ {
+  "text": "I call heaven and earth to record this day against you, that I have set before you life and death, blessing and cursing: therefore choose life, that both thou and thy seed may live:",
+  "source": "Deut 30:19 (KJV)"
+ },
+ {
+  "text": "Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee.",
+  "source": "Deut 31:6 (KJV)"
+ },
+ {
+  "text": "And the LORD, he it is that doth go before thee; he will be with thee, he will not fail thee, neither forsake thee: fear not, neither be dismayed.",
+  "source": "Deut 31:8 (KJV)"
+ },
+ {
+  "text": "This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night, that thou mayest observe to do according to all that is written therein: for then thou shalt make thy way prosperous, and then thou shalt have good success.",
+  "source": "Josh 1:8 (KJV)"
+ },
+ {
+  "text": "And if it seem evil unto you to serve the LORD, choose you this day whom ye will serve; whether the gods which your fathers served that were on the other side of the flood, or the gods of the Amorites, in whose land ye dwell: but as for me and my house, we will serve the LORD.",
+  "source": "Josh 24:15 (KJV)"
+ },
+ {
+  "text": "And Ruth said, Intreat me not to leave thee, or to return from following after thee: for whither thou goest, I will go; and where thou lodgest, I will lodge: thy people shall be my people, and thy God my God:",
+  "source": "Ruth 1:16 (KJV)"
+ },
+ {
+  "text": "There is none holy as the LORD: for there is none beside thee: neither is there any rock like our God.",
+  "source": "1 Sam 2:2 (KJV)"
+ },
+ {
+  "text": "Only fear the LORD, and serve him in truth with all your heart: for consider how great things he hath done for you.",
+  "source": "1 Sam 12:24 (KJV)"
+ },
+ {
+  "text": "And Samuel said, Hath the LORD as great delight in burnt offerings and sacrifices, as in obeying the voice of the LORD? Behold, to obey is better than sacrifice, and to hearken than the fat of rams.",
+  "source": "1 Sam 15:22 (KJV)"
+ },
+ {
+  "text": "But the LORD said unto Samuel, Look not on his countenance, or on the height of his stature; because I have refused him: for the Lord seeth not as man seeth; for man looketh on the outward appearance, but the LORD looketh on the heart.",
+  "source": "1 Sam 16:7 (KJV)"
+ },
+ {
+  "text": "And he answered, Fear not: for they that be with us are more than they that be with them.",
+  "source": "2 Kgs 6:16 (KJV)"
+ },
+ {
+  "text": "O give thanks unto the LORD; for he is good; for his mercy endureth for ever.",
+  "source": "1 Chr 16:34 (KJV)"
+ },
+ {
+  "text": "If my people, which are called by my name, shall humble themselves, and pray, and seek my face, and turn from their wicked ways; then will I hear from heaven, and will forgive their sin, and will heal their land.",
+  "source": "2 Chr 7:14 (KJV)"
+ },
+ {
+  "text": "For the eyes of the LORD run to and fro throughout the whole earth, to shew himself strong in the behalf of them whose heart is perfect toward him. Herein thou hast done foolishly: therefore from henceforth thou shalt have wars.",
+  "source": "2 Chr 16:9 (KJV)"
+ },
+ {
+  "text": "Then he said unto them, Go your way, eat the fat, and drink the sweet, and send portions unto them for whom nothing is prepared: for this day is holy unto our Lord: neither be ye sorry; for the joy of the LORD is your strength.",
+  "source": "Neh 8:10 (KJV)"
+ },
+ {
+  "text": "And said, Naked came I out of my mother's womb, and naked shall I return thither: the LORD gave, and the LORD hath taken away; blessed be the name of the LORD.",
+  "source": "Job 1:21 (KJV)"
+ },
+ {
+  "text": "For I know that my redeemer liveth, and that he shall stand at the latter day upon the earth:",
+  "source": "Job 19:25 (KJV)"
+ },
+ {
+  "text": "But he knoweth the way that I take: when he hath tried me, I shall come forth as gold.",
+  "source": "Job 23:10 (KJV)"
+ },
+ {
+  "text": "I know that thou canst do every thing, and that no thought can be withholden from thee.",
+  "source": "Job 42:2 (KJV)"
+ },
+ {
+  "text": "I have set the LORD always before me: because he is at my right hand, I shall not be moved.",
+  "source": "Ps 16:8 (KJV)"
+ },
+ {
+  "text": "Thou wilt shew me the path of life: in thy presence is fulness of joy; at thy right hand there are pleasures for evermore.",
+  "source": "Ps 16:11 (KJV)"
+ },
+ {
+  "text": "The heavens declare the glory of God; and the firmament sheweth his handywork.",
+  "source": "Ps 19:1 (KJV)"
+ },
+ {
+  "text": "Let the words of my mouth, and the meditation of my heart, be acceptable in thy sight, O LORD, my strength, and my redeemer.",
+  "source": "Ps 19:14 (KJV)"
+ },
+ {
+  "text": "Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.",
+  "source": "Ps 23:4 (KJV)"
+ },
+ {
+  "text": "Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the LORD for ever.",
+  "source": "Ps 23:6 (KJV)"
+ },
+ {
+  "text": "Shew me thy ways, O LORD; teach me thy paths. Lead me in thy truth, and teach me: for thou art the God of my salvation; on thee do I wait all the day.",
+  "source": "Ps 25:4-5 (KJV)"
+ },
+ {
+  "text": "One thing have I desired of the LORD, that will I seek after; that I may dwell in the house of the LORD all the days of my life, to behold the beauty of the LORD, and to enquire in his temple.",
+  "source": "Ps 27:4 (KJV)"
+ },
+ {
+  "text": "Wait on the LORD: be of good courage, and he shall strengthen thine heart: wait, I say, on the LORD.",
+  "source": "Ps 27:14 (KJV)"
+ },
+ {
+  "text": "I will instruct thee and teach thee in the way which thou shalt go: I will guide thee with mine eye.",
+  "source": "Ps 32:8 (KJV)"
+ },
+ {
+  "text": "O taste and see that the LORD is good: blessed is the man that trusteth in him.",
+  "source": "Ps 34:8 (KJV)"
+ },
+ {
+  "text": "The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.",
+  "source": "Ps 34:18 (KJV)"
+ },
+ {
+  "text": "Delight thyself also in the LORD; and he shall give thee the desires of thine heart.",
+  "source": "Ps 37:4 (KJV)"
+ },
+ {
+  "text": "Rest in the LORD, and wait patiently for him: fret not thyself because of him who prospereth in his way, because of the man who bringeth wicked devices to pass.",
+  "source": "Ps 37:7 (KJV)"
+ },
+ {
+  "text": "As the hart panteth after the water brooks, so panteth my soul after thee, O God.",
+  "source": "Ps 42:1 (KJV)"
+ },
+ {
+  "text": "Why art thou cast down, O my soul? and why art thou disquieted in me? hope thou in God: for I shall yet praise him for the help of his countenance.",
+  "source": "Ps 42:5 (KJV)"
+ },
+ {
+  "text": "The sacrifices of God are a broken spirit: a broken and a contrite heart, O God, thou wilt not despise.",
+  "source": "Ps 51:17 (KJV)"
+ },
+ {
+  "text": "What time I am afraid, I will trust in thee.",
+  "source": "Ps 56:3 (KJV)"
+ },
+ {
+  "text": "Trust in him at all times; ye people, pour out your heart before him: God is a refuge for us. Selah.",
+  "source": "Ps 62:8 (KJV)"
+ },
+ {
+  "text": "My flesh and my heart faileth: but God is the strength of my heart, and my portion for ever.",
+  "source": "Ps 73:26 (KJV)"
+ },
+ {
+  "text": "So teach us to number our days, that we may apply our hearts unto wisdom.",
+  "source": "Ps 90:12 (KJV)"
+ },
+ {
+  "text": "For he shall give his angels charge over thee, to keep thee in all thy ways.",
+  "source": "Ps 91:11 (KJV)"
+ },
+ {
+  "text": "Enter into his gates with thanksgiving, and into his courts with praise: be thankful unto him, and bless his name.",
+  "source": "Ps 100:4 (KJV)"
+ },
+ {
+  "text": "Bless the LORD, O my soul: and all that is within me, bless his holy name. Bless the LORD, O my soul, and forget not all his benefits:",
+  "source": "Ps 103:1-2 (KJV)"
+ },
+ {
+  "text": "As far as the east is from the west, so far hath he removed our transgressions from us.",
+  "source": "Ps 103:12 (KJV)"
+ },
+ {
+  "text": "This is the day which the LORD hath made; we will rejoice and be glad in it.",
+  "source": "Ps 118:24 (KJV)"
+ },
+ {
+  "text": "Thy word have I hid in mine heart, that I might not sin against thee.",
+  "source": "Ps 119:11 (KJV)"
+ },
+ {
+  "text": "It is good for me that I have been afflicted; that I might learn thy statutes.",
+  "source": "Ps 119:71 (KJV)"
+ },
+ {
+  "text": "The LORD shall preserve thee from all evil: he shall preserve thy soul. The LORD shall preserve thy going out and thy coming in from this time forth, and even for evermore.",
+  "source": "Ps 121:7-8 (KJV)"
+ },
+ {
+  "text": "Behold, how good and how pleasant it is for brethren to dwell together in unity!",
+  "source": "Ps 133:1 (KJV)"
+ },
+ {
+  "text": "I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.",
+  "source": "Ps 139:14 (KJV)"
+ },
+ {
+  "text": "He healeth the broken in heart, and bindeth up their wounds.",
+  "source": "Ps 147:3 (KJV)"
+ },
+ {
+  "text": "Let every thing that hath breath praise the LORD. Praise ye the LORD.",
+  "source": "Ps 150:6 (KJV)"
+ },
+ {
+  "text": "The fear of the LORD is the beginning of knowledge: but fools despise wisdom and instruction.",
+  "source": "Prov 1:7 (KJV)"
+ },
+ {
+  "text": "Honour the LORD with thy substance, and with the firstfruits of all thine increase:",
+  "source": "Prov 3:9 (KJV)"
+ },
+ {
+  "text": "There is a way which seemeth right unto a man, but the end thereof are the ways of death.",
+  "source": "Prov 14:12 (KJV)"
+ },
+ {
+  "text": "A soft answer turneth away wrath: but grievous words stir up anger.",
+  "source": "Prov 15:1 (KJV)"
+ },
+ {
+  "text": "A friend loveth at all times, and a brother is born for adversity.",
+  "source": "Prov 17:17 (KJV)"
+ },
+ {
+  "text": "The name of the LORD is a strong tower: the righteous runneth into it, and is safe.",
+  "source": "Prov 18:10 (KJV)"
+ },
+ {
+  "text": "Favour is deceitful, and beauty is vain: but a woman that feareth the LORD, she shall be praised.",
+  "source": "Prov 31:30 (KJV)"
+ },
+ {
+  "text": "To every thing there is a season, and a time to every purpose under the heaven:",
+  "source": "Eccl 3:1 (KJV)"
+ },
+ {
+  "text": "He hath made every thing beautiful in his time: also he hath set the world in their heart, so that no man can find out the work that God maketh from the beginning to the end.",
+  "source": "Eccl 3:11 (KJV)"
+ },
+ {
+  "text": "Two are better than one; because they have a good reward for their labour.",
+  "source": "Eccl 4:9 (KJV)"
+ },
+ {
+  "text": "Let us hear the conclusion of the whole matter: Fear God, and keep his commandments: for this is the whole duty of man.",
+  "source": "Eccl 12:13 (KJV)"
+ },
+ {
+  "text": "Many waters cannot quench love, neither can the floods drown it: if a man would give all the substance of his house for love, it would utterly be contemned.",
+  "source": "Song 8:7 (KJV)"
+ },
+ {
+  "text": "Come now, and let us reason together, saith the LORD: though your sins be as scarlet, they shall be as white as snow; though they be red like crimson, they shall be as wool.",
+  "source": "Isa 1:18 (KJV)"
+ },
+ {
+  "text": "Also I heard the voice of the Lord, saying, Whom shall I send, and who will go for us? Then said I, Here am I; send me.",
+  "source": "Isa 6:8 (KJV)"
+ },
+ {
+  "text": "For unto us a child is born, unto us a son is given: and the government shall be upon his shoulder: and his name shall be called Wonderful, Counsellor, The mighty God, The everlasting Father, The Prince of Peace.",
+  "source": "Isa 9:6 (KJV)"
+ },
+ {
+  "text": "Behold, God is my salvation; I will trust, and not be afraid: for the LORD JEHOVAH is my strength and my song; he also is become my salvation.",
+  "source": "Isa 12:2 (KJV)"
+ },
+ {
+  "text": "For thus saith the Lord GOD, the Holy One of Israel; In returning and rest shall ye be saved; in quietness and in confidence shall be your strength: and ye would not.",
+  "source": "Isa 30:15 (KJV)"
+ },
+ {
+  "text": "The grass withereth, the flower fadeth: but the word of our God shall stand for ever.",
+  "source": "Isa 40:8 (KJV)"
+ },
+ {
+  "text": "He giveth power to the faint; and to them that have no might he increaseth strength.",
+  "source": "Isa 40:29 (KJV)"
+ },
+ {
+  "text": "When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee.",
+  "source": "Isa 43:2 (KJV)"
+ },
+ {
+  "text": "Behold, I will do a new thing; now it shall spring forth; shall ye not know it? I will even make a way in the wilderness, and rivers in the desert.",
+  "source": "Isa 43:19 (KJV)"
+ },
+ {
+  "text": "Can a woman forget her sucking child, that she should not have compassion on the son of her womb? yea, they may forget, yet will I not forget thee.",
+  "source": "Isa 49:15 (KJV)"
+ },
+ {
+  "text": "All we like sheep have gone astray; we have turned every one to his own way; and the LORD hath laid on him the iniquity of us all.",
+  "source": "Isa 53:6 (KJV)"
+ },
+ {
+  "text": "Seek ye the LORD while he may be found, call ye upon him while he is near:",
+  "source": "Isa 55:6 (KJV)"
+ },
+ {
+  "text": "So shall my word be that goeth forth out of my mouth: it shall not return unto me void, but it shall accomplish that which I please, and it shall prosper in the thing whereto I sent it.",
+  "source": "Isa 55:11 (KJV)"
+ },
+ {
+  "text": "And the LORD shall guide thee continually, and satisfy thy soul in drought, and make fat thy bones: and thou shalt be like a watered garden, and like a spring of water, whose waters fail not.",
+  "source": "Isa 58:11 (KJV)"
+ },
+ {
+  "text": "The Spirit of the Lord GOD is upon me; because the LORD hath anointed me to preach good tidings unto the meek; he hath sent me to bind up the brokenhearted, to proclaim liberty to the captives, and the opening of the prison to them that are bound;",
+  "source": "Isa 61:1 (KJV)"
+ },
+ {
+  "text": "Before I formed thee in the belly I knew thee; and before thou camest forth out of the womb I sanctified thee, and I ordained thee a prophet unto the nations.",
+  "source": "Jer 1:5 (KJV)"
+ },
+ {
+  "text": "Blessed is the man that trusteth in the LORD, and whose hope the LORD is.",
+  "source": "Jer 17:7 (KJV)"
+ },
+ {
+  "text": "The LORD hath appeared of old unto me, saying, Yea, I have loved thee with an everlasting love: therefore with lovingkindness have I drawn thee.",
+  "source": "Jer 31:3 (KJV)"
+ },
+ {
+  "text": "The LORD is good unto them that wait for him, to the soul that seeketh him.",
+  "source": "Lam 3:25 (KJV)"
+ },
+ {
+  "text": "A new heart also will I give you, and a new spirit will I put within you: and I will take away the stony heart out of your flesh, and I will give you an heart of flesh.",
+  "source": "Ezek 36:26 (KJV)"
+ },
+ {
+  "text": "If it be so, our God whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of thine hand, O king. But if not, be it known unto thee, O king, that we will not serve thy gods, nor worship the golden image which thou hast set up.",
+  "source": "Dan 3:17-18 (KJV)"
+ },
+ {
+  "text": "And they that be wise shall shine as the brightness of the firmament; and they that turn many to righteousness as the stars for ever and ever.",
+  "source": "Dan 12:3 (KJV)"
+ },
+ {
+  "text": "Then shall we know, if we follow on to know the LORD: his going forth is prepared as the morning; and he shall come unto us as the rain, as the latter and former rain unto the earth.",
+  "source": "Hos 6:3 (KJV)"
+ },
+ {
+  "text": "And rend your heart, and not your garments, and turn unto the LORD your God: for he is gracious and merciful, slow to anger, and of great kindness, and repenteth him of the evil.",
+  "source": "Joel 2:13 (KJV)"
+ },
+ {
+  "text": "And it shall come to pass afterward, that I will pour out my spirit upon all flesh; and your sons and your daughters shall prophesy, your old men shall dream dreams, your young men shall see visions:",
+  "source": "Joel 2:28 (KJV)"
+ },
+ {
+  "text": "But let judgment run down as waters, and righteousness as a mighty stream.",
+  "source": "Amos 5:24 (KJV)"
+ },
+ {
+  "text": "The LORD is good, a strong hold in the day of trouble; and he knoweth them that trust in him.",
+  "source": "Nah 1:7 (KJV)"
+ },
+ {
+  "text": "Behold, his soul which is lifted up is not upright in him: but the just shall live by his faith.",
+  "source": "Hab 2:4 (KJV)"
+ },
+ {
+  "text": "Then he answered and spake unto me, saying, This is the word of the LORD unto Zerubbabel, saying, Not by might, nor by power, but by my spirit, saith the LORD of hosts.",
+  "source": "Zech 4:6 (KJV)"
+ },
+ {
+  "text": "And she shall bring forth a son, and thou shalt call his name JESUS: for he shall save his people from their sins.",
+  "source": "Matt 1:21 (KJV)"
+ },
+ {
+  "text": "But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God.",
+  "source": "Matt 4:4 (KJV)"
+ },
+ {
+  "text": "And he saith unto them, Follow me, and I will make you fishers of men.",
+  "source": "Matt 4:19 (KJV)"
+ },
+ {
+  "text": "Blessed are they which do hunger and thirst after righteousness: for they shall be filled.",
+  "source": "Matt 5:6 (KJV)"
+ },
+ {
+  "text": "Blessed are the pure in heart: for they shall see God.",
+  "source": "Matt 5:8 (KJV)"
+ },
+ {
+  "text": "Blessed are the peacemakers: for they shall be called the children of God.",
+  "source": "Matt 5:9 (KJV)"
+ },
+ {
+  "text": "But I say unto you, Love your enemies, bless them that curse you, do good to them that hate you, and pray for them which despitefully use you, and persecute you;",
+  "source": "Matt 5:44 (KJV)"
+ },
+ {
+  "text": "After this manner therefore pray ye: Our Father which art in heaven, Hallowed be thy name.",
+  "source": "Matt 6:9 (KJV)"
+ },
+ {
+  "text": "For where your treasure is, there will your heart be also.",
+  "source": "Matt 6:21 (KJV)"
+ },
+ {
+  "text": "Take therefore no thought for the morrow: for the morrow shall take thought for the things of itself. Sufficient unto the day is the evil thereof.",
+  "source": "Matt 6:34 (KJV)"
+ },
+ {
+  "text": "Therefore all things whatsoever ye would that men should do to you, do ye even so to them: for this is the law and the prophets.",
+  "source": "Matt 7:12 (KJV)"
+ },
+ {
+  "text": "Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls.",
+  "source": "Matt 11:29 (KJV)"
+ },
+ {
+  "text": "Then said Jesus unto his disciples, If any man will come after me, let him deny himself, and take up his cross, and follow me.",
+  "source": "Matt 16:24 (KJV)"
+ },
+ {
+  "text": "For what is a man profited, if he shall gain the whole world, and lose his own soul? or what shall a man give in exchange for his soul?",
+  "source": "Matt 16:26 (KJV)"
+ },
+ {
+  "text": "For where two or three are gathered together in my name, there am I in the midst of them.",
+  "source": "Matt 18:20 (KJV)"
+ },
+ {
+  "text": "But Jesus beheld them, and said unto them, With men this is impossible; but with God all things are possible.",
+  "source": "Matt 19:26 (KJV)"
+ },
+ {
+  "text": "Heaven and earth shall pass away, but my words shall not pass away.",
+  "source": "Matt 24:35 (KJV)"
+ },
+ {
+  "text": "And the King shall answer and say unto them, Verily I say unto you, Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me.",
+  "source": "Matt 25:40 (KJV)"
+ },
+ {
+  "text": "Watch and pray, that ye enter not into temptation: the spirit indeed is willing, but the flesh is weak.",
+  "source": "Matt 26:41 (KJV)"
+ },
+ {
+  "text": "And saying, The time is fulfilled, and the kingdom of God is at hand: repent ye, and believe the gospel.",
+  "source": "Mark 1:15 (KJV)"
+ },
+ {
+  "text": "For what shall it profit a man, if he shall gain the whole world, and lose his own soul?",
+  "source": "Mark 8:36 (KJV)"
+ },
+ {
+  "text": "Jesus said unto him, If thou canst believe, all things are possible to him that believeth.",
+  "source": "Mark 9:23 (KJV)"
+ },
+ {
+  "text": "Therefore I say unto you, What things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them.",
+  "source": "Mark 11:24 (KJV)"
+ },
+ {
+  "text": "And the second is like, namely this, Thou shalt love thy neighbour as thyself. There is none other commandment greater than these.",
+  "source": "Mark 12:31 (KJV)"
+ },
+ {
+  "text": "For with God nothing shall be impossible.",
+  "source": "Luke 1:37 (KJV)"
+ },
+ {
+  "text": "For unto you is born this day in the city of David a Saviour, which is Christ the Lord.",
+  "source": "Luke 2:11 (KJV)"
+ },
+ {
+  "text": "Glory to God in the highest, and on earth peace, good will toward men.",
+  "source": "Luke 2:14 (KJV)"
+ },
+ {
+  "text": "And as ye would that men should do to you, do ye also to them likewise.",
+  "source": "Luke 6:31 (KJV)"
+ },
+ {
+  "text": "Give, and it shall be given unto you; good measure, pressed down, and shaken together, and running over, shall men give into your bosom. For with the same measure that ye mete withal it shall be measured to you again.",
+  "source": "Luke 6:38 (KJV)"
+ },
+ {
+  "text": "And I say unto you, Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you.",
+  "source": "Luke 11:9 (KJV)"
+ },
+ {
+  "text": "I say unto you, that likewise joy shall be in heaven over one sinner that repenteth, more than over ninety and nine just persons, which need no repentance.",
+  "source": "Luke 15:7 (KJV)"
+ },
+ {
+  "text": "And he said, The things which are impossible with men are possible with God.",
+  "source": "Luke 18:27 (KJV)"
+ },
+ {
+  "text": "And the Word was made flesh, and dwelt among us, (and we beheld his glory, the glory as of the only begotten of the Father,) full of grace and truth.",
+  "source": "John 1:14 (KJV)"
+ },
+ {
+  "text": "The next day John seeth Jesus coming unto him, and saith, Behold the Lamb of God, which taketh away the sin of the world.",
+  "source": "John 1:29 (KJV)"
+ },
+ {
+  "text": "Jesus answered and said unto him, Verily, verily, I say unto thee, Except a man be born again, he cannot see the kingdom of God.",
+  "source": "John 3:3 (KJV)"
+ },
+ {
+  "text": "He must increase, but I must decrease.",
+  "source": "John 3:30 (KJV)"
+ },
+ {
+  "text": "God is a Spirit: and they that worship him must worship him in spirit and in truth.",
+  "source": "John 4:24 (KJV)"
+ },
+ {
+  "text": "And Jesus said unto them, I am the bread of life: he that cometh to me shall never hunger; and he that believeth on me shall never thirst.",
+  "source": "John 6:35 (KJV)"
+ },
+ {
+  "text": "Then spake Jesus again unto them, saying, I am the light of the world: he that followeth me shall not walk in darkness, but shall have the light of life.",
+  "source": "John 8:12 (KJV)"
+ },
+ {
+  "text": "If the Son therefore shall make you free, ye shall be free indeed.",
+  "source": "John 8:36 (KJV)"
+ },
+ {
+  "text": "I am the good shepherd: the good shepherd giveth his life for the sheep.",
+  "source": "John 10:11 (KJV)"
+ },
+ {
+  "text": "My sheep hear my voice, and I know them, and they follow me: And I give unto them eternal life; and they shall never perish, neither shall any man pluck them out of my hand.",
+  "source": "John 10:27-28 (KJV)"
+ },
+ {
+  "text": "Verily, verily, I say unto you, Except a corn of wheat fall into the ground and die, it abideth alone: but if it die, it bringeth forth much fruit.",
+  "source": "John 12:24 (KJV)"
+ },
+ {
+  "text": "By this shall all men know that ye are my disciples, if ye have love one to another.",
+  "source": "John 13:35 (KJV)"
+ },
+ {
+  "text": "In my Father's house are many mansions: if it were not so, I would have told you. I go to prepare a place for you.",
+  "source": "John 14:2 (KJV)"
+ },
+ {
+  "text": "If ye love me, keep my commandments.",
+  "source": "John 14:15 (KJV)"
+ },
+ {
+  "text": "He that hath my commandments, and keepeth them, he it is that loveth me: and he that loveth me shall be loved of my Father, and I will love him, and will manifest myself to him.",
+  "source": "John 14:21 (KJV)"
+ },
+ {
+  "text": "If ye abide in me, and my words abide in you, ye shall ask what ye will, and it shall be done unto you.",
+  "source": "John 15:7 (KJV)"
+ },
+ {
+  "text": "This is my commandment, That ye love one another, as I have loved you.",
+  "source": "John 15:12 (KJV)"
+ },
+ {
+  "text": "Greater love hath no man than this, that a man lay down his life for his friends.",
+  "source": "John 15:13 (KJV)"
+ },
+ {
+  "text": "Ye have not chosen me, but I have chosen you, and ordained you, that ye should go and bring forth fruit, and that your fruit should remain: that whatsoever ye shall ask of the Father in my name, he may give it you.",
+  "source": "John 15:16 (KJV)"
+ },
+ {
+  "text": "And this is life eternal, that they might know thee the only true God, and Jesus Christ, whom thou hast sent.",
+  "source": "John 17:3 (KJV)"
+ },
+ {
+  "text": "Jesus saith unto him, Thomas, because thou hast seen me, thou hast believed: blessed are they that have not seen, and yet have believed.",
+  "source": "John 20:29 (KJV)"
+ },
+ {
+  "text": "But these are written, that ye might believe that Jesus is the Christ, the Son of God; and that believing ye might have life through his name.",
+  "source": "John 20:31 (KJV)"
+ },
+ {
+  "text": "He saith unto him the third time, Simon, son of Jonas, lovest thou me? Peter was grieved because he said unto him the third time, Lovest thou me? And he said unto him, Lord, thou knowest all things; thou knowest that I love thee. Jesus saith unto him, Feed my sheep.",
+  "source": "John 21:17 (KJV)"
+ },
+ {
+  "text": "Then Peter said unto them, Repent, and be baptized every one of you in the name of Jesus Christ for the remission of sins, and ye shall receive the gift of the Holy Ghost.",
+  "source": "Acts 2:38 (KJV)"
+ },
+ {
+  "text": "And they continued stedfastly in the apostles' doctrine and fellowship, and in breaking of bread, and in prayers.",
+  "source": "Acts 2:42 (KJV)"
+ },
+ {
+  "text": "These were more noble than those in Thessalonica, in that they received the word with all readiness of mind, and searched the scriptures daily, whether those things were so.",
+  "source": "Acts 17:11 (KJV)"
+ },
+ {
+  "text": "But none of these things move me, neither count I my life dear unto myself, so that I might finish my course with joy, and the ministry, which I have received of the Lord Jesus, to testify the gospel of the grace of God.",
+  "source": "Acts 20:24 (KJV)"
+ },
+ {
+  "text": "I have shewed you all things, how that so labouring ye ought to support the weak, and to remember the words of the Lord Jesus, how he said, It is more blessed to give than to receive.",
+  "source": "Acts 20:35 (KJV)"
+ },
+ {
+  "text": "For therein is the righteousness of God revealed from faith to faith: as it is written, The just shall live by faith.",
+  "source": "Rom 1:17 (KJV)"
+ },
+ {
+  "text": "Therefore being justified by faith, we have peace with God through our Lord Jesus Christ:",
+  "source": "Rom 5:1 (KJV)"
+ },
+ {
+  "text": "And not only so, but we glory in tribulations also: knowing that tribulation worketh patience; And patience, experience; and experience, hope:",
+  "source": "Rom 5:3-4 (KJV)"
+ },
+ {
+  "text": "For I reckon that the sufferings of this present time are not worthy to be compared with the glory which shall be revealed in us.",
+  "source": "Rom 8:18 (KJV)"
+ },
+ {
+  "text": "What shall we then say to these things? If God be for us, who can be against us?",
+  "source": "Rom 8:31 (KJV)"
+ },
+ {
+  "text": "Nay, in all these things we are more than conquerors through him that loved us.",
+  "source": "Rom 8:37 (KJV)"
+ },
+ {
+  "text": "For I am persuaded, that neither death, nor life, nor angels, nor principalities, nor powers, nor things present, nor things to come, Nor height, nor depth, nor any other creature, shall be able to separate us from the love of God, which is in Christ Jesus our Lord.",
+  "source": "Rom 8:38-39 (KJV)"
+ },
+ {
+  "text": "So then faith cometh by hearing, and hearing by the word of God.",
+  "source": "Rom 10:17 (KJV)"
+ },
+ {
+  "text": "For of him, and through him, and to him, are all things: to whom be glory for ever. Amen.",
+  "source": "Rom 11:36 (KJV)"
+ },
+ {
+  "text": "Be kindly affectioned one to another with brotherly love; in honour preferring one another;",
+  "source": "Rom 12:10 (KJV)"
+ },
+ {
+  "text": "Rejoicing in hope; patient in tribulation; continuing instant in prayer;",
+  "source": "Rom 12:12 (KJV)"
+ },
+ {
+  "text": "Be not overcome of evil, but overcome evil with good.",
+  "source": "Rom 12:21 (KJV)"
+ },
+ {
+  "text": "Owe no man any thing, but to love one another: for he that loveth another hath fulfilled the law.",
+  "source": "Rom 13:8 (KJV)"
+ },
+ {
+  "text": "For whether we live, we live unto the Lord; and whether we die, we die unto the Lord: whether we live therefore, or die, we are the Lord's.",
+  "source": "Rom 14:8 (KJV)"
+ },
+ {
+  "text": "Now the God of hope fill you with all joy and peace in believing, that ye may abound in hope, through the power of the Holy Ghost.",
+  "source": "Rom 15:13 (KJV)"
+ },
+ {
+  "text": "For the preaching of the cross is to them that perish foolishness; but unto us which are saved it is the power of God.",
+  "source": "1 Cor 1:18 (KJV)"
+ },
+ {
+  "text": "But as it is written, Eye hath not seen, nor ear heard, neither have entered into the heart of man, the things which God hath prepared for them that love him.",
+  "source": "1 Cor 2:9 (KJV)"
+ },
+ {
+  "text": "Know ye not that ye are the temple of God, and that the Spirit of God dwelleth in you?",
+  "source": "1 Cor 3:16 (KJV)"
+ },
+ {
+  "text": "What? know ye not that your body is the temple of the Holy Ghost which is in you, which ye have of God, and ye are not your own? For ye are bought with a price: therefore glorify God in your body, and in your spirit, which are God's.",
+  "source": "1 Cor 6:19-20 (KJV)"
+ },
+ {
+  "text": "And now abideth faith, hope, charity, these three; but the greatest of these is charity.",
+  "source": "1 Cor 13:13 (KJV)"
+ },
+ {
+  "text": "For I delivered unto you first of all that which I also received, how that Christ died for our sins according to the scriptures; And that he was buried, and that he rose again the third day according to the scriptures:",
+  "source": "1 Cor 15:3-4 (KJV)"
+ },
+ {
+  "text": "Watch ye, stand fast in the faith, quit you like men, be strong.",
+  "source": "1 Cor 16:13 (KJV)"
+ },
+ {
+  "text": "For which cause we faint not; but though our outward man perish, yet the inward man is renewed day by day.",
+  "source": "2 Cor 4:16 (KJV)"
+ },
+ {
+  "text": "While we look not at the things which are seen, but at the things which are not seen: for the things which are seen are temporal; but the things which are not seen are eternal.",
+  "source": "2 Cor 4:18 (KJV)"
+ },
+ {
+  "text": "(For we walk by faith, not by sight:)",
+  "source": "2 Cor 5:7 (KJV)"
+ },
+ {
+  "text": "For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him.",
+  "source": "2 Cor 5:21 (KJV)"
+ },
+ {
+  "text": "Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver.",
+  "source": "2 Cor 9:7 (KJV)"
+ },
+ {
+  "text": "Stand fast therefore in the liberty wherewith Christ hath made us free, and be not entangled again with the yoke of bondage.",
+  "source": "Gal 5:1 (KJV)"
+ },
+ {
+  "text": "For, brethren, ye have been called unto liberty; only use not liberty for an occasion to the flesh, but by love serve one another.",
+  "source": "Gal 5:13 (KJV)"
+ },
+ {
+  "text": "This I say then, Walk in the Spirit, and ye shall not fulfil the lust of the flesh.",
+  "source": "Gal 5:16 (KJV)"
+ },
+ {
+  "text": "Bear ye one another's burdens, and so fulfil the law of Christ.",
+  "source": "Gal 6:2 (KJV)"
+ },
+ {
+  "text": "But God forbid that I should glory, save in the cross of our Lord Jesus Christ, by whom the world is crucified unto me, and I unto the world.",
+  "source": "Gal 6:14 (KJV)"
+ },
+ {
+  "text": "For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them.",
+  "source": "Eph 2:10 (KJV)"
+ },
+ {
+  "text": "Now unto him that is able to do exceeding abundantly above all that we ask or think, according to the power that worketh in us,",
+  "source": "Eph 3:20 (KJV)"
+ },
+ {
+  "text": "With all lowliness and meekness, with longsuffering, forbearing one another in love;",
+  "source": "Eph 4:2 (KJV)"
+ },
+ {
+  "text": "Be ye angry, and sin not: let not the sun go down upon your wrath:",
+  "source": "Eph 4:26 (KJV)"
+ },
+ {
+  "text": "And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you.",
+  "source": "Eph 4:32 (KJV)"
+ },
+ {
+  "text": "Redeeming the time, because the days are evil.",
+  "source": "Eph 5:16 (KJV)"
+ },
+ {
+  "text": "And be not drunk with wine, wherein is excess; but be filled with the Spirit;",
+  "source": "Eph 5:18 (KJV)"
+ },
+ {
+  "text": "Children, obey your parents in the Lord: for this is right.",
+  "source": "Eph 6:1 (KJV)"
+ },
+ {
+  "text": "Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.",
+  "source": "Eph 6:11 (KJV)"
+ },
+ {
+  "text": "Being confident of this very thing, that he which hath begun a good work in you will perform it until the day of Jesus Christ:",
+  "source": "Phil 1:6 (KJV)"
+ },
+ {
+  "text": "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.",
+  "source": "Phil 2:3 (KJV)"
+ },
+ {
+  "text": "Let this mind be in you, which was also in Christ Jesus:",
+  "source": "Phil 2:5 (KJV)"
+ },
+ {
+  "text": "Brethren, I count not myself to have apprehended: but this one thing I do, forgetting those things which are behind, and reaching forth unto those things which are before, I press toward the mark for the prize of the high calling of God in Christ Jesus.",
+  "source": "Phil 3:13-14 (KJV)"
+ },
+ {
+  "text": "Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things.",
+  "source": "Phil 4:8 (KJV)"
+ },
+ {
+  "text": "But my God shall supply all your need according to his riches in glory by Christ Jesus.",
+  "source": "Phil 4:19 (KJV)"
+ },
+ {
+  "text": "Who hath delivered us from the power of darkness, and hath translated us into the kingdom of his dear Son: In whom we have redemption through his blood, even the forgiveness of sins:",
+  "source": "Col 1:13-14 (KJV)"
+ },
+ {
+  "text": "As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith, as ye have been taught, abounding therein with thanksgiving.",
+  "source": "Col 2:6-7 (KJV)"
+ },
+ {
+  "text": "Set your affection on things above, not on things on the earth.",
+  "source": "Col 3:2 (KJV)"
+ },
+ {
+  "text": "And let the peace of God rule in your hearts, to the which also ye are called in one body; and be ye thankful.",
+  "source": "Col 3:15 (KJV)"
+ },
+ {
+  "text": "And what soever ye do in word or deed, do all in the name of the Lord Jesus, giving thanks to God and the Father by him.",
+  "source": "Col 3:17 (KJV)"
+ },
+ {
+  "text": "Continue in prayer, and watch in the same with thanksgiving;",
+  "source": "Col 4:2 (KJV)"
+ },
+ {
+  "text": "For the Lord himself shall descend from heaven with a shout, with the voice of the archangel, and with the trump of God: and the dead in Christ shall rise first:",
+  "source": "1 Thess 4:16 (KJV)"
+ },
+ {
+  "text": "Wherefore comfort yourselves together, and edify one another, even as also ye do.",
+  "source": "1 Thess 5:11 (KJV)"
+ },
+ {
+  "text": "But the Lord is faithful, who shall stablish you, and keep you from evil.",
+  "source": "2 Thess 3:3 (KJV)"
+ },
+ {
+  "text": "For bodily exercise profiteth little: but godliness is profitable unto all things, having promise of the life that now is, and of that which is to come.",
+  "source": "1 Tim 4:8 (KJV)"
+ },
+ {
+  "text": "Let no man despise thy youth; but be thou an example of the believers, in word, in conversation, in charity, in spirit, in faith, in purity.",
+  "source": "1 Tim 4:12 (KJV)"
+ },
+ {
+  "text": "But godliness with contentment is great gain.",
+  "source": "1 Tim 6:6 (KJV)"
+ },
+ {
+  "text": "For the love of money is the root of all evil: which while some coveted after, they have erred from the faith, and pierced themselves through with many sorrows.",
+  "source": "1 Tim 6:10 (KJV)"
+ },
+ {
+  "text": "Study to shew thyself approved unto God, a workman that needeth not to be ashamed, rightly dividing the word of truth.",
+  "source": "2 Tim 2:15 (KJV)"
+ },
+ {
+  "text": "Preach the word; be instant in season, out of season; reprove, rebuke, exhort with all longsuffering and doctrine.",
+  "source": "2 Tim 4:2 (KJV)"
+ },
+ {
+  "text": "I have fought a good fight, I have finished my course, I have kept the faith:",
+  "source": "2 Tim 4:7 (KJV)"
+ },
+ {
+  "text": "For the grace of God that bringeth salvation hath appeared to all men,",
+  "source": "Titus 2:11 (KJV)"
+ },
+ {
+  "text": "For we have not an high priest which cannot be touched with the feeling of our infirmities; but was in all points tempted like as we are, yet without sin.",
+  "source": "Heb 4:15 (KJV)"
+ },
+ {
+  "text": "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.",
+  "source": "Heb 4:16 (KJV)"
+ },
+ {
+  "text": "And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together, as the manner of some is; but exhorting one another: and so much the more, as ye see the day approaching.",
+  "source": "Heb 10:24-25 (KJV)"
+ },
+ {
+  "text": "But without faith it is impossible to please him: for he that cometh to God must believe that he is, and that he is a rewarder of them that diligently seek him.",
+  "source": "Heb 11:6 (KJV)"
+ },
+ {
+  "text": "Wherefore seeing we also are compassed about with so great a cloud of witnesses, let us lay aside every weight, and the sin which doth so easily beset us, and let us run with patience the race that is set before us,",
+  "source": "Heb 12:1 (KJV)"
+ },
+ {
+  "text": "Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee.",
+  "source": "Heb 13:5 (KJV)"
+ },
+ {
+  "text": "Jesus Christ the same yesterday, and to day, and for ever.",
+  "source": "Heb 13:8 (KJV)"
+ },
+ {
+  "text": "My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience.",
+  "source": "Jas 1:2-3 (KJV)"
+ },
+ {
+  "text": "Blessed is the man that endureth temptation: for when he is tried, he shall receive the crown of life, which the Lord hath promised to them that love him.",
+  "source": "Jas 1:12 (KJV)"
+ },
+ {
+  "text": "But be ye doers of the word, and not hearers only, deceiving your own selves.",
+  "source": "Jas 1:22 (KJV)"
+ },
+ {
+  "text": "Submit yourselves therefore to God. Resist the devil, and he will flee from you.",
+  "source": "Jas 4:7 (KJV)"
+ },
+ {
+  "text": "Draw nigh to God, and he will draw nigh to you. Cleanse your hands, ye sinners; and purify your hearts, ye double minded.",
+  "source": "Jas 4:8 (KJV)"
+ },
+ {
+  "text": "Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much.",
+  "source": "Jas 5:16 (KJV)"
+ },
+ {
+  "text": "But as he which hath called you is holy, so be ye holy in all manner of conversation; Because it is written, Be ye holy; for I am holy.",
+  "source": "1 Pet 1:15-16 (KJV)"
+ },
+ {
+  "text": "But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light:",
+  "source": "1 Pet 2:9 (KJV)"
+ },
+ {
+  "text": "Who his own self bare our sins in his own body on the tree, that we, being dead to sins, should live unto righteousness: by whose stripes ye were healed.",
+  "source": "1 Pet 2:24 (KJV)"
+ },
+ {
+  "text": "But sanctify the Lord God in your hearts: and be ready always to give an answer to every man that asketh you a reason of the hope that is in you with meekness and fear:",
+  "source": "1 Pet 3:15 (KJV)"
+ },
+ {
+  "text": "And above all things have fervent charity among yourselves: for charity shall cover the multitude of sins.",
+  "source": "1 Pet 4:8 (KJV)"
+ },
+ {
+  "text": "The Lord is not slack concerning his promise, as some men count slackness; but is longsuffering to us-ward, not willing that any should perish, but that all should come to repentance.",
+  "source": "2 Pet 3:9 (KJV)"
+ },
+ {
+  "text": "But grow in grace, and in the knowledge of our Lord and Saviour Jesus Christ. To him be glory both now and for ever. Amen.",
+  "source": "2 Pet 3:18 (KJV)"
+ },
+ {
+  "text": "But if we walk in the light, as he is in the light, we have fellowship one with another, and the blood of Jesus Christ his Son cleanseth us from all sin.",
+  "source": "1 John 1:7 (KJV)"
+ },
+ {
+  "text": "My little children, let us not love in word, neither in tongue; but in deed and in truth.",
+  "source": "1 John 3:18 (KJV)"
+ },
+ {
+  "text": "Beloved, let us love one another: for love is of God; and every one that loveth is born of God, and knoweth God.",
+  "source": "1 John 4:7 (KJV)"
+ },
+ {
+  "text": "He that loveth not knoweth not God; for God is love.",
+  "source": "1 John 4:8 (KJV)"
+ },
+ {
+  "text": "There is no fear in love; but perfect love casteth out fear: because fear hath torment. He that feareth is not made perfect in love.",
+  "source": "1 John 4:18 (KJV)"
+ },
+ {
+  "text": "We love him, because he first loved us.",
+  "source": "1 John 4:19 (KJV)"
+ },
+ {
+  "text": "For whatsoever is born of God overcometh the world: and this is the victory that overcometh the world, even our faith.",
+  "source": "1 John 5:4 (KJV)"
+ },
+ {
+  "text": "And this is the confidence that we have in him, that, if we ask any thing according to his will, he heareth us:",
+  "source": "1 John 5:14 (KJV)"
+ },
+ {
+  "text": "Now unto him that is able to keep you from falling, and to present you faultless before the presence of his glory with exceeding joy,",
+  "source": "Jude 1:24 (KJV)"
+ },
+ {
+  "text": "I am Alpha and Omega, the beginning and the ending, saith the Lord, which is, and which was, and which is to come, the Almighty.",
+  "source": "Rev 1:8 (KJV)"
+ },
+ {
+  "text": "Fear none of those things which thou shalt suffer: behold, the devil shall cast some of you into prison, that ye may be tried; and ye shall have tribulation ten days: be thou faithful unto death, and I will give thee a crown of life.",
+  "source": "Rev 2:10 (KJV)"
+ },
+ {
+  "text": "And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain: for the former things are passed away.",
+  "source": "Rev 21:4 (KJV)"
+ },
+ {
+  "text": "He which testifieth these things saith, Surely I come quickly. Amen. Even so, come, Lord Jesus.",
+  "source": "Rev 22:20 (KJV)"
  }
 ]);

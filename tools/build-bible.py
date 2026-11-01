@@ -1,51 +1,45 @@
 """Generate the Bible typing data from the local Bible DB.
 
 Usage:
-    python3 tools/build-bible.py [translation]     # 암송 100구절 → data/bible.js (default: 개역한글)
-    python3 tools/build-bible.py english [KJV]     # same 100 references in English → data/bible-en.js
-    python3 tools/build-bible.py psalms [개역한글]  # all 150 Psalms → data/psalms.js
-    python3 tools/build-bible.py psalms KJV        # KJV Psalms → data/psalms-kjv.js
+    python3 tools/build-bible.py [translation]     # 암송 365구절 → data/bible.js (default: 개역한글)
+    python3 tools/build-bible.py english [KJV]     # the same 365 references in English → data/bible-en.js
+    python3 tools/build-bible.py full [개역한글]    # the whole Bible → data/bible-full-krv.js
+    python3 tools/build-bible.py full KJV          # the whole Bible → data/bible-full-kjv.js
 
+Memory-verse references live in tools/memory-verses.txt (one per line).
 Requires the B-Wiki bible_db.py script and its .env (BIBLE_DB_DIR).
-개역한글 is used by default because its copyright has expired; other
-translations (e.g. 개역개정) may only be used for personal practice.
+개역한글 and KJV are public domain; other translations (e.g. 개역개정) may only be used for personal practice.
 """
 import json
 import re
+import sqlite3
 import subprocess
 import sys
 from pathlib import Path
 
 WIKI_DIR = Path.home() / "Desktop" / "B-Wiki"
 SCRIPT = WIKI_DIR / "scripts" / "bible_db.py"
-DATA = Path(__file__).resolve().parent.parent / "src" / "renderer" / "data"
+TOOLS = Path(__file__).resolve().parent
+DATA = TOOLS.parent / "src" / "renderer" / "data"
 OUT = DATA / "bible.js"
 OUT_EN = DATA / "bible-en.js"
-OUT_PSALMS = DATA / "psalms.js"
-OUT_PSALMS_KJV = DATA / "psalms-kjv.js"
-PSALM_COUNT = 150
-
-REFS = [
-    "창 1:1", "신 6:5", "수 1:9", "시 1:1-2", "시 23:1", "시 27:1", "시 37:5", "시 46:1", "시 46:10",
-    "시 51:10", "시 55:22", "시 91:1", "시 119:9", "시 119:105", "시 121:1-2", "시 127:1",
-    "시 139:23-24", "잠 3:5-6", "잠 4:23", "잠 16:3", "잠 16:9", "전 12:1", "사 26:3", "사 40:31",
-    "사 41:10", "사 43:1", "사 53:5", "사 55:8", "렘 29:11", "렘 33:3", "애 3:22-23", "미 6:8",
-    "합 3:17-18", "습 3:17", "말 3:10", "마 5:3", "마 5:14", "마 5:16", "마 6:33", "마 7:7",
-    "마 11:28", "마 22:37", "마 28:19-20", "막 10:45", "막 16:15", "눅 9:23", "눅 19:10", "요 1:1",
-    "요 1:12", "요 3:16", "요 5:24", "요 8:32", "요 10:10", "요 11:25", "요 13:34", "요 14:1",
-    "요 14:6", "요 14:27", "요 15:5", "요 16:33", "행 1:8", "행 4:12", "행 16:31", "롬 1:16",
-    "롬 3:23", "롬 5:8", "롬 6:23", "롬 8:1", "롬 8:28", "롬 10:9-10", "롬 12:1", "롬 12:2",
-    "고전 10:13", "고전 10:31", "고전 13:4", "고전 15:58", "고후 5:17", "고후 12:9", "갈 2:20",
-    "갈 5:22-23", "갈 6:9", "엡 2:8-9", "엡 6:10", "빌 1:21", "빌 4:4", "빌 4:6-7", "빌 4:13",
-    "골 3:23", "살전 5:16-18", "딤후 1:7", "딤후 3:16", "히 4:12", "히 11:1", "히 12:2", "약 1:5",
-    "벧전 5:7", "요일 1:9", "요일 4:10", "계 3:20", "잠 22:6",
-]
+FULL_OUT = {"개역한글": DATA / "bible-full-krv.js", "KJV": DATA / "bible-full-kjv.js"}
+MEMORY_COUNT = 365
+BOOK_COUNT = 66
 
 LINE = re.compile(r"^\S+ \d+:\d+\s+(.*)$")
-# Characters that are hard to type are normalized to their keyboard equivalents.
-NORMALIZE = {"‘": "'", "’": "'", "“": '"', "”": '"', "·": ",", "…": "...", " ": " ", "—": "-", "–": "-"}
 LINE_REF = re.compile(r"^(\S+) (\d+:\d+)\s")
+# Characters that are hard to type are normalized to their keyboard equivalents.
+NORMALIZE = {"‘": "'", "’": "'", "“": '"', "”": '"', "·": ",", "…": "...", " ": " ", "—": "-", "–": "-",
+             "○": "", "æ": "ae", "Æ": "Ae"}  # ○ = 개역한글 paragraph mark; æ = 1769 KJV ligature (Cæsar)
 
+
+def memory_refs() -> list[str]:
+    lines = (TOOLS / "memory-verses.txt").read_text(encoding="utf-8").splitlines()
+    refs = [line.strip() for line in lines if line.strip() and not line.startswith("#")]
+    if len(refs) != MEMORY_COUNT or len(set(refs)) != MEMORY_COUNT:
+        raise SystemExit(f"Expected {MEMORY_COUNT} unique references, got {len(set(refs))}")
+    return refs
 
 
 def quote(translation: str, ref: str) -> list[str]:
@@ -61,14 +55,15 @@ def quote(translation: str, ref: str) -> list[str]:
 
 
 def clean(text: str) -> str:
+    """Typable text: KJV italics markers like [is] are dropped (keeping the words), punctuation normalized."""
+    text = re.sub(r"[\[\]]", "", text)
     for src, dst in NORMALIZE.items():
         text = text.replace(src, dst)
     return re.sub(r"\s+", " ", text).strip()
 
 
 def fetch(translation: str, ref: str) -> str:
-    """Verse text ready to type. KJV italics markers like [is] are dropped, keeping the words."""
-    return clean(re.sub(r"[\[\]]", "", " ".join(LINE.match(line).group(1) for line in quote(translation, ref))))
+    return clean(" ".join(LINE.match(line).group(1) for line in quote(translation, ref)))
 
 
 def english_ref(translation: str, ref: str) -> str:
@@ -80,53 +75,62 @@ def english_ref(translation: str, ref: str) -> str:
     return re.sub(r"^(\d)([A-Za-z])", r"\1 \2", label)
 
 
-def write_js(path: Path, header: str, exports: dict) -> None:
+def write_js(path: Path, header: str, exports: dict, indent: int | None = 1) -> None:
     lines = [header]
     for name, value in exports.items():
-        body = json.dumps(value, ensure_ascii=False, indent=1)
+        body = json.dumps(value, ensure_ascii=False, indent=indent, separators=None if indent else (",", ":"))
         lines.append(f"export const {name} = {body if isinstance(value, str) else f'Object.freeze({body})'};")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def check_refs() -> None:
-    if len(REFS) != 100 or len(set(REFS)) != 100:
-        raise SystemExit(f"Expected 100 unique references, got {len(set(REFS))}")
-
-
 def build_verses(translation: str) -> None:
-    check_refs()
-    items = [{"text": fetch(translation, ref), "source": ref} for ref in REFS]
-    write_js(OUT, f"// 성경 암송 말씀 100구절 ({translation}) - generated by tools/build-bible.py",
+    items = [{"text": fetch(translation, ref), "source": ref} for ref in memory_refs()]
+    write_js(OUT, f"// 성경 암송 말씀 365구절 ({translation}) - generated by tools/build-bible.py",
              {"BIBLE_TRANSLATION": translation, "BIBLE_VERSES": items})
     print(f"Wrote {len(items)} verses to {OUT}")
 
 
 def build_english(translation: str) -> None:
-    check_refs()
-    items = [{"text": fetch(translation, ref), "source": f"{english_ref(translation, ref)} ({translation})"} for ref in REFS]
-    exports = {"EN_BIBLE_TRANSLATION": translation, "EN_BIBLE_VERSES": items}
-    write_js(OUT_EN, f"// Memory verses in English ({translation}), same references as bible.js - generated by tools/build-bible.py", exports)
+    items = [{"text": fetch(translation, ref), "source": f"{english_ref(translation, ref)} ({translation})"} for ref in memory_refs()]
+    write_js(OUT_EN, f"// Memory verses in English ({translation}), same references as bible.js - generated by tools/build-bible.py",
+             {"EN_BIBLE_TRANSLATION": translation, "EN_BIBLE_VERSES": items})
     print(f"Wrote {len(items)} verses to {OUT_EN}")
 
 
-def build_psalms(translation: str) -> None:
-    """All 150 Psalms. KJV italics markers like [is] are dropped so only the words are typed."""
-    out = OUT_PSALMS_KJV if translation.upper() == "KJV" else OUT_PSALMS
-    chapters = []
-    for number in range(1, PSALM_COUNT + 1):
-        verses = [clean(re.sub(r"[\[\]]", "", LINE.match(line).group(1))) for line in quote(translation, f"시 {number}")]
-        chapters.append({"chapter": number, "verses": verses})
-    write_js(out, f"// 시편 150편 ({translation}) - generated by tools/build-bible.py",
-             {"PSALMS_TRANSLATION": translation, "PSALMS": chapters})
-    print(f"Wrote {len(chapters)} psalms ({sum(len(c['verses']) for c in chapters)} verses) to {out}")
+def db_path(translation: str) -> Path:
+    """The SQLite file for a translation, found in BIBLE_DB_DIR from the B-Wiki .env (e.g. 개역한글 → 개역한글KRV.db)."""
+    env = (WIKI_DIR / ".env").read_text(encoding="utf-8")
+    folder = Path(re.search(r'^BIBLE_DB_DIR="?([^"\n]+)"?', env, re.M).group(1))
+    matches = sorted(p for p in folder.glob("*.db") if p.stem.lower().startswith(translation.lower()))
+    if not matches:
+        raise SystemExit(f"No database for {translation} in {folder}")
+    return matches[0]
+
+
+def build_full(translation: str) -> None:
+    """Whole Bible as books → chapters → verse texts (read-only access to the DB)."""
+    con = sqlite3.connect(f"file:{db_path(translation)}?mode=ro", uri=True)
+    rows = con.execute("select bibleCode, Jang, Jul, Cont from bible order by bibleCode, Jang, Jul").fetchall()
+    books: list[list[list[str]]] = [[] for _ in range(BOOK_COUNT)]
+    for book, chapter, verse, text in rows:
+        chapters = books[book - 1]
+        while len(chapters) < chapter:
+            chapters.append([])
+        if len(chapters[chapter - 1]) != verse - 1:
+            raise SystemExit(f"Verse gap at {book} {chapter}:{verse}")
+        chapters[chapter - 1].append(clean(text or ""))
+    out = FULL_OUT.get(translation, DATA / f"bible-full-{translation.lower()}.js")
+    write_js(out, f"// 성경 전권 ({translation}) - generated by tools/build-bible.py. BIBLE_FULL[book-1][chapter-1][verse-1]",
+             {"BIBLE_FULL_TRANSLATION": translation, "BIBLE_FULL": books}, indent=None)
+    print(f"Wrote {len(rows)} verses in {sum(len(b) for b in books)} chapters to {out}")
 
 
 def main() -> None:
     args = sys.argv[1:]
     if args[:1] == ["english"]:
         build_english(args[1] if len(args) > 1 else "KJV")
-    elif args[:1] == ["psalms"]:
-        build_psalms(args[1] if len(args) > 1 else "개역한글")
+    elif args[:1] == ["full"]:
+        build_full(args[1] if len(args) > 1 else "개역한글")
     else:
         build_verses(args[0] if args else "개역한글")
 

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeLine, parseTextFile, parseBibleFile, expandRef, buildBibleOverride } from '../src/renderer/core/user-content.js';
+import { normalizeLine, parseTextFile, expandRef } from '../src/renderer/core/user-content.js';
 import { bookNumber } from '../src/renderer/data/bible-books.js';
 
 test('normalizeLine makes text typable and counts what it had to drop', () => {
@@ -31,18 +31,4 @@ test('book names are recognised in Korean and English', () => {
   for (const name of ['요일', '요한일서', '1John', '1 John']) assert.equal(bookNumber(name), 62);
   assert.equal(bookNumber('없는책'), null);
   assert.deepEqual(expandRef('시 1:1-2'), [[19, 1, 1], [19, 1, 2]]);
-});
-
-test('a Bible file replaces memory verses and, when complete, the Psalms', () => {
-  const psalms = Array.from({ length: 150 }, (_, c) => `시편 ${c + 1}:1 ${c + 1}편 1절 말씀`).join('\n');
-  const file = `#번역 나의번역\n창 1:1 태초에 하나님이\n요 3:16 하나님이 세상을\n시 1:2 오직 여호와의 율법을\n${psalms}\n없는책 1:1 무시됨`;
-  const parsed = parseBibleFile(file, 'bible.txt');
-  assert.equal(parsed.name, '나의번역');
-  assert.equal(parsed.lang, 'ko');
-  assert.equal(parsed.unknownBooks, 1);
-  const override = buildBibleOverride(parsed, ['창 1:1', '요 3:16', '시 1:1-2', '롬 8:28']);
-  assert.deepEqual(Object.keys(override.verses), ['창 1:1', '요 3:16', '시 1:1-2']);
-  assert.equal(override.verses['시 1:1-2'], '1편 1절 말씀 오직 여호와의 율법을');
-  assert.equal(override.psalms.length, 150);
-  assert.equal(buildBibleOverride(parseBibleFile('Gen 1:1 In the beginning', 'kjv.txt'), ['창 1:1']).psalms, null);
 });

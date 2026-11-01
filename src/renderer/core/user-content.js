@@ -1,13 +1,11 @@
-// 사용자가 불러온 글: 텍스트 파일(긴 글 연습)과 성경 본문 파일(개역한글·KJV 대신 쓰기).
-// 파일 해석은 순수 함수로 두고, 저장은 이 컴퓨터의 앱 저장소(localStorage)에만 합니다.
+// 사용자가 불러온 텍스트 파일(긴 글 연습)과 공용 도우미(문자 정리, 성경 구절 표기 풀기).
+// 파일 해석은 순수 함수로 두고, 저장은 이 컴퓨터의 앱 저장소(localStorage)에만 합니다. 성경 전권은 bible-store.js(IndexedDB)에 저장합니다.
 import { isTypable } from './keyboard-layout.js';
-import { bookNumber, PSALMS_BOOK } from '../data/bible-books.js';
+import { bookNumber } from '../data/bible-books.js';
 
 export const MAX_FILE_CHARS = 600_000; // about 1 MB of UTF-8 text
 const LINES_PER_PART = 20; // a file without "## headings" is split into parts of this many lines
-const PSALM_COUNT = 150;
 const TEXTS_KEY = 'tw.userTexts.v1';
-const BIBLE_KEY = 'tw.userBible.v1';
 
 const PUNCT = [
   [/[‘’‛′]/g, "'"], [/[“”„″]/g, '"'], [/[―—–‐]/g, '-'], [/…/g, '...'], [/[·•]/g, ','],
@@ -73,40 +71,6 @@ export function parseTextFile(content, fileName) {
 
 const chunk = (list, size) => Array.from({ length: Math.ceil(list.length / size) }, (_, i) => list.slice(i * size, i * size + size));
 
-const VERSE_LINE = /^(.+?)\s*(\d+)\s*:\s*(\d+)\s+(.+)$/;
-
-/**
- * Bible text file → verses by reference.
- * Each line: "<책> <장>:<절> <본문>", e.g. "창 1:1 태초에 …" or "Gen 1:1 In the beginning …".
- * An optional first line "#번역 개역개정" names the translation (otherwise the file name is used).
- */
-export function parseBibleFile(content, fileName) {
-  if (content.length > MAX_FILE_CHARS * 8) throw new Error('too-large');
-  let name = baseName(fileName);
-  const verses = new Map();
-  let unknownBooks = 0;
-  for (const raw of content.replace(/^﻿/, '').split(/\r?\n/)) {
-    const line = raw.trim();
-    if (!line) continue;
-    const header = line.match(/^#\s*(번역|translation)\s*[:：]?\s*(.+)$/i);
-    if (header) {
-      name = header[2].trim();
-      continue;
-    }
-    const m = line.match(VERSE_LINE);
-    if (!m) continue;
-    const book = bookNumber(m[1]);
-    if (!book) {
-      unknownBooks += 1;
-      continue;
-    }
-    const text = normalizeLine(m[4]).text;
-    if (text) verses.set(`${book}|${Number(m[2])}|${Number(m[3])}`, text);
-  }
-  if (verses.size === 0) throw new Error('no-verses');
-  return { name, lang: detectLang([...verses.values()].slice(0, 50).join(' ')), verses, unknownBooks };
-}
-
 /** "시 1:1-2" → [[19, 1, 1], [19, 1, 2]] (references in the app's memory-verse list). */
 export function expandRef(ref) {
   const m = ref.match(/^(\S+)\s+(\d+):(\d+)(?:-(\d+))?/);
@@ -114,26 +78,6 @@ export function expandRef(ref) {
   const book = bookNumber(m[1]);
   const [chapter, first, last] = [Number(m[2]), Number(m[3]), Number(m[4] || m[3])];
   return Array.from({ length: last - first + 1 }, (_, i) => [book, chapter, first + i]);
-}
-
-/**
- * Pick out what the app uses from a parsed Bible: the memory verses (by the app's Korean references)
- * and, when all 150 are present, the Psalms.
- */
-export function buildBibleOverride(parsed, memoryRefs) {
-  const verses = {};
-  for (const ref of memoryRefs) {
-    const parts = expandRef(ref).map(([b, c, v]) => parsed.verses.get(`${b}|${c}|${v}`));
-    if (parts.length && parts.every(Boolean)) verses[ref] = parts.join(' ');
-  }
-  const psalms = [];
-  for (let chapter = 1; chapter <= PSALM_COUNT; chapter += 1) {
-    const lines = [];
-    for (let verse = 1; parsed.verses.has(`${PSALMS_BOOK}|${chapter}|${verse}`); verse += 1) lines.push(parsed.verses.get(`${PSALMS_BOOK}|${chapter}|${verse}`));
-    if (lines.length === 0) break;
-    psalms.push({ chapter, verses: lines });
-  }
-  return { name: parsed.name, lang: parsed.lang, verses, psalms: psalms.length === PSALM_COUNT ? psalms : null };
 }
 
 // ---------------------------------------------------------------- storage (this computer only)
@@ -173,19 +117,4 @@ export function removeUserText(id) {
   const texts = loadUserTexts().filter((w) => w.id !== id);
   write(TEXTS_KEY, texts);
   return texts;
-}
-
-/** { ko?: override, en?: override } — overrides replace 개역한글 (ko) or KJV (en). */
-export const loadUserBible = () => {
-  const stored = read(BIBLE_KEY, {});
-  return stored && typeof stored === 'object' ? stored : {};
-};
-
-export function saveUserBible(override) {
-  return write(BIBLE_KEY, { ...loadUserBible(), [override.lang]: override });
-}
-
-export function clearUserBible(lang) {
-  const { [lang]: _removed, ...rest } = loadUserBible();
-  write(BIBLE_KEY, rest);
 }

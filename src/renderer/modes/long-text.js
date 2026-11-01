@@ -1,75 +1,47 @@
-// 긴 글 연습: 시편과 시집을 한 편씩, 한 줄(절)씩 이어서 칩니다. 작품마다 어디까지 쳤는지 저장해 다음에 이어서 합니다.
-// 연습 언어(한/EN)에 맞는 작품만 보여 줍니다.
-import { PSALMS as KO_PSALMS, PSALMS_TRANSLATION as KO_TRANSLATION } from '../data/psalms.js';
-import { PSALMS as KJV_PSALMS, PSALMS_TRANSLATION as KJV_TRANSLATION } from '../data/psalms-kjv.js';
-import { WORKS as KO_POETRY } from '../data/poetry-ko.js';
-import { WORKS as EN_POETRY } from '../data/poetry-en.js';
+// 긴 글 연습: 성경 전권(책 → 장)과 시집, 내가 불러온 글을 한 줄(절)씩 이어서 칩니다.
+// 작품마다 어디까지 쳤는지 저장해 다음에 이어서 합니다. 연습 언어(한/EN)에 맞는 작품만 보여 줍니다.
 import { applyKey, createTarget, typedText, detectLang } from '../core/typing-input.js';
 import { el, pills } from '../ui/dom.js';
 import { renderTypingLine } from '../ui/typing-line.js';
 import { sounds } from '../core/sound.js';
-import { t, loc } from '../core/i18n.js';
+import { t, getUiLang } from '../core/i18n.js';
+import { bookName } from '../data/bible-books.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 import { createImportTools } from './long-text-import.js';
-import { loadUserTexts, removeUserText, loadUserBible, clearUserBible } from '../core/user-content.js';
-
-const psalms = (id, lang, chapters, translation) => ({
-  id, lang, numbered: true,
-  pieces: chapters.map((c) => ({ title: null, lines: c.verses })),
-  label: () => t('long.psalms', { translation }),
-  pieceLabel: (n) => t('long.chapter', { chapter: n }),
-});
-
-const poetry = (work) => ({
-  id: work.id, lang: work.lang, numbered: false, pieces: work.pieces,
-  label: () => `📖 ${loc(work.title)}`,
-  pieceLabel: (n, piece) => (piece.title ? `${n}. ${piece.title}` : t('long.sonnet', { n })),
-});
-
-const userWork = (work) => ({
-  id: work.id, lang: work.lang, numbered: false, pieces: work.pieces, user: true,
-  label: () => `📄 ${work.title}`,
-  pieceLabel: (n, piece) => (piece.title ? `${n}. ${piece.title}` : t('long.userPart', { n })),
-});
-
-/** All texts: built-in works, the user's Bible text in place of 개역한글/KJV Psalms, and the user's own files. */
-function buildTexts() {
-  const bible = loadUserBible();
-  const user = loadUserTexts().map(userWork);
-  const ko = bible.ko?.psalms ? psalms('psalms', 'ko', bible.ko.psalms, bible.ko.name) : psalms('psalms', 'ko', KO_PSALMS, KO_TRANSLATION);
-  const en = bible.en?.psalms ? psalms('psalms-kjv', 'en', bible.en.psalms, bible.en.name) : psalms('psalms-kjv', 'en', KJV_PSALMS, KJV_TRANSLATION);
-  return [
-    ko, ...KO_POETRY.map(poetry), ...user.filter((w) => w.lang === 'ko'),
-    en, ...EN_POETRY.map(poetry), ...user.filter((w) => w.lang === 'en'),
-  ];
-}
+import { buildTexts, migrateOldPsalms, PSALMS_BOOK } from './long-text-works.js';
+import { removeUserText } from '../core/user-content.js';
+import { getBible } from '../core/bible-source.js';
+import { clearUserBible } from '../core/bible-store.js';
 
 export function createLongTextMode(ctx) {
   const session = createSession();
-  let texts = buildTexts();
-  const textsFor = (lang) => texts.filter((item) => item.lang === lang);
-  /** The last text practiced if it matches the practice language, otherwise the first text in that language. */
-  const pickText = (id, lang) => textsFor(lang).find((item) => item.id === id) || textsFor(lang)[0];
-  let text = pickText(ctx.settings().longTextId, ctx.settings().lang);
+  let alive = true;
+  let bibles = null; // { ko, en } once loaded
+  let texts = [];
+  let text = null;
   let showHelp = false;
-  let piece = 1; // 1-based piece number (psalm, sonnet, poem)
+  let piece = 1; // 1-based piece number (chapter, sonnet, poem)
   let line = 0; // index of the line (verse) being typed
   let typed = [];
   let target = null;
   let lang = 'ko';
+
+  const textsFor = (language) => texts.filter((item) => item.lang === language);
+  /** The last text practiced if it matches the practice language, otherwise the first text in that language. */
+  const pickText = (id, language) => textsFor(language).find((item) => item.id === id) || textsFor(language)[0];
 
   const toolbar = el('div', { class: 'mode-toolbar' });
   const actions = el('div', { class: 'mode-toolbar long-actions' });
   const help = el('div', { class: 'long-help', hidden: true });
   const tools = createImportTools(ctx, {
     onTextAdded(work) {
-      texts = buildTexts();
+      texts = buildTexts(bibles);
       if (work.lang === text.lang) switchText(work.id);
       else ctx.toast(t(work.lang === 'en' ? 'long.seeInEn' : 'long.seeInKo', { title: work.title }));
     },
     onBibleChanged: refreshBible,
   });
-  const title = el('h2', { class: 'long-title' });
+  const title = el('h2', { class: 'long-title' }, t('long.loading'));
   const previous = el('div', { class: 'long-context' });
   const current = el('div', { class: 'sentence-target' });
   const input = el('div', { class: 'typed-box sentence-typed' });
@@ -83,6 +55,17 @@ export function createLongTextMode(ctx) {
   const lines = () => pieces()[piece - 1].lines;
   const doneId = (number) => `${text.id}-${number}`;
   const pieceName = (number = piece) => text.pieceLabel(number, pieces()[number - 1]);
+
+  async function init() {
+    const [ko, en] = await Promise.all([getBible('ko'), getBible('en')]);
+    if (!alive) return;
+    bibles = { ko, en };
+    texts = buildTexts(bibles);
+    const patch = migrateOldPsalms(ctx.settings(), texts);
+    if (patch) ctx.updateSettings(patch);
+    text = pickText(ctx.settings().longTextId, ctx.settings().lang);
+    resume();
+  }
 
   function saveProgress() {
     const progress = { ...ctx.settings().longTextProgress, [text.id]: { chapter: piece, verse: line } };
@@ -105,20 +88,18 @@ export function createLongTextMode(ctx) {
     resume();
   }
 
-  /** The user's Bible text was added or cleared: rebuild the Psalms and reopen them if they are showing. */
-  function refreshBible(lang) {
-    texts = buildTexts();
-    const reopened = texts.find((item) => item.id === text.id);
-    if (reopened && reopened.lang === lang) {
-      text = reopened;
-      resume();
-    } else {
-      renderToolbar();
-    }
+  /** The user's Bible was added or cleared: reload it and reopen the Bible if it is showing. */
+  async function refreshBible(language) {
+    bibles = { ...bibles, [language]: await getBible(language) };
+    if (!alive) return;
+    texts = buildTexts(bibles);
+    text = texts.find((item) => item.id === text.id) || textsFor(text.lang)[0];
+    if (text.bible) resume();
+    else renderToolbar();
   }
 
-  function resetBible() {
-    clearUserBible(text.lang);
+  async function resetBible() {
+    await clearUserBible(text.lang);
     ctx.toast(t('long.bibleReset'));
     refreshBible(text.lang);
   }
@@ -126,7 +107,7 @@ export function createLongTextMode(ctx) {
   function removeText() {
     if (!window.confirm(t('long.confirmRemove', { title: text.label().replace(/^📄 /, '') }))) return;
     removeUserText(text.id);
-    texts = buildTexts();
+    texts = buildTexts(bibles);
     text = textsFor(text.lang)[0];
     ctx.updateSettings({ longTextId: text.id });
     resume();
@@ -149,29 +130,44 @@ export function createLongTextMode(ctx) {
 
   function load() {
     typed = [];
-    target = createTarget(lines()[line]);
+    target = createTarget(lines()[line] ?? '');
     lang = detectLang(target.text);
     ctx.setKeyboardLang(lang);
     render();
   }
 
+  const select = (tip, options, onPick) =>
+    el('select', { class: 'long-picker', title: tip, tabindex: '-1', onchange: (e) => { e.target.blur(); onPick(Number(e.target.value)); } }, options);
+
+  /** Bible: a book list and a chapter list. Other works: one list of pieces. */
+  function pickers(done) {
+    const mark = (i) => (done.has(doneId(i)) ? '✓ ' : '');
+    if (!text.bible) {
+      return [select(t('long.pick'), pieces().map((p, i) => el('option', { value: i + 1, selected: i + 1 === piece }, `${mark(i + 1)}${text.pieceLabel(i + 1, p)}`)), openPiece)];
+    }
+    const { book } = pieces()[piece - 1];
+    const start = text.bookStart[book - 1];
+    const chapterCount = (text.bookStart[book] ?? pieces().length + 1) - start;
+    const books = text.bookStart.map((first, b) => el('option', { value: first, selected: b + 1 === book }, bookName(b + 1, getUiLang())));
+    const chapters = Array.from({ length: chapterCount }, (_, c) => el('option', { value: start + c, selected: start + c === piece }, `${mark(start + c)}${t(book === PSALMS_BOOK ? 'long.psalmOnly' : 'long.chapterOnly', { chapter: c + 1 })}`));
+    return [select(t('long.pickBook'), books, openPiece), select(t('long.pick'), chapters, openPiece)];
+  }
+
   function renderToolbar() {
-    const done = ctx.settings().completedStages;
-    const doneCount = pieces().filter((_, i) => done.includes(doneId(i + 1))).length;
-    const picker = el('select', { class: 'long-picker', title: t('long.pick'), tabindex: '-1', onchange: (e) => { e.target.blur(); openPiece(Number(e.target.value)); } },
-      pieces().map((p, i) => el('option', { value: i + 1, selected: i + 1 === piece }, `${done.includes(doneId(i + 1)) ? '✓ ' : ''}${text.pieceLabel(i + 1, p)}`)));
+    const done = new Set(ctx.settings().completedStages);
+    const doneCount = pieces().filter((_, i) => done.has(doneId(i + 1))).length;
     const step = (label, tip, delta) => el('button', { class: 'pill', type: 'button', tabindex: '-1', title: tip, onclick: () => openPiece(piece + delta) }, label);
     toolbar.replaceChildren(
       pills(textsFor(text.lang).map((item) => ({ value: item.id, label: item.label() })), text.id, switchText),
-      el('div', { class: 'level-stepper' }, step('◀', t('long.prev'), -1), picker, step('▶', t('long.nextBtn'), 1)),
-      el('span', { class: 'practice-desc' }, t('long.completed', { count: doneCount, total: pieces().length })),
+      el('div', { class: 'level-stepper' }, step('◀', t('long.prev'), -1), ...pickers(done), step('▶', t('long.nextBtn'), 1)),
+      el('span', { class: 'practice-desc' }, t(text.bible ? 'long.completedChapters' : 'long.completed', { count: doneCount, total: pieces().length })),
     );
     const button = (label, onClick, active = false) => el('button', { class: `pill${active ? ' active' : ''}`, type: 'button', tabindex: '-1', onclick: onClick }, label);
-    const hasUserBible = Boolean(loadUserBible()[text.lang]);
+    const customBible = textsFor(text.lang).some((item) => item.bible && item.customBible);
     actions.replaceChildren(...[
       button(t('long.importText'), tools.chooseText),
       button(t('long.importBible'), tools.chooseBible),
-      hasUserBible && button(t('long.resetBible'), resetBible),
+      customBible && button(t('long.resetBible'), resetBible),
       text.user && button(t('long.removeText'), removeText),
       button(t('long.formatHelp'), toggleHelp, showHelp),
     ].filter(Boolean)); // replaceChildren would print a skipped button as the text "null"
@@ -199,7 +195,9 @@ export function createLongTextMode(ctx) {
     tick();
   }
 
-  const tick = () => ctx.status(statusFrom(session.snapshot(), t('long.progress', { piece: pieceName(), line: line + 1, total: lines().length })));
+  const tick = () => {
+    if (text) ctx.status(statusFrom(session.snapshot(), t('long.progress', { piece: pieceName(), line: line + 1, total: lines().length })));
+  };
 
   function finishPiece() {
     const finished = piece;
@@ -233,6 +231,7 @@ export function createLongTextMode(ctx) {
   }
 
   function onKeyDown(event) {
+    if (!text) return false; // still loading
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
       submit();
       return true;
@@ -250,13 +249,18 @@ export function createLongTextMode(ctx) {
     return true;
   }
 
-  resume();
+  init().catch((error) => {
+    console.error('Could not load the long texts.', error);
+    title.textContent = t('long.errRead');
+  });
   return {
     onKeyDown,
     onLangChange(nextLang) {
-      if (text.lang !== nextLang) switchText(pickText(ctx.settings().longTextId, nextLang).id);
+      if (text && text.lang !== nextLang) switchText(pickText(ctx.settings().longTextId, nextLang).id);
     },
     tick,
-    destroy() {},
+    destroy() {
+      alive = false;
+    },
   };
 }

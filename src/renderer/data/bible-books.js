@@ -35,3 +35,6 @@ const BY_NAME = new Map(BOOKS.flatMap((names, i) => names.map((name) => [key(nam
 /** Book number (1-66) for a book name in Korean or English, or null when unknown. */
 export const bookNumber = (name) => BY_NAME.get(key(name)) ?? null;
 
+
+/** Full book name for display: 19 → '시편' (ko) or 'Psalms' (en). */
+export const bookName = (number, lang) => BOOKS[number - 1]?.[lang === 'ko' ? 1 : 3] ?? String(number);

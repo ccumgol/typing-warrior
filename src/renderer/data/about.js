@@ -14,8 +14,8 @@ export const ABOUT = Object.freeze({
     ],
     features: [
       ['자리 연습', '한글 7단계, 영문 6단계, 혼합 모드. 손가락 색상과 다음 키 표시'],
-      ['단어 · 문장', '주제별 단어, 명언, 성경 암송 구절(개역한글·KJV), 영어 문장'],
-      ['📜 긴 글', '시편(개역한글·KJV)과 시집을 한 줄씩 이어서 타이핑. 어디까지 쳤는지 저장. 내 텍스트 파일과 내 성경 본문 파일도 불러와 연습'],
+      ['단어 · 문장', '주제별 단어, 명언, 📅 오늘의 말씀, 성경 암송 365구절(개역한글·KJV), 영어 문장'],
+      ['📜 긴 글', '성경 전권(개역한글·KJV, 1,189장)과 시집을 한 줄씩 이어서 타이핑. 어디까지 쳤는지 저장. 내 텍스트 파일과 성경 전권 파일(CSV·XML·TXT)도 올려 연습'],
       ['🧱 단어블록게임', '연속 모드와 단계 모드(LEVEL 1~20, 레벨 10 = 분당 200타)'],
       ['🎖️ 전선 작전', '1인칭 전장 타자 게임. 효과음 세트 4종(전장 배경음 포함)'],
       ['단축키', 'macOS·Windows 기본 단축키 3단계. 키보드를 감추면 외워서 누르기'],
@@ -29,20 +29,20 @@ export const ABOUT = Object.freeze({
       '모든 본문은 아래 출처에서 그대로 가져왔고, 키보드로 칠 수 없는 문자만 정해진 규칙으로 바꿨습니다.',
     sources: [
       {
-        name: '성경 · 개역한글 (암송 100구절, 시편 150편)',
+        name: '성경 · 개역한글 (성경 전권, 암송 365구절)',
         lines: [
           '번역·저작권: 대한성서공회. 『성경전서 개역한글판』(1961)은 저작재산권 보호 기간이 지나 저작권료 없이 쓸 수 있다고 대한성서공회가 안내합니다.',
-          '조건: 성명표시권(번역자 표시)과 동일성유지권(본문을 바꾸지 않기)을 지켜야 합니다. 이 프로그램은 본문을 바꾸지 않고, 키보드로 칠 수 없는 따옴표·가운뎃점만 바꿨습니다.',
+          '조건: 성명표시권(번역자 표시)과 동일성유지권(본문을 바꾸지 않기)을 지켜야 합니다. 이 프로그램은 본문을 바꾸지 않고, 키보드로 칠 수 없는 따옴표·가운뎃점만 바꾸고 문단 표시(○)는 뺐습니다.',
           '개역개정판은 저작권이 있어(대한성서공회) 기본 데이터에 넣지 않았습니다.',
         ],
         links: [link('대한성서공회 저작권 FAQ', 'https://www.bskorea.or.kr/bbs/board.php?bo_table=copyright_faq&wr_id=5')],
       },
       {
-        name: '성경 · KJV (영어 암송 100구절, 시편 150편, 응원 구절)',
+        name: '성경 · KJV (성경 전권, 영어 암송 365구절, 응원 구절)',
         lines: [
           'King James Version(1769년 옥스퍼드 Blayney판 기준). CrossWire Bible Society가 1769년판 영인본과 대조해 만든 전자 본문을 eBible.org에서 받아 썼습니다.',
           '영국 밖에서는 퍼블릭 도메인입니다. 영국에서는 왕실 특허(Letters Patent)로 인쇄가 제한됩니다.',
-          '이탤릭(번역자가 덧붙인 말) 표시는 빼고 단어만 남겼고, 둥근 아포스트로피(’)는 키보드의 \'로 바꿨습니다.',
+          '이탤릭(번역자가 덧붙인 말) 표시는 빼고 단어만 남겼고, 둥근 아포스트로피(’)는 키보드의 \'로, 합자 æ(Cæsar)는 ae로 바꿨습니다.',
         ],
         links: [link('eBible.org KJV', 'https://ebible.org/find/details.php?id=eng-kjv'), link('CrossWire KJV', 'https://wiki.crosswire.org/CrossWire_KJV')],
       },
@@ -111,7 +111,7 @@ export const ABOUT = Object.freeze({
     ],
     otherTitle: '그 밖의 정보',
     other: [
-      '긴 글의 「📂 내 글 불러오기」와 「📖 성경 본문 바꾸기」로 불러온 파일은 이 컴퓨터 안에만 저장되고 다른 곳으로 보내지 않습니다. 불러온 글의 저작권은 각 저작권자에게 있으며, 저작권이 있는 글(예: 개역개정)은 개인 연습용으로만 쓰세요. 파일 형식은 긴 글 화면의 「❔ 파일 형식」에서 볼 수 있습니다.',
+      '긴 글의 「📂 내 글 불러오기」와 「📖 성경 파일 올리기」로 불러온 파일은 이 컴퓨터 안에만 저장되고 다른 곳으로 보내지 않습니다. 불러온 글의 저작권은 각 저작권자에게 있으며, 저작권이 있는 역본(예: 개역개정, ESV)은 정식으로 구한 본문을 개인 연습용으로만 쓰세요. 파일 형식은 긴 글 화면의 「❔ 파일 형식」에서 볼 수 있습니다.',
       '효과음은 녹음 파일 없이 프로그램이 직접 합성합니다.',
       '설정과 연습 기록은 이 컴퓨터 안(앱 저장소)에만 저장되며 외부로 보내지 않습니다.',
       '데스크톱 앱은 Electron(MIT 라이선스)으로 만들었습니다.',
@@ -127,8 +127,8 @@ export const ABOUT = Object.freeze({
     ],
     features: [
       ['Key Drills', '7 Korean and 6 English steps plus a mixed mode, with finger colours and next-key hints'],
-      ['Words · Sentences', 'Themed words, Korean quotes, memory verses (Korean 개역한글 and KJV), English sentences'],
-      ['📜 Long texts', 'Psalms (Korean and KJV) and poetry books typed line by line; your place is saved. You can also open your own text files and Bible text'],
+      ['Words · Sentences', 'Themed words, Korean quotes, 📅 verse of the day, 365 memory verses (Korean 개역한글 and KJV), English sentences'],
+      ['📜 Long texts', 'The whole Bible (Korean 개역한글 and KJV, 1,189 chapters) and poetry books typed line by line; your place is saved. You can also open your own text files and whole-Bible files (CSV · XML · TXT)'],
       ['🧱 Word Blocks', 'Endless mode and stage mode (LEVEL 1-20; level 10 = 200 strokes per minute)'],
       ['🎖️ Frontline', 'First-person typing shooter with four sound sets, including a battlefield ambience'],
       ['Shortcuts', 'macOS and Windows shortcuts in three steps; hide the keyboard to practise from memory'],
@@ -142,20 +142,20 @@ export const ABOUT = Object.freeze({
       'All texts are taken unchanged from the sources below; only characters that cannot be typed on a keyboard were replaced by fixed rules.',
     sources: [
       {
-        name: 'Bible · Korean Revised Version 개역한글 (100 memory verses, 150 Psalms)',
+        name: 'Bible · Korean Revised Version 개역한글 (whole Bible, 365 memory verses)',
         lines: [
           'Translation and copyright: Korean Bible Society. The Society states that the economic rights in 『성경전서 개역한글판』 (1961) have expired and it may be used without royalties.',
-          "Conditions: the translator's moral rights (attribution and integrity) must be respected. The text is not altered; only untypable quotation marks and middle dots were replaced.",
+          "Conditions: the translator's moral rights (attribution and integrity) must be respected. The text is not altered; only untypable quotation marks and middle dots were replaced and paragraph marks (○) removed.",
           'The Korean Revised New Version (개역개정) is still under copyright and is not included.',
         ],
         links: [link('Korean Bible Society copyright FAQ', 'https://www.bskorea.or.kr/bbs/board.php?bo_table=copyright_faq&wr_id=5')],
       },
       {
-        name: 'Bible · KJV (100 English memory verses, 150 Psalms, encouragement verses)',
+        name: 'Bible · KJV (whole Bible, 365 memory verses, encouragement verses)',
         lines: [
           'King James Version, 1769 Oxford (Blayney) text, from the CrossWire Bible Society e-text checked against a 1769 facsimile, downloaded from eBible.org.',
           'Public domain outside the United Kingdom; in the UK printing is restricted by the Crown Letters Patent.',
-          "Italic (supplied-word) markers were removed, keeping the words; curly apostrophes (’) were replaced with the keyboard's '.",
+          "Italic (supplied-word) markers were removed, keeping the words; curly apostrophes (’) were replaced with the keyboard's ' and the ligature æ (Cæsar) with ae.",
         ],
         links: [link('eBible.org KJV', 'https://ebible.org/find/details.php?id=eng-kjv'), link('CrossWire KJV', 'https://wiki.crosswire.org/CrossWire_KJV')],
       },
@@ -224,7 +224,7 @@ export const ABOUT = Object.freeze({
     ],
     otherTitle: 'Other information',
     other: [
-      'Files opened with 「📂 Open my text」 or 「📖 Use my Bible text」 in Long texts are stored only on this computer and never sent anywhere. Their copyright belongs to their owners; use copyrighted translations for personal practice only. The file format is shown under 「❔ File format」 on the Long texts screen.',
+      'Files opened with 「📂 Open my text」 or 「📖 Open a Bible file」 in Long texts are stored only on this computer and never sent anywhere. Their copyright belongs to their owners; use legitimately obtained copies of copyrighted translations (e.g. ESV, 개역개정) for personal practice only. The file format is shown under 「❔ File format」 on the Long texts screen.',
       'Sound effects are synthesized by the program; no audio files are used.',
       'Settings and records are stored only on this computer and never sent anywhere.',
       'The desktop app is built with Electron (MIT licence).',
