@@ -1,5 +1,6 @@
 // Electron main process: creates the window and handles fullscreen toggling.
-const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, shell, safeStorage } = require('electron');
+const fs = require('node:fs');
 const path = require('node:path');
 
 const isMac = process.platform === 'darwin';
@@ -61,6 +62,44 @@ ipcMain.handle('toggle-fullscreen', (event) => {
 });
 
 ipcMain.handle('get-platform', () => process.platform);
+
+// Secrets the user types in (e.g. their API.Bible key) are encrypted with the OS keychain / DPAPI and kept in userData.
+const SECRET_NAME = /^[a-z][a-z0-9-]{0,30}$/;
+const secretsFile = () => path.join(app.getPath('userData'), 'secrets.json');
+
+function readSecrets() {
+  try {
+    return JSON.parse(fs.readFileSync(secretsFile(), 'utf8'));
+  } catch (error) {
+    if (error.code !== 'ENOENT') console.error('Could not read secrets:', error);
+    return {};
+  }
+}
+
+ipcMain.handle('secret-get', (_event, name) => {
+  if (!SECRET_NAME.test(name) || !safeStorage.isEncryptionAvailable()) return null;
+  const stored = readSecrets()[name];
+  try {
+    return stored ? safeStorage.decryptString(Buffer.from(stored, 'base64')) : null;
+  } catch (error) {
+    console.error('Could not decrypt a secret:', error);
+    return null;
+  }
+});
+
+ipcMain.handle('secret-set', (_event, name, value) => {
+  if (!SECRET_NAME.test(name) || typeof value !== 'string' || value.length > 500 || !safeStorage.isEncryptionAvailable()) return false;
+  const secrets = readSecrets();
+  if (value) secrets[name] = safeStorage.encryptString(value).toString('base64');
+  else delete secrets[name];
+  try {
+    fs.writeFileSync(secretsFile(), JSON.stringify(secrets), { mode: 0o600 });
+    return true;
+  } catch (error) {
+    console.error('Could not save a secret:', error);
+    return false;
+  }
+});
 
 app.whenReady().then(() => {
   createWindow();

@@ -181,7 +181,7 @@ function switchMode(def, options = {}) {
 const ALWAYS_PREVENT = new Set(['Space', 'Tab', 'Backspace', 'Quote', 'Slash']);
 
 function onKeyDown(event) {
-  if (isModalOpen() || isProfileDialogOpen()) return;
+  if (isModalOpen() || isProfileDialogOpen() || $('modal-root').childElementCount > 0) return; // a dialog is open
   if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable="true"]')) return; // typing in a form field
   if (event.code === 'F2') return updateSettings({ showKeyboard: !settings.showKeyboard });
   if (event.code === 'F3') return updateSettings({ showFingers: !settings.showFingers });

@@ -13,6 +13,8 @@ import { removeUserText } from '../core/user-content.js';
 import { getBible } from '../core/bible-source.js';
 import { clearUserBible } from '../core/bible-store.js';
 import { REPO_URL } from '../version.js';
+import { openApiBibleDialog } from '../ui/api-bible-dialog.js';
+import { reportView } from '../core/api-bible.js';
 
 const SAMPLES_URL = `${REPO_URL}/blob/main/docs/samples`;
 const SAMPLES = { text: ['my-text-example.txt'], bible: ['bible-example.csv', 'bible-example-zefania.xml', 'bible-example.txt'] };
@@ -50,9 +52,10 @@ export function createLongTextMode(ctx) {
   const current = el('div', { class: 'sentence-target' });
   const input = el('div', { class: 'typed-box sentence-typed' });
   const upcoming = el('div', { class: 'long-context' });
+  const notice = el('div', { class: 'bible-notice' }); // copyright notice of a Bible from API.Bible
   ctx.root.replaceChildren(
     el('section', { class: 'mode sentences long-text' }, toolbar, actions, tools.input,
-      el('div', { class: 'practice-area' }, help, title, previous, current, input, upcoming, el('div', { class: 'practice-desc' }, t('long.desc')))),
+      el('div', { class: 'practice-area' }, help, title, previous, current, input, upcoming, el('div', { class: 'practice-desc' }, t('long.desc')), notice)),
   );
 
   const pieces = () => text.pieces;
@@ -64,6 +67,7 @@ export function createLongTextMode(ctx) {
     const [ko, en] = await Promise.all([getBible('ko'), getBible('en')]);
     if (!alive) return;
     bibles = { ko, en };
+    for (const bible of [ko, en]) if (bible.stale) ctx.toast(t('api.stale', { name: bible.stale }));
     texts = buildTexts(bibles);
     const patch = migrateOldPsalms(ctx.settings(), texts);
     if (patch) ctx.updateSettings(patch);
@@ -139,6 +143,8 @@ export function createLongTextMode(ctx) {
 
   function load() {
     typed = [];
+    if (text.bible && text.fums) reportView(text, pieces()[piece - 1].book, pieces()[piece - 1].chapter); // API.Bible licence
+    notice.textContent = text.bible && text.copyright ? text.copyright : '';
     target = createTarget(lines()[line] ?? '');
     lang = detectLang(target.text);
     ctx.setKeyboardLang(lang);
@@ -176,6 +182,7 @@ export function createLongTextMode(ctx) {
     actions.replaceChildren(...[
       button(t('long.importText'), tools.chooseText),
       button(t('long.importBible'), tools.chooseBible),
+      button(t('long.importApi'), () => openApiBibleDialog(ctx, refreshBible)),
       customBible && button(t('long.resetBible'), resetBible),
       text.user && button(t('long.removeText'), removeText),
       button(t('long.formatHelp'), toggleHelp, showHelp),

@@ -3,6 +3,7 @@ import { BIBLE_VERSES, BIBLE_TRANSLATION } from '../data/bible.js';
 import { EN_BIBLE_VERSES, EN_BIBLE_TRANSLATION } from '../data/bible-en.js';
 import { loadUserBible } from './bible-store.js';
 import { completeVerseText } from './bible-source.js';
+import { needsRefresh } from './api-bible.js';
 
 export const DEFAULT_NAMES = { ko: BIBLE_TRANSLATION, en: EN_BIBLE_TRANSLATION };
 const DEFAULT_VERSES = { ko: BIBLE_VERSES, en: EN_BIBLE_VERSES };
@@ -14,12 +15,12 @@ const DEFAULT_VERSES = { ko: BIBLE_VERSES, en: EN_BIBLE_VERSES };
  */
 export async function loadMemoryVerses(lang) {
   const user = await loadUserBible(lang);
-  if (!user) return { translation: DEFAULT_NAMES[lang], items: DEFAULT_VERSES[lang] };
+  if (!user || needsRefresh(user)) return { translation: DEFAULT_NAMES[lang], items: DEFAULT_VERSES[lang], copyright: '' };
   // Verses missing from the user's file keep the default text and its translation name.
   const items = DEFAULT_VERSES[lang].map((verse, i) => {
     const text = completeVerseText(user.books, BIBLE_VERSES[i].source);
     return text ? { text, source: `${verse.source.replace(/\s*\([^)]*\)$/, '')} (${user.name})` } : verse;
   });
-  return { translation: user.name, items };
+  return { translation: user.name, items, copyright: user.copyright ?? '' };
 }
 

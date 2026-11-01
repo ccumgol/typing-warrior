@@ -18,7 +18,7 @@ function bibleWork(lang, bible) {
   });
   return {
     id: BIBLE_IDS[lang], lang, numbered: true, bible: true, user: false, pieces, bookStart,
-    translation: bible.name, customBible: bible.user,
+    translation: bible.name, customBible: bible.user, copyright: bible.copyright ?? '', fums: bible.fums ?? null,
     label: () => t('long.bible', { translation: bible.name }),
     // Korean calls a psalm 편 rather than 장 (시편 23편)
     pieceLabel: (n, piece) => t(piece.book === PSALMS_BOOK ? 'long.psalmChapter' : 'long.bibleChapter', { book: bookName(piece.book, getUiLang()), chapter: piece.chapter }),
