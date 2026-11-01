@@ -73,10 +73,16 @@ export function comboLabels(combo, platform) {
 const MODIFIERS = ['Meta', 'Control', 'Alt', 'Shift'];
 
 /** Does this keyboard event match the combo exactly? */
-export function matchesCombo(combo, event) {
+/**
+ * Practising macOS shortcuts on a Windows keyboard: the keys keep the Mac's left-to-right order,
+ * so control = Ctrl, option = Win, command = Alt.
+ */
+const MAC_ON_WINDOWS = { Control: 'Control', Alt: 'Meta', Meta: 'Alt', Shift: 'Shift' };
+
+export function matchesCombo(combo, event, { macOnWindows = false } = {}) {
   const parts = combo.split('+');
   const key = parts.find((p) => !MODIFIERS.includes(p));
-  const wanted = new Set(parts.filter((p) => MODIFIERS.includes(p)));
+  const wanted = new Set(parts.filter((p) => MODIFIERS.includes(p)).map((p) => (macOnWindows ? MAC_ON_WINDOWS[p] : p)));
   const pressed = { Meta: event.metaKey, Control: event.ctrlKey, Alt: event.altKey, Shift: event.shiftKey };
   return event.code === key && MODIFIERS.every((m) => pressed[m] === wanted.has(m));
 }
@@ -85,6 +91,6 @@ export function matchesCombo(combo, event) {
  * Physical keys to light up for a combo. Shortcuts are usually pressed with the left hand
  * holding the modifiers, so modifiers always use the left-hand keys.
  */
-export function comboCodes(combo) {
-  return combo.split('+').map((p) => (MODIFIERS.includes(p) ? `${p}Left` : p));
+export function comboCodes(combo, { macOnWindows = false } = {}) {
+  return combo.split('+').map((p) => (MODIFIERS.includes(p) ? `${macOnWindows ? MAC_ON_WINDOWS[p] : p}Left` : p));
 }

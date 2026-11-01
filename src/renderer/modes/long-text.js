@@ -12,6 +12,10 @@ import { buildTexts, migrateOldPsalms, PSALMS_BOOK } from './long-text-works.js'
 import { removeUserText } from '../core/user-content.js';
 import { getBible } from '../core/bible-source.js';
 import { clearUserBible } from '../core/bible-store.js';
+import { REPO_URL } from '../version.js';
+
+const SAMPLES_URL = `${REPO_URL}/blob/main/docs/samples`;
+const SAMPLES = { text: ['my-text-example.txt'], bible: ['bible-example.csv', 'bible-example-zefania.xml', 'bible-example.txt'] };
 
 export function createLongTextMode(ctx) {
   const session = createSession();
@@ -113,10 +117,15 @@ export function createLongTextMode(ctx) {
     resume();
   }
 
+  const helpCard = (key, files) => el('div', { class: 'long-help-card' },
+    el('pre', {}, t(key)),
+    el('p', { class: 'about-links' }, `${t('long.samples')}: `, files.map((file) => el('a', { href: `${SAMPLES_URL}/${file}`, target: '_blank', rel: 'noopener noreferrer' }, file))),
+  );
+
   function toggleHelp() {
     showHelp = !showHelp;
     help.hidden = !showHelp;
-    help.replaceChildren(el('pre', {}, t('long.helpText')), el('pre', {}, t('long.helpBible')));
+    help.replaceChildren(helpCard('long.helpText', SAMPLES.text), helpCard('long.helpBible', SAMPLES.bible));
     renderToolbar();
   }
 

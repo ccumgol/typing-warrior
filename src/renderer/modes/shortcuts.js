@@ -21,6 +21,8 @@ const keycaps = (combo, platform) =>
 export function createShortcutsMode(ctx) {
   const session = createSession();
   let platform = ctx.settings().shortcutPlatform || ctx.platform;
+  /** Practising macOS shortcuts on a Windows computer (Ctrl · Win · Alt stand in for control · option · command). */
+  const macOnWindows = () => platform === 'mac' && ctx.platform === 'win';
   let stageId = SHORTCUT_STAGES[0].id;
   let queue = [];
   let index = 0;
@@ -75,7 +77,7 @@ export function createShortcutsMode(ctx) {
 
   function render() {
     renderToolbar();
-    ctx.keyboard.setPlatform(platform);
+    ctx.keyboard.setPlatform(macOnWindows() ? 'mac-on-win' : platform);
     if (showReference) {
       ctx.keyboard.highlight(null);
       area.replaceChildren(el('h2', { class: 'ref-title' }, t('sc.tableTitle', { platform: PLATFORM_LABEL[platform] })), renderReference());
@@ -86,14 +88,15 @@ export function createShortcutsMode(ctx) {
     // Keyboard shown: see the answer and press it. Keyboard hidden (F2): recall it from memory.
     const reveal = keyboardShown() || misses >= HINT_AFTER_MISSES;
     const desc = keyboardShown() ? t('sc.withKeyboard') : t('sc.fromMemory', { count: HINT_AFTER_MISSES });
-    area.replaceChildren(
+    area.replaceChildren(...[
       el('div', { class: 'shortcut-category' }, `${stageTitle()} · ${t(`sc.cat.${item.category}`)} · ${index + 1}/${queue.length}`),
       el('div', { class: 'shortcut-action' }, loc(item.action)),
       reveal ? keycaps(combo, platform) : el('div', { class: 'keycaps placeholder' }, t('sc.placeholder')),
       el('div', { class: 'practice-desc' }, `${currentStage() ? t(`${stageId}.desc`) : t('sc.mixDesc')} · ${t('sc.basis', { platform: PLATFORM_LABEL[platform] })}`),
       el('div', { class: 'practice-desc' }, desc),
-    );
-    if (keyboardShown()) ctx.keyboard.highlightKeys(comboCodes(combo), comboLabels(combo, platform).join(' + '));
+      macOnWindows() && el('div', { class: 'practice-desc sc-notice' }, t('sc.macOnWindows')),
+    ].filter(Boolean)); // replaceChildren would print a skipped notice as the text "null"
+    if (keyboardShown()) ctx.keyboard.highlightKeys(comboCodes(combo, { macOnWindows: macOnWindows() }), comboLabels(combo, platform).join(' + '));
     else ctx.keyboard.highlight(null);
     tick();
   }
@@ -104,7 +107,7 @@ export function createShortcutsMode(ctx) {
     event.preventDefault();
     if (showReference || MODIFIER_CODES.has(event.code) || event.repeat) return true;
     const item = queue[index];
-    const ok = matchesCombo(item[platform], event);
+    const ok = matchesCombo(item[platform], event, { macOnWindows: macOnWindows() });
     session.stroke(ok);
     ctx.keyboard.flash(event.code, ok);
     if (!ok) {

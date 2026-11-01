@@ -4,6 +4,7 @@ import { WORKS as KO_POETRY } from '../data/poetry-ko.js';
 import { WORKS as EN_POETRY } from '../data/poetry-en.js';
 import { getUiLang } from '../core/i18n.js';
 import { el } from '../ui/dom.js';
+import { APP_VERSION } from '../version.js';
 
 const WORKS = [...KO_POETRY, ...EN_POETRY];
 
@@ -32,10 +33,24 @@ export function createAboutMode(ctx) {
       el('h2', {}, about.title),
       about.intro.map((p) => el('p', {}, p)),
       el('dl', { class: 'about-features' }, about.features.map(([name, desc]) => [el('dt', {}, name), el('dd', {}, desc)])),
-      el('p', { class: 'muted' }, about.shortcuts),
+      el('section', { class: 'about-keys' },
+        el('h3', {}, about.shortcutsTitle),
+        el('dl', {}, about.shortcuts.map(([keys, desc]) => [
+          el('dt', {}, keys.split(' + ').map((k, i) => [i > 0 ? ' + ' : null, el('kbd', {}, k)])),
+          el('dd', {}, desc),
+        ])),
+      ),
       el('h3', {}, about.sourcesTitle),
       el('p', {}, about.sourcesIntro),
       el('div', { class: 'about-sources' }, about.sources.map(sourceCard)),
+      el('h3', {}, about.creatorTitle),
+      el('div', { class: 'about-creator' },
+        el('p', { class: 'about-version' }, `Typing Warrior ${APP_VERSION}`),
+        el('dl', {}, about.creator.map((row) => [
+          el('dt', {}, row.label),
+          el('dd', {}, row.text ? `${row.text} ` : null, row.link ? externalLink(row.link) : null),
+        ])),
+      ),
       el('h3', {}, about.otherTitle),
       el('ul', {}, about.other.map((line) => el('li', {}, line))),
     ),

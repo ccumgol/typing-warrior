@@ -72,3 +72,12 @@ test('the About page lists a source for every long text', () => {
     assert.ok(ABOUT[lang].sources.every((s) => s.links.every((l) => l.url.startsWith('https://'))));
   }
 });
+
+test('verse of the day: one verse per date, including 29 February', async () => {
+  const { verseOfDayIndex } = await import('../src/renderer/core/verse-of-day.js');
+  assert.equal(verseOfDayIndex(new Date(2026, 0, 1)), 0);
+  assert.equal(verseOfDayIndex(new Date(2026, 11, 31)), 364);
+  assert.equal(verseOfDayIndex(new Date(2028, 11, 31)), 364); // leap year: no shift
+  assert.equal(verseOfDayIndex(new Date(2028, 1, 29)), verseOfDayIndex(new Date(2028, 1, 28)));
+  assert.equal(verseOfDayIndex(new Date(2028, 2, 1)), verseOfDayIndex(new Date(2026, 2, 1)));
+});

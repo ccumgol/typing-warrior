@@ -1,7 +1,10 @@
 // 프로그램 소개 페이지 내용 (화면 표시 언어별). 출처와 저작권 근거는 실제 데이터 파일과 같이 유지합니다.
 // {count:<work id>} 같은 자리표시는 화면에서 실제 편 수로 바뀝니다.
 
+import { REPO_URL } from '../version.js';
+
 const link = (label, url) => Object.freeze({ label, url });
+const HOMEPAGE = 'https://jesusiswith.us';
 
 
 export const ABOUT = Object.freeze({
@@ -21,7 +24,15 @@ export const ABOUT = Object.freeze({
       ['단축키', 'macOS·Windows 기본 단축키 3단계. 키보드를 감추면 외워서 누르기'],
       ['📊 기록', '연속 연습일, 연습 시간, 모드별 최고 기록'],
     ],
-    shortcuts: 'F2 키보드 표시 · F3 손가락 색상 · Shift+Space 또는 한/영 키로 연습 언어 전환 · F11 전체화면 · Esc 게임 일시정지',
+    shortcutsTitle: '꼭 알아 두면 좋은 키',
+    shortcuts: [
+      ['F2', '화면 키보드 보이기 / 감추기'],
+      ['F3', '손가락 색상 켜기 / 끄기'],
+      ['Shift + Space', '연습 언어 한글 ↔ 영문 (한/영 키도 됨)'],
+      ['F11', '전체화면 / 창 모드'],
+      ['Esc', '게임 일시정지'],
+      ['Enter', '다음 문장·다음 줄로 넘어가기, 게임 시작'],
+    ],
     sourcesTitle: '연습 글의 출처와 저작권',
     sourcesIntro:
       '이 프로그램에 실린 글은 저작권이 끝났거나(퍼블릭 도메인), 저작권자가 정한 조건 안에서 쓰는 글입니다. ' +
@@ -109,9 +120,17 @@ export const ABOUT = Object.freeze({
         links: [],
       },
     ],
+    creatorTitle: '만든 사람',
+    creator: [
+      { label: '제작', text: '박기현' },
+      { label: '홈페이지', link: link('jesusiswith.us', HOMEPAGE) },
+      { label: '버그·오타 신고, 개선 제안', text: 'GitHub 이슈에 남겨 주세요.', link: link('Issues', `${REPO_URL}/issues`) },
+      { label: '소스 코드', text: 'MIT 라이선스로 공개합니다.', link: link('GitHub', REPO_URL) },
+      { label: '후원', text: '후원 방법은 홈페이지에서 안내합니다.', link: link('jesusiswith.us', HOMEPAGE) },
+    ],
     otherTitle: '그 밖의 정보',
     other: [
-      '긴 글의 「📂 내 글 불러오기」와 「📖 성경 파일 올리기」로 불러온 파일은 이 컴퓨터 안에만 저장되고 다른 곳으로 보내지 않습니다. 불러온 글의 저작권은 각 저작권자에게 있으며, 저작권이 있는 역본(예: 개역개정, ESV)은 정식으로 구한 본문을 개인 연습용으로만 쓰세요. 파일 형식은 긴 글 화면의 「❔ 파일 형식」에서 볼 수 있습니다.',
+      '긴 글 화면의 \'내 글 불러오기\'와 \'성경 파일 올리기\'로 불러온 파일은 이 컴퓨터 안에만 저장되고 다른 곳으로 보내지 않습니다. 불러온 글의 저작권은 각 저작권자에게 있으므로, 저작권이 있는 글은 정식으로 구한 본문을 개인 연습용으로만 쓰세요. 파일 형식과 예시 파일은 긴 글 화면의 \'파일 형식\' 버튼을 누르면 볼 수 있습니다.',
       '효과음은 녹음 파일 없이 프로그램이 직접 합성합니다.',
       '설정과 연습 기록은 이 컴퓨터 안(앱 저장소)에만 저장되며 외부로 보내지 않습니다.',
       '데스크톱 앱은 Electron(MIT 라이선스)으로 만들었습니다.',
@@ -134,7 +153,15 @@ export const ABOUT = Object.freeze({
       ['Shortcuts', 'macOS and Windows shortcuts in three steps; hide the keyboard to practise from memory'],
       ['📊 Records', 'Day streak, practice time and best results by mode'],
     ],
-    shortcuts: 'F2 keyboard · F3 finger colours · Shift+Space or the 한/영 key switches practice language · F11 fullscreen · Esc pauses games',
+    shortcutsTitle: 'Keys worth knowing',
+    shortcuts: [
+      ['F2', 'Show / hide the on-screen keyboard'],
+      ['F3', 'Finger colours on / off'],
+      ['Shift + Space', 'Practice language Korean ↔ English (the 한/영 key works too)'],
+      ['F11', 'Fullscreen / window'],
+      ['Esc', 'Pause a game'],
+      ['Enter', 'Next sentence or line, start a game'],
+    ],
     sourcesTitle: 'Text sources and copyright',
     sourcesIntro:
       'Every text in this program is either in the public domain or quoted within the terms set by its copyright holder. ' +
@@ -222,9 +249,17 @@ export const ABOUT = Object.freeze({
         links: [],
       },
     ],
+    creatorTitle: 'Made by',
+    creator: [
+      { label: 'Author', text: 'Gihyun Park (박기현)' },
+      { label: 'Homepage', link: link('jesusiswith.us', HOMEPAGE) },
+      { label: 'Bugs, typos and ideas', text: 'Please open a GitHub issue.', link: link('Issues', `${REPO_URL}/issues`) },
+      { label: 'Source code', text: 'Open source under the MIT licence.', link: link('GitHub', REPO_URL) },
+      { label: 'Support', text: 'Ways to support the project are on the homepage.', link: link('jesusiswith.us', HOMEPAGE) },
+    ],
     otherTitle: 'Other information',
     other: [
-      'Files opened with 「📂 Open my text」 or 「📖 Open a Bible file」 in Long texts are stored only on this computer and never sent anywhere. Their copyright belongs to their owners; use legitimately obtained copies of copyrighted translations (e.g. ESV, 개역개정) for personal practice only. The file format is shown under 「❔ File format」 on the Long texts screen.',
+      "Files opened with 'Open my text' or 'Open a Bible file' on the Long texts screen are stored only on this computer and never sent anywhere. Their copyright belongs to their owners, so use legitimately obtained copies of copyrighted texts for personal practice only. The file formats and sample files are shown with the 'File format' button on the Long texts screen.",
       'Sound effects are synthesized by the program; no audio files are used.',
       'Settings and records are stored only on this computer and never sent anywhere.',
       'The desktop app is built with Electron (MIT licence).',

@@ -58,13 +58,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 .topbar button { -webkit-app-region: no-drag; }
 .brand { font-weight: 800; white-space: nowrap; font-size: 14px; }
-.mode-nav { display: flex; gap: 2px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.mode-nav { display: flex; gap: 6px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
+/* Menu items are plain-text buttons (no icons) so every menu looks alike. */
 .nav-item {
-  border: 0; background: none; padding: 6px 12px; border-radius: 8px;
-  color: var(--muted); font-size: 14px; white-space: nowrap;
+  border: 1px solid var(--border); background: var(--surface); padding: 5px 12px; border-radius: 8px;
+  color: var(--muted); font-size: 13.5px; font-weight: 600; white-space: nowrap;
 }
 .nav-item:hover { background: var(--surface-2); color: var(--text); }
-.nav-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.nav-item.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 700; }
 .tools { display: flex; gap: 4px; }
 .tool {
   min-width: 32px; height: 30px; border: 1px solid var(--border); background: var(--surface);

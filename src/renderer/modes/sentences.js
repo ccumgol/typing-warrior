@@ -10,13 +10,12 @@ import { t } from '../core/i18n.js';
 import { createSession, statusFrom, finishSession } from './session.js';
 import { loadUserBible } from '../core/bible-store.js';
 import { completeVerseText } from '../core/bible-source.js';
+import { verseOfDayIndex } from '../core/verse-of-day.js';
 
 const SENTENCES_PER_ROUND = 5;
 const DEFAULT_NAMES = { ko: BIBLE_TRANSLATION, en: EN_BIBLE_TRANSLATION };
 const DEFAULT_VERSES = { ko: BIBLE_VERSES, en: EN_BIBLE_VERSES };
 
-/** Day of the year (0-364) picks the verse of the day. */
-const dayIndex = (date = new Date()) => Math.floor((date - new Date(date.getFullYear(), 0, 1)) / 86_400_000) % BIBLE_VERSES.length;
 
 /**
  * Memory verses for a language, using the Bible the user opened (긴 글 → 성경 파일 올리기) when there is one.
@@ -37,7 +36,7 @@ const today = (lang) => ({
   lang, ordered: true, label: () => t('src.today'),
   load: async (memory) => {
     const { items } = await memory(lang);
-    const start = dayIndex();
+    const start = verseOfDayIndex();
     return Array.from({ length: SENTENCES_PER_ROUND }, (_, k) => items[(start + k) % items.length]);
   },
 });

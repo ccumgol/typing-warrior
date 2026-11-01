@@ -20,9 +20,15 @@ const BOTTOM_ROWS = Object.freeze({
     { code: 'Space', label: '', finger: 'T', size: 7, special: true },
     mod('MetaRight', 'command', 'T', 1.6, '⌘'), mod('AltRight', 'option', 'T', 1.3, '⌥'),
   ],
+  // Mac labels on a Windows keyboard (macOS shortcut practice on Windows): control · option · command sit on Ctrl · Win · Alt.
+  'mac-on-win': [
+    mod('ControlLeft', 'control', 'L5', 1.4, '⌃'), mod('MetaLeft', 'option', 'L5', 1.25, '⌥'), mod('AltLeft', 'command', 'T', 1.4, '⌘'),
+    { code: 'Space', label: '', finger: 'T', size: 6.2, special: true },
+    mod('AltRight', 'command', 'T', 1.4, '⌘'), mod('MetaRight', 'option', 'R5', 1.25, '⌥'), mod('ControlRight', 'control', 'R5', 1.4, '⌃'),
+  ],
 });
 
-/** Bottom (modifier + Space) row for 'mac' or 'win'. */
+/** Bottom (modifier + Space) row for 'mac', 'win' or 'mac-on-win'. */
 export const bottomRow = (platform) => BOTTOM_ROWS[platform] || BOTTOM_ROWS.win;
 
 export const FUNCTION_ROW = Object.freeze([

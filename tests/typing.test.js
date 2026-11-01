@@ -53,3 +53,12 @@ test('every practice shortcut belongs to a stage', () => {
   assert.ok(practice.every((sc) => levels.has(sc.level)));
   for (const level of levels) assert.ok(practice.some((sc) => sc.level === level), `level ${level} is empty`);
 });
+
+test('macOS shortcuts on a Windows keyboard follow the Mac key order (Ctrl · Win · Alt)', () => {
+  const base = { code: 'KeyC', metaKey: false, ctrlKey: false, altKey: false, shiftKey: false };
+  assert.equal(matchesCombo('Meta+KeyC', { ...base, altKey: true }, { macOnWindows: true }), true); // ⌘ = Alt
+  assert.equal(matchesCombo('Meta+KeyC', { ...base, metaKey: true }, { macOnWindows: true }), false);
+  assert.equal(matchesCombo('Alt+KeyC', { ...base, metaKey: true }, { macOnWindows: true }), true); // ⌥ = Win
+  assert.equal(matchesCombo('Control+KeyC', { ...base, ctrlKey: true }, { macOnWindows: true }), true);
+  assert.deepEqual(comboCodes('Meta+Alt+KeyV', { macOnWindows: true }), ['AltLeft', 'MetaLeft', 'KeyV']);
+});
