@@ -4,7 +4,7 @@
 
 성경 전권과 김소월·윤동주·한용운의 시, 셰익스피어와 디킨슨, 옛 찬송가를 한 줄씩 따라 치며 타자를 익힙니다. 지칠 때는 두 가지 게임(단어블록게임, 전선작전게임)으로 즐겁게 손을 풀 수 있습니다.
 
-- 버전 **1.0.2** · [바뀐 내용](CHANGELOG.md) · [버그·오타 신고와 개선 제안](https://github.com/ccumgol/typing-warrior/issues)
+- 버전 **1.1.0** · [바뀐 내용](CHANGELOG.md) · [버그·오타 신고와 개선 제안](https://github.com/ccumgol/typing-warrior/issues)
 - 만든 사람: 박기현 · 홈페이지 <https://jesusiswith.us>
 - 무료 프로그램입니다. 도움이 되셨다면 [☕ Buy Me a Coffee](https://buymeacoffee.com/ccumgol)로 응원해 주세요.
 - 프로그램 코드는 [MIT 라이선스](LICENSE)로 공개합니다. 연습 글의 저작권은 아래 [연습 글과 저작권](#연습-글과-저작권)을 보세요.
@@ -33,9 +33,9 @@
 
 | 운영체제 | 파일 | 설치 |
 |---|---|---|
-| macOS (Apple Silicon: M1 이후) | `Typing-Warrior-1.0.2-mac-arm64.dmg` | 열어서 앱을 '응용 프로그램' 폴더로 끌어 놓습니다 |
-| macOS (인텔) | `Typing-Warrior-1.0.2-mac-intel.dmg` | 위와 같습니다 |
-| Windows 10/11 (64비트) | `Typing-Warrior-1.0.2-win-x64.zip` | 압축을 풀고 폴더 안의 `Typing Warrior.exe`를 실행합니다 |
+| macOS (Apple Silicon: M1 이후) | `Typing-Warrior-1.1.0-mac-arm64.dmg` | 열어서 앱을 '응용 프로그램' 폴더로 끌어 놓습니다 |
+| macOS (인텔) | `Typing-Warrior-1.1.0-mac-intel.dmg` | 위와 같습니다 |
+| Windows 10/11 (64비트) | `Typing-Warrior-1.1.0-win-x64.zip` | 압축을 풀고 폴더 안의 `Typing Warrior.exe`를 실행합니다 |
 
 **처음 열 때 경고가 나오면** (아직 개발자 인증서로 서명하지 않은 앱이라 그렇습니다)
 - macOS: 앱을 **오른쪽 클릭 → 열기 → 열기**. 또는 '시스템 설정 → 개인정보 보호 및 보안'에서 '그래도 열기'.

@@ -1,6 +1,6 @@
 {
   "name": "typing-warrior",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "한글/영문 타자연습 - 자소, 단어, 문장, 게임, 단축키",
   "main": "src/main/main.cjs",
   "type": "module",
