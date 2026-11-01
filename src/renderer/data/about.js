@@ -112,6 +112,14 @@ export const ABOUT = Object.freeze({
         links: [link('Project Gutenberg #12242', 'https://www.gutenberg.org/ebooks/12242')],
       },
       {
+        name: '옛 찬송가 (영어) · {count:hymns}곡',
+        lines: [
+          'Rock of Ages, Amazing Grace, Joy to the World, When I Survey the Wondrous Cross, Abide with Me 등 지금도 널리 부르는 찬송가를 골랐습니다. 작사가는 아이작 와츠(1674~1748), 찰스 웨슬리(1707~1788), 존 뉴턴(1725~1807) 등으로 모두 퍼블릭 도메인입니다.',
+          '본문 출처: 『The Christian Hymn Book』(1865년, 1870년 개정판) — 구텐베르크 프로젝트 eBook #46041. 이 판의 가사를 그대로 실어 요즘 찬송가집과 단어나 절 구성이 조금 다를 수 있습니다.',
+        ],
+        links: [link('Project Gutenberg #46041', 'https://www.gutenberg.org/ebooks/46041')],
+      },
+      {
         name: '단어 · 명언 · 영어 문장',
         lines: [
           '단어와 영어 연습 문장은 이 프로그램을 위해 고른 일반 낱말과 짧은 문장입니다.',
@@ -239,6 +247,14 @@ export const ABOUT = Object.freeze({
           "Source: Project Gutenberg eBook #12242, without the editors' prefaces and notes or the Project Gutenberg header. Accented letters (è, ë) were replaced with their base letters so they can be typed.",
         ],
         links: [link('Project Gutenberg #12242', 'https://www.gutenberg.org/ebooks/12242')],
+      },
+      {
+        name: 'Old Hymns · {count:hymns} hymns',
+        lines: [
+          'Hymns still widely sung, such as Rock of Ages, Amazing Grace, Joy to the World, When I Survey the Wondrous Cross and Abide with Me, by Isaac Watts (1674-1748), Charles Wesley (1707-1788), John Newton (1725-1807) and others. Public domain.',
+          'Source: The Christian Hymn Book (1865, revised 1870), Project Gutenberg eBook #46041. Words follow that edition, so a word or stanza may differ from modern hymnals.',
+        ],
+        links: [link('Project Gutenberg #46041', 'https://www.gutenberg.org/ebooks/46041')],
       },
       {
         name: 'Words · quotes · English sentences',

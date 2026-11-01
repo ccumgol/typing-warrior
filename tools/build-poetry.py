@@ -7,6 +7,7 @@ Usage:
 Sources (all public domain; see the 프로그램 소개 page for details):
   - Shakespeare, Sonnets — Project Gutenberg eBook #1041
   - Emily Dickinson, Poems (Three Series, 1890-1896) — Project Gutenberg eBook #12242
+  - Old hymns: well-known hymns from The Christian Hymn Book (1865, rev. 1870) — Project Gutenberg eBook #46041
   - 김소월 『진달래꽃』(1925), 윤동주 『하늘과 바람과 별과 시』(1948 초판), 한용운 『님의 침묵』(1926)
     and selected modern Korean poems — ko.wikisource.org
 Project Gutenberg headers, licence text and editors' prefaces are dropped; only the poems are kept.
@@ -26,7 +27,18 @@ DATA = ROOT / "src" / "renderer" / "data"
 HANJA_TABLE = Path(__file__).resolve().parent / "hanja-readings.json"
 UA = {"User-Agent": "typing-warrior-builder/1.0 (personal typing practice app)"}
 
-GUTENBERG = {"sonnets": 1041, "dickinson": 12242}
+GUTENBERG = {"sonnets": 1041, "dickinson": 12242, "hymns": 46041}
+# Well-known hymns picked from the 1,324 in The Christian Hymn Book, by first line (in this order).
+HYMN_FIRST_LINES = [
+    "Rock of ages, cleft for me", "Jesus, lover of my soul", "Amazing grace", "Joy to the world", "When I survey the wondrous cross",
+    "All hail the power of Jesus", "Just as I am", "Sweet hour of prayer", "Nearer, my God, to thee", "How firm a foundation",
+    "Love divine, all love", "Abide with me", "Our God, our help in ages past", "Jesus shall reign", "Am I a soldier of the cross",
+    "There is a fountain filled with blood", "My faith looks up to thee", "Guide me, O thou great", "Alas! and did my Saviour bleed",
+    "Blest be the tie that binds", "From Greenland's icy mountains", "I love thy kingdom, Lord", "O happy day", "Hark! the herald angels sing",
+    "Jesus, I my cross have taken", "Come, ye disconsolate", "Glorious things of thee are spoken", "Majestic sweetness sits enthroned",
+    "A charge to keep I have", "On Jordan's stormy banks", "O could I speak the matchless worth", "Children of the heavenly King",
+    "Jerusalem, my happy home", "There is a land of pure delight", "Before Jehovah's awful throne",
+]
 KO_BOOKS = {"jindallae": "진달래꽃 (시집)", "yundongju": "하늘과 바람과 별과 시 (1948년)", "nimui": "님의 침묵"}
 ANTHOLOGY = [  # (Wikisource page, title, author)
     ("광야 (이육사)", "광야", "이육사"), ("청포도", "청포도", "이육사"), ("절정", "절정", "이육사"),
@@ -272,12 +284,35 @@ def dickinson(folder: Path) -> list[dict]:
     return [p for p in pieces if p["lines"]]
 
 
+def hymns(folder: Path) -> list[dict]:
+    """Each hymn starts with its number and meter ("261        7s, 6 lines."); stanza lines are indented, numbered "2 ", "3 "…"""
+    parsed, current = [], None
+    for line in gutenberg_body(folder, GUTENBERG["hymns"]):
+        if re.match(r"^\d{1,4}\s{5,}\S", line):
+            current = []
+            parsed.append(current)
+        elif current is not None and re.match(r"^ {2,4}\S", line):
+            text = re.sub(r"^\s*\d+\s+", "", line).strip()  # drop stanza numbers
+            if text:
+                current.append(english_line(text))
+    key = lambda s: re.sub(r"[^a-z ]", "", s.lower())
+    pieces = []
+    for first in HYMN_FIRST_LINES:
+        lines = next((h for h in parsed if h and key(h[0]).startswith(key(first))), None)
+        if lines is None:
+            raise SystemExit(f"Hymn not found: {first}")
+        pieces.append({"title": lines[0].rstrip(",;:.!"), "kind": "original", "lines": lines})
+    return pieces
+
+
 def build_english(folder: Path) -> list[dict]:
     return [
         work("sonnets", "en", {"ko": "셰익스피어 소네트", "en": "Shakespeare's Sonnets"}, {"ko": "윌리엄 셰익스피어", "en": "William Shakespeare"}, 1609,
              sonnets(folder), None, gutenberg=GUTENBERG["sonnets"]),
         work("dickinson", "en", {"ko": "에밀리 디킨슨 시집", "en": "Poems by Emily Dickinson"}, {"ko": "에밀리 디킨슨", "en": "Emily Dickinson"}, 1890,
              dickinson(folder), None, gutenberg=GUTENBERG["dickinson"]),
+        work("hymns", "en", {"ko": "옛 찬송가 (영어)", "en": "Old Hymns"}, {"ko": "아이작 와츠, 찰스 웨슬리 외", "en": "Isaac Watts, Charles Wesley and others"}, 1870,
+             hymns(folder), None, gutenberg=GUTENBERG["hymns"]),
     ]
 
 
