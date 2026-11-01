@@ -32,6 +32,7 @@
 
 📥 내려받기: https://github.com/ccumgol/typing-warrior/releases
 🏠 홈페이지: https://jesusiswith.us
+☕ 응원하기: https://buymeacoffee.com/ccumgol
 
 ---
 
@@ -60,3 +61,4 @@ When you need a break, play **Word Blocks** — clear the falling words before t
 
 Free for macOS and Windows. Your records stay on your computer.
 Download: https://github.com/ccumgol/typing-warrior/releases
+Support: https://buymeacoffee.com/ccumgol

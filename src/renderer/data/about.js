@@ -1,7 +1,7 @@
 // 프로그램 소개 페이지 내용 (화면 표시 언어별). 출처와 저작권 근거는 실제 데이터 파일과 같이 유지합니다.
 // {count:<work id>} 같은 자리표시는 화면에서 실제 편 수로 바뀝니다.
 
-import { REPO_URL } from '../version.js';
+import { REPO_URL, DONATE_URL } from '../version.js';
 
 const link = (label, url) => Object.freeze({ label, url });
 const HOMEPAGE = 'https://jesusiswith.us';
@@ -137,7 +137,7 @@ export const ABOUT = Object.freeze({
       { label: '홈페이지', link: link('jesusiswith.us', HOMEPAGE) },
       { label: '버그·오타 신고, 개선 제안', text: 'GitHub 이슈에 남겨 주세요.', link: link('Issues', `${REPO_URL}/issues`) },
       { label: '소스 코드', text: 'MIT 라이선스로 공개합니다.', link: link('GitHub', REPO_URL) },
-      { label: '후원', text: '후원 방법은 홈페이지에서 안내합니다.', link: link('jesusiswith.us', HOMEPAGE) },
+      { label: '후원', text: '무료 프로그램입니다. 도움이 되셨다면 커피 한 잔으로 응원해 주세요.', link: link('☕ Buy Me a Coffee', DONATE_URL) },
     ],
     otherTitle: '그 밖의 정보',
     other: [
@@ -277,7 +277,7 @@ export const ABOUT = Object.freeze({
       { label: 'Homepage', link: link('jesusiswith.us', HOMEPAGE) },
       { label: 'Bugs, typos and ideas', text: 'Please open a GitHub issue.', link: link('Issues', `${REPO_URL}/issues`) },
       { label: 'Source code', text: 'Open source under the MIT licence.', link: link('GitHub', REPO_URL) },
-      { label: 'Support', text: 'Ways to support the project are on the homepage.', link: link('jesusiswith.us', HOMEPAGE) },
+      { label: 'Support', text: 'Typing Warrior is free. If it helps you, you can buy me a coffee.', link: link('☕ Buy Me a Coffee', DONATE_URL) },
     ],
     otherTitle: 'Other information',
     other: [
