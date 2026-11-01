@@ -145,3 +145,13 @@
 .verse-topic td { padding-top: 16px !important; border-bottom: 2px solid var(--accent) !important; }
 .verse-topic b { margin-right: 10px; color: var(--accent); }
 .verse-topic .pill { font-size: 12px; padding: 3px 10px; }
+
+/* Records: ranking and badges */
+.records-body { display: flex; flex-direction: column; gap: 8px; }
+.rank-chip { display: inline-block; margin: 2px 8px 2px 0; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); font-size: 13px; }
+.rank-me { color: var(--accent); font-weight: 700; }
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.badge-card { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); text-align: center; }
+.badge-icon { font-size: 40px; }
+.badge-actions { display: flex; gap: 6px; margin-top: 6px; }
+.badge-actions .pill { font-size: 12px; padding: 3px 10px; }

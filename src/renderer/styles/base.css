@@ -167,3 +167,14 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @media (max-width: 760px) {
   .brand span, .st-help { display: none; }
 }
+
+/* Users dialog */
+.profile-modal { text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.profile-modal h4 { margin: 6px 0 0; }
+.profile-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.profile-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.profile-input {
+  flex: 1; min-width: 160px; height: 32px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg); color: var(--text); font: inherit;
+}
+.pill.danger { color: var(--bad); border-color: var(--bad); }

@@ -6,6 +6,8 @@ import { t, setUiLang, getUiLang, detectUiLang } from './core/i18n.js';
 import { el } from './ui/dom.js';
 import { createKeyboardView } from './ui/keyboard-view.js';
 import { isModalOpen, closeModal } from './ui/result-modal.js';
+import { openProfileDialog, isProfileDialogOpen } from './ui/profile-dialog.js';
+import { loadProfiles, loadProfileData, saveProfileData, PROFILE_KEYS } from './core/profiles.js';
 import { createJamoMode } from './modes/jamo.js';
 import { createWordsMode } from './modes/words.js';
 import { createSentencesMode } from './modes/sentences.js';
@@ -34,7 +36,15 @@ const $ = (id) => document.getElementById(id);
 const desktop = window.desktop; // undefined when opened in a plain browser
 const platform = /Mac/i.test(navigator.userAgent) ? 'mac' : 'win';
 
-let settings = loadSettings();
+/** App-wide settings merged with the active profile's own values (records progress, finished stages…). */
+function composeSettings() {
+  const global = loadSettings();
+  const uiLang = global.uiLang ?? detectUiLang(navigator.language);
+  const { activeId } = loadProfiles(uiLang === 'ko' ? '나' : 'Me');
+  return Object.freeze({ ...global, ...loadProfileData(activeId) });
+}
+
+let settings = composeSettings();
 let activeDef = MODES[0];
 let active = null;
 let isFullscreen = false;
@@ -44,6 +54,7 @@ const keyboard = createKeyboardView($('keyboard-dock'), { platform });
 function updateSettings(patch) {
   settings = Object.freeze({ ...settings, ...patch });
   saveSettings(settings);
+  if (PROFILE_KEYS.some((key) => key in patch)) saveProfileData(loadProfiles().activeId, settings);
   applySettings();
   active?.onSettingsChange?.(settings);
 }
@@ -77,8 +88,17 @@ function renderStatus({ cpm, accuracy, time, progress }) {
 const iconButton = (label, title, active, onClick) =>
   el('button', { class: `tool${active ? ' active' : ''}`, type: 'button', title, tabindex: '-1', onclick: onClick }, label);
 
+/** Another profile was chosen (or the current one renamed, reset or removed): reload its data and reopen the menu. */
+function onProfileChanged() {
+  settings = composeSettings();
+  switchMode(activeDef);
+}
+
 function renderTools() {
+  const { activeId, profiles } = loadProfiles();
+  const current = profiles.find((p) => p.id === activeId);
   $('tools').replaceChildren(
+    iconButton(`👤 ${current?.name ?? ''}`, t('tool.profile'), false, () => openProfileDialog(onProfileChanged)),
     iconButton(`🌐 ${getUiLang().toUpperCase()}`, t('tool.uiLang'), false, toggleUiLang),
     iconButton(settings.lang === 'ko' ? '한' : 'EN', t('tool.practiceLang'), false, toggleLang),
     iconButton('⌨', t('tool.keyboard'), settings.showKeyboard, () => updateSettings({ showKeyboard: !settings.showKeyboard })),
@@ -136,6 +156,7 @@ const ctx = {
   status: renderStatus,
   toast,
   setKeyboardLang: (lang) => keyboard.setLang(lang),
+  reloadProfile: () => onProfileChanged(),
   openMode(id, options) {
     const def = MODES.find((mode) => mode.id === id);
     if (def) switchMode(def, options);
@@ -160,7 +181,8 @@ function switchMode(def, options = {}) {
 const ALWAYS_PREVENT = new Set(['Space', 'Tab', 'Backspace', 'Quote', 'Slash']);
 
 function onKeyDown(event) {
-  if (isModalOpen()) return;
+  if (isModalOpen() || isProfileDialogOpen()) return;
+  if (event.target instanceof Element && event.target.closest('input, textarea, select, [contenteditable="true"]')) return; // typing in a form field
   if (event.code === 'F2') return updateSettings({ showKeyboard: !settings.showKeyboard });
   if (event.code === 'F3') return updateSettings({ showFingers: !settings.showFingers });
   if (event.code === 'F11' && !desktop) return toggleFullscreen();

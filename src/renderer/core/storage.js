@@ -1,7 +1,8 @@
 // Persists settings and practice records in localStorage, validating what it reads back.
+// Records belong to the active profile (core/profiles.js); app-wide settings are shared by all profiles.
+import { loadProfiles, recordsKey, PROFILE_KEYS } from './profiles.js';
 
 const SETTINGS_KEY = 'tw.settings.v1';
-const RECORDS_KEY = 'tw.records.v1';
 const MAX_HISTORY = 200;
 
 /** Text size multipliers offered for the games. */
@@ -74,13 +75,15 @@ export function loadSettings() {
   });
 }
 
-export const saveSettings = (settings) => writeJson(SETTINGS_KEY, settings);
+/** Saves the app-wide settings (per-profile values are saved by saveProfileData). */
+export const saveSettings = (settings) =>
+  writeJson(SETTINGS_KEY, Object.fromEntries(Object.entries(settings).filter(([key]) => !PROFILE_KEYS.includes(key))));
 
 const isRecord = (r) =>
   r && typeof r.mode === 'string' && Number.isFinite(r.score) && Number.isFinite(r.at) && Number.isFinite(r.ms);
 
-export function loadRecords() {
-  const stored = readJson(RECORDS_KEY);
+export function loadRecords(profileId = loadProfiles().activeId) {
+  const stored = readJson(recordsKey(profileId));
   return Array.isArray(stored) ? stored.filter(isRecord) : [];
 }
 
@@ -95,6 +98,6 @@ export function addRecord(entry) {
     .filter((r) => r.mode === entry.mode)
     .reduce((best, r) => Math.max(best, r.score), 0);
   const next = [record, ...records].slice(0, MAX_HISTORY);
-  writeJson(RECORDS_KEY, next);
+  writeJson(recordsKey(loadProfiles().activeId), next);
   return { records: next, isBest: entry.score > previousBest };
 }
