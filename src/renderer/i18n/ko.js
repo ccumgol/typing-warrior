@@ -337,6 +337,7 @@ export const KO = Object.freeze({
   'sc.fromMemory': '외워서 눌러 보세요 · {count}번 틀리면 정답을 보여 드려요 · F2로 키보드 보이기',
   'sc.macOnWindows': "윈도우 키보드에서는 맥 왼쪽 키 순서대로 Ctrl = control(⌃), Win = option(⌥), Alt = command(⌘)로 누르세요. 화면 연습을 위한 배치이며, 실제 맥에서는 맥 키보드의 키를 씁니다.",
   'sc.placeholder': '단축키를 눌러 보세요',
+  'typed.placeholder': "여기에 입력됩니다",
   'sc.label': '단축키 · {platform} · {stage}',
   'sc-1': '1단계 기본',
   'sc-1.desc': '복사·붙여넣기·실행 취소처럼 매일 쓰는 단축키',

@@ -38,6 +38,101 @@ Learn Korean and English typing by copying Scripture and poetry line by line: th
 - Per-user records, ranking and badges; display and practice languages chosen separately
 - Free, no ads. If it helps you, you can buy me a coffee.
 
+## App Store Connect 입력 내용 (그대로 붙여 넣기)
+
+### 앱 정보
+| 항목 | 한국어 | English (U.S.) |
+|---|---|---|
+| 이름 (30자) | Typing Warrior | Typing Warrior |
+| 부제 (30자) | 말씀과 시로 배우는 한글·영문 타자 | Learn typing with Scripture |
+| 기본 카테고리 / 보조 | 교육 / 참고 | Education / Reference |
+| 콘텐츠 권한 | "제3자 콘텐츠를 포함하며 사용 권한이 있음"(퍼블릭 도메인·CC BY-SA, 소개 페이지에 출처) | |
+| 연령 등급 | 설문: 만화 또는 판타지 폭력 "드물게/약하게", 나머지 "없음" → 4+ 또는 9+ | |
+
+### 가격 및 사용 가능 여부
+무료(0원), 모든 국가·지역
+
+### 앱 개인정보 보호
+- 개인정보 처리방침 URL: https://github.com/ccumgol/typing-warrior/blob/main/docs/PRIVACY.md
+- 데이터 수집: **"아니요, 이 앱에서 데이터를 수집하지 않습니다"** (API 키는 사용자가 API.Bible에 직접 보내는 것이고 개발자가 받지 않음)
+
+### 버전 정보 (1.1.0)
+| 항목 | 한국어 | English |
+|---|---|---|
+| 프로모션 텍스트 (170자) | 성경 전권과 윤동주·김소월의 시, 셰익스피어와 옛 찬송가를 한 줄씩 따라 치며 한글·영문 타자를 익히세요. 무료, 광고 없음, 기록은 내 Mac에만. | Learn Korean and English typing by copying the Bible, Korean poetry, Shakespeare and old hymns line by line. Free, no ads, records stay on your Mac. |
+| 키워드 (100자) | 타자연습,타자,한글타자,영타,타이핑,성경,필사,말씀,암송,시편,윤동주,김소월,찬송가,키보드,단축키,교육 | typing,tutor,keyboard,Korean,Hangul,Bible,KJV,scripture,verse,poetry,Shakespeare,hymns,speed |
+| 지원 URL | https://github.com/ccumgol/typing-warrior/issues | 같음 |
+| 마케팅 URL | https://jesusiswith.us | 같음 |
+| 저작권 | 2026 Gihyun Park | 같음 |
+
+**설명 (한국어)**
+
+```
+손끝으로 새기는 말씀과 시 — Typing Warrior는 성경과 문학을 따라 치며 한글·영문 타자를 익히는 프로그램입니다.
+
+■ 성경 전권을 한 줄씩
+개역한글과 KJV 성경 66권 1,189장을 책과 장을 골라 이어서 칩니다. 어디까지 쳤는지 기억해 두니 날마다 한 장씩 필사하듯 이어 가세요. 날마다 바뀌는 오늘의 말씀과 15개 주제로 정리한 암송 말씀 365구절도 있습니다.
+
+■ 시와 찬송
+김소월 『진달래꽃』, 윤동주 『하늘과 바람과 별과 시』, 한용운 『님의 침묵』, 셰익스피어 소네트, 에밀리 디킨슨, Amazing Grace 같은 옛 찬송가를 원문 그대로 따라 칩니다. 내 텍스트 파일이나 성경 파일을 불러와 연습할 수도 있습니다.
+
+■ 차근차근 배우는 타자
+자리 연습(한글 7단계, 영문 6단계), 단어, 문장, 긴 글. 화면 키보드가 다음 키와 손가락을 알려 줍니다. 컴퓨터의 한/영 상태와 상관없이 두벌식 한글을 바로 칠 수 있습니다.
+
+■ 지칠 때는 게임으로
+떨어지는 단어를 막는 단어블록게임(레벨 1~20), 다가오는 적을 막는 전선작전게임.
+
+■ 단축키 연습
+맥 기본 단축키를 1~3단계로 익힙니다.
+
+■ 가족이 함께
+사용자마다 기록·진행 위치·화면 언어가 따로 저장되고, 순위와 배지(성경 한 권, 시집 한 권을 다 치면)를 볼 수 있습니다.
+
+■ 화면 언어와 연습 언어를 따로
+영어 화면으로 한글 타자를 배울 수도 있습니다.
+
+무료이며 광고가 없습니다. 기록은 이 Mac에만 저장되고 밖으로 보내지 않습니다.
+연습 글은 퍼블릭 도메인과 CC BY-SA 본문이며, 출처는 앱의 소개 페이지에 있습니다.
+```
+
+**Description (English)**
+
+```
+Type the Word, line by line. Typing Warrior teaches Korean and English typing through Scripture and literature.
+
+THE WHOLE BIBLE
+Type all 66 books and 1,189 chapters of the King James Version or the Korean 개역한글, chapter by chapter, with your place remembered. Practise the verse of the day and 365 memory verses arranged in 15 topics.
+
+POETRY AND HYMNS
+Shakespeare's sonnets, Emily Dickinson, beloved old hymns like Amazing Grace and Rock of Ages, and the Korean poets Kim Sowol, Yun Dong-ju and Han Yong-un. You can also open your own text files or a Bible file.
+
+STEP BY STEP
+Key drills, words, sentences and long texts, with an on-screen keyboard that shows the next key and finger. Korean Hangul works without switching your input source.
+
+GAMES
+Word Blocks (levels 1–20) and Frontline Game, a first-person typing battle.
+
+SHORTCUTS
+Learn the basic Mac shortcuts in three levels.
+
+FOR THE FAMILY
+Each user keeps their own records, reading positions and languages, with a local ranking and badges for finishing a book of the Bible.
+
+Free, no ads. Your records stay on your Mac. Texts are public domain or CC BY-SA; sources are listed on the About page.
+```
+
+### 심사 정보
+- 로그인 필요: **없음** (로그인 정보 칸 체크 해제)
+- 연락처: 박기현 / 이메일 / 전화번호
+- 메모(영어):
+
+```
+No account or login is needed. All features work offline except "Get from API.Bible" (Typing > Long texts), which needs the user's own free API key from scripture.api.bible; it is optional. Practice texts are public domain (KJV, 개역한글 1961, poems by authors who died in 1962 or earlier, public domain under Korean law) or CC BY-SA 4.0 (Korean Wikisource), with sources on the About page. The app is free with no in-app purchases.
+```
+
+### 스크린샷
+- 크기: 2560×1600 (16:10). 1~10장. `npm run screenshots`로 `docs/screenshots/ko`, `docs/screenshots/en`에 만듭니다.
+
 ## 맥: 서명과 공증 (GitHub에서 받는 dmg)
 
 - 인증서: 키체인의 **Developer ID Application: Gihyun Park (QYB6DPBR6X)**
@@ -47,7 +142,7 @@ Learn Korean and English typing by copying Scripture and poetry line by line: th
 
 ## Mac App Store 등록 순서
 
-1. **Bundle ID 등록**: developer.apple.com → Certificates, IDs & Profiles → Identifiers → **+** → App IDs → App → Bundle ID `com.typingwarrior.app` (Explicit). App Groups 기능을 켜고 `QYB6DPBR6X.com.typingwarrior.app`를 씁니다.
+1. **Bundle ID 등록**: developer.apple.com → Certificates, IDs & Profiles → Identifiers → **+** → App IDs → App → Description `Typing Warrior`, Bundle ID `com.typingwarrior.app` (Explicit) → Continue → Register. 앱 그룹 `QYB6DPBR6X.com.typingwarrior.app`는 맥 방식(팀 ID로 시작)이라 포털에 등록하지 않고 권한 파일에만 적습니다(App Groups의 Configure는 쓰지 않음).
 2. **인증서 두 개**: Xcode → Settings → Accounts → Manage Certificates → **+** → **Apple Distribution**, **Mac Installer Distribution**
 3. **프로비저닝 프로파일**: Profiles → **+** → Distribution → **Mac App Store Connect** → 위 App ID → Apple Distribution 인증서 → 내려받아 `build/embedded.provisionprofile`로 저장 (Git에는 올리지 않음)
 4. **App Store Connect**: appstoreconnect.apple.com → 앱 → **+** 새로운 앱 → macOS, 이름 Typing Warrior, 기본 언어 한국어, Bundle ID 선택, SKU `typing-warrior`

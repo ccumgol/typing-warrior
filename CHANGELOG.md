@@ -9,6 +9,8 @@
 
 ## 다음 버전 (아직 내지 않음)
 - 맥 dmg를 Developer ID로 서명하고 Apple 공증을 받음(1.1.0 릴리스 파일도 교체) — 경고 없이 열림
+- 영어 화면에서 입력칸 안내 문구가 한국어로 나오던 문제 수정
+- 개인정보 처리방침(`docs/PRIVACY.md`), 스토어 스크린샷 자동 촬영(`npm run screenshots` → `docs/screenshots/`)
 - Mac App Store 빌드 설정(샌드박스 권한, 스토어 빌드에서는 후원 줄 숨김), MS Store 타일 이미지, 등록 순서(`docs/STORE.md`)
 
 ## 1.1.0 — 2026-11-01

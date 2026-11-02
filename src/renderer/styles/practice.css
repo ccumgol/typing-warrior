@@ -55,7 +55,7 @@
   border-radius: 12px; background: var(--surface); border: 1px solid var(--border);
   font-size: clamp(20px, 3.4vh, 30px); white-space: pre-wrap;
 }
-.typed-box.empty::after { content: '여기에 입력됩니다'; color: var(--pending); font-size: 0.7em; }
+.typed-box.empty::after { content: attr(data-placeholder); color: var(--pending); font-size: 0.7em; }
 
 .word-current .typing-line { font-size: clamp(48px, 10vh, 104px); }
 .word-upcoming { display: flex; gap: 14px; color: var(--pending); font-size: clamp(16px, 2.6vh, 24px); }

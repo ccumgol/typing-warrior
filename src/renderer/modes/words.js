@@ -29,7 +29,7 @@ export function createWordsMode(ctx) {
 
   const toolbar = el('div', { class: 'mode-toolbar' });
   const current = el('div', { class: 'word-current' });
-  const input = el('div', { class: 'typed-box' });
+  const input = el('div', { class: 'typed-box', 'data-placeholder': t('typed.placeholder') });
   const upcoming = el('div', { class: 'word-upcoming' });
   ctx.root.replaceChildren(
     el('section', { class: 'mode words' }, toolbar, el('div', { class: 'practice-area' }, current, input, upcoming, el('div', { class: 'practice-desc' }, t('words.desc')))),

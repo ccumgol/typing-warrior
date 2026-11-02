@@ -63,7 +63,7 @@ export function createSentencesMode(ctx, options = {}) {
   const toolbar = el('div', { class: 'mode-toolbar' });
   const sourceLine = el('div', { class: 'sentence-source' });
   const line = el('div', { class: 'sentence-target' });
-  const input = el('div', { class: 'typed-box sentence-typed' });
+  const input = el('div', { class: 'typed-box sentence-typed', 'data-placeholder': t('typed.placeholder') });
   const next = el('div', { class: 'sentence-next' });
   ctx.root.replaceChildren(
     el('section', { class: 'mode sentences' }, toolbar, el('div', { class: 'practice-area' }, sourceLine, line, input, next, el('div', { class: 'practice-desc' }, t('sentences.desc')))),

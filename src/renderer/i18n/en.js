@@ -337,6 +337,7 @@ export const EN = Object.freeze({
   'sc.fromMemory': 'Press it from memory · the answer appears after {count} misses · F2 shows the keyboard',
   'sc.macOnWindows': "On a Windows keyboard, press the keys in the Mac's left-to-right order: Ctrl = control (⌃), Win = option (⌥), Alt = command (⌘). This layout is for practice only; on a real Mac use the Mac keys.",
   'sc.placeholder': 'Press the shortcut',
+  'typed.placeholder': "Your typing appears here",
   'sc.label': 'Shortcuts · {platform} · {stage}',
   'sc-1': 'Step 1 Basics',
   'sc-1.desc': 'Everyday shortcuts like copy, paste and undo',

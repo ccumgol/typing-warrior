@@ -24,7 +24,8 @@
     "dist:win-zip": "electron-builder --win zip --x64 -c.win.signAndEditExecutable=false",
     "dist:win-installer": "electron-builder --win nsis --x64 --publish never",
     "dist:mac-notarized": "APPLE_KEYCHAIN_PROFILE=typing-warrior electron-builder --mac",
-    "dist:mas": "electron-builder --mac mas --universal"
+    "dist:mas": "electron-builder --mac mas --universal",
+    "screenshots": "electron tools/screenshots.cjs"
   },
   "build": {
     "appId": "com.typingwarrior.app",

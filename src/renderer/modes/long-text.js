@@ -50,7 +50,7 @@ export function createLongTextMode(ctx) {
   const title = el('h2', { class: 'long-title' }, t('long.loading'));
   const previous = el('div', { class: 'long-context' });
   const current = el('div', { class: 'sentence-target' });
-  const input = el('div', { class: 'typed-box sentence-typed' });
+  const input = el('div', { class: 'typed-box sentence-typed', 'data-placeholder': t('typed.placeholder') });
   const upcoming = el('div', { class: 'long-context' });
   const notice = el('div', { class: 'bible-notice' }); // copyright notice of a Bible from API.Bible
   ctx.root.replaceChildren(
