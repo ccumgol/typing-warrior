@@ -131,7 +131,7 @@ No account or login is needed. All features work offline except "Get from API.Bi
 ```
 
 ### 스크린샷
-- 크기: 2560×1600 (16:10). 1~10장. `npm run screenshots`로 `docs/screenshots/ko`, `docs/screenshots/en`에 만듭니다.
+- 크기: 2560×1600 (16:10). 1~10장. `npm run screenshots`로 `docs/screenshots/ko`, `docs/screenshots/en`에 만듭니다. MS Store용(윈도우 키보드 표시)은 `npm run screenshots -- --windows` → `docs/screenshots/windows/{ko,en}`.
 
 ## 맥: 서명과 공증 (GitHub에서 받는 dmg)
 

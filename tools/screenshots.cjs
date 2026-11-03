@@ -1,11 +1,14 @@
 // Store screenshots: opens the app's screens at 1280×800 with a 2× scale factor and saves 2560×1600 PNGs
 // to docs/screenshots/<ko|en>/. Run with `npm run screenshots` (uses a throwaway profile, not your records).
+// `npm run screenshots -- --windows` shows the Windows keyboard (Ctrl, Win, Alt) and saves to docs/screenshots/windows/<ko|en>/.
 const { app, BrowserWindow } = require('electron');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const OUT = path.join(ROOT, 'docs', 'screenshots');
+const WINDOWS = process.argv.includes('--windows');
+const OUT = path.join(ROOT, 'docs', 'screenshots', ...(WINDOWS ? ['windows'] : []));
+const WINDOWS_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
 const WIDTH = 1280;
 const HEIGHT = 800;
 const PSALM_23 = 501; // chapters before Psalms (478) + 23, counted across the whole Bible
@@ -97,6 +100,7 @@ async function run() {
     webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
   });
   const page = path.join(ROOT, 'src', 'renderer', 'index.html');
+  if (WINDOWS) win.webContents.setUserAgent(WINDOWS_UA); // the app picks its keyboard layout from the user agent
   for (const lang of ['ko', 'en']) {
     fs.mkdirSync(path.join(OUT, lang), { recursive: true });
     await win.loadFile(page);
