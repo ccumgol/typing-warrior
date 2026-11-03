@@ -154,9 +154,9 @@ No account or login is needed. All features work offline except "Get from API.Bi
 ## Microsoft Store 등록 순서
 
 1. **개발자 계정**: partner.microsoft.com → Microsoft Store 개발자 계정(개인) 가입
-2. **앱 이름 예약**: Partner Center → 앱 및 게임 → **새 제품** → MSIX 또는 PWA 앱 → 이름 `Typing Warrior`
+2. **앱 이름 예약**: Partner Center → 앱 및 게임 → **새 제품** → MSIX 또는 PWA 앱. `Typing Warrior`는 다른 사람이 예약해 둬서 **`Typing Warrior: Bible & Poetry`**로 예약함 (Store ID `9N1907XRG6SQ`, https://apps.microsoft.com/detail/9N1907XRG6SQ)
 3. **패키지 ID 확인**: 제품 → 제품 관리 → **제품 ID**에서 `Package/Identity/Name`, `Package/Identity/Publisher`(CN=…), `Package/Properties/PublisherDisplayName` 세 값을 복사 → `package.json`의 `build.appx`에 넣음
-4. **빌드**: MSIX(.appx)는 윈도우에서만 만들 수 있어 GitHub Actions에서 만듦. 스토어가 서명하므로 코드 서명 인증서는 필요 없음
+4. **빌드**: MSIX(.appx)는 윈도우에서만 만들 수 있어 GitHub Actions → **MS Store package** → Run workflow로 만들고, 결과의 `msstore-package` 파일을 받음(`npm run dist:msstore`, `.github/workflows/msstore-package.yml`). 스토어가 서명하므로 코드 서명 인증서는 필요 없음. 패키지 ID: `ccumgol.TypingWarriorBiblePoetry`, 게시자 `CN=F056DC6C-2FA7-4C7F-B3A6-150A3E1399A7`, 표시 이름 `ccumgol`(Partner Center 계정 설정에서 게시자 표시 이름을 바꾸면 package.json도 함께 바꿀 것)
 5. **제출**: 패키지 업로드, 스토어 설명·스크린샷(1366×768 이상), 연령 등급 설문, 개인정보 URL → 제출
 
 스토어 타일 이미지는 `build/appx/`(앱 아이콘에서 만듦)에 있습니다.

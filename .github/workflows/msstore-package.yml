@@ -1,0 +1,30 @@
+# Builds the Microsoft Store package (.appx) on a Windows machine. The Store signs it, so no certificate is needed.
+# Run by hand (Actions → MS Store package → Run workflow), then download the "msstore-package" artifact
+# and upload the .appx in Partner Center. Package identity values are in package.json "build.appx".
+name: MS Store package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm test
+
+      - run: npm run dist:msstore
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: msstore-package
+          path: dist/*.appx
+          if-no-files-found: error
