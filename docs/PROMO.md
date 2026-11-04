@@ -30,7 +30,8 @@
 
 맥과 윈도우에서 무료로 쓸 수 있고, 기록은 내 컴퓨터에만 저장됩니다.
 
-📥 내려받기: https://github.com/ccumgol/typing-warrior/releases
+🪟 윈도우: https://apps.microsoft.com/detail/9N1907XRG6SQ (Microsoft Store)
+📥 맥·윈도우 설치 파일: https://github.com/ccumgol/typing-warrior/releases
 🏠 홈페이지: https://jesusiswith.us
 ☕ 응원하기: https://buymeacoffee.com/ccumgol
 
@@ -41,7 +42,8 @@
 말씀과 시를 따라 치며 배우는 타자 연습 🙏⌨️
 성경 전권(개역한글·KJV), 김소월·윤동주·한용운의 시, 셰익스피어와 옛 찬송가까지 한 줄씩.
 지칠 땐 단어블록게임과 전선작전게임으로 재밌게! 맥·윈도우 무료.
-👉 https://github.com/ccumgol/typing-warrior/releases
+👉 윈도우: https://apps.microsoft.com/detail/9N1907XRG6SQ
+👉 맥: https://github.com/ccumgol/typing-warrior/releases
 
 ---
 
@@ -60,5 +62,6 @@ Type the whole Bible — Korean 개역한글 and the KJV — chapter by chapter,
 When you need a break, play **Word Blocks** — clear the falling words before they land — or **Frontline Game**, a first-person typing battle. Several users can share one computer, earn badges for finishing a book of the Bible, and share badge cards with friends.
 
 Free for macOS and Windows. Your records stay on your computer.
-Download: https://github.com/ccumgol/typing-warrior/releases
+Windows: https://apps.microsoft.com/detail/9N1907XRG6SQ (Microsoft Store)
+Download for Mac and Windows: https://github.com/ccumgol/typing-warrior/releases
 Support: https://buymeacoffee.com/ccumgol

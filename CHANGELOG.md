@@ -8,6 +8,7 @@
 새 버전을 낼 때는 `package.json`의 `version`과 `src/renderer/version.js`의 `APP_VERSION`을 같이 바꾸고(테스트가 확인), 이 파일 맨 위에 바뀐 내용을 적습니다.
 
 ## 다음 버전 (아직 내지 않음)
+- **Microsoft Store**에 게시: https://apps.microsoft.com/detail/9N1907XRG6SQ (README·홍보글에 링크)
 - 맥 dmg를 Developer ID로 서명하고 Apple 공증을 받음(1.1.0 릴리스 파일도 교체) — 경고 없이 열림
 - 영어 화면에서 입력칸 안내 문구가 한국어로 나오던 문제 수정
 - 개인정보 처리방침(`docs/PRIVACY.md`), 스토어 스크린샷 자동 촬영(`npm run screenshots` → `docs/screenshots/`)
