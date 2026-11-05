@@ -26,7 +26,8 @@
     "dist:mac-notarized": "APPLE_KEYCHAIN_PROFILE=typing-warrior electron-builder --mac",
     "dist:mas": "electron-builder --mac mas --universal",
     "screenshots": "electron tools/screenshots.cjs",
-    "dist:msstore": "electron-builder --win appx --x64 --publish never"
+    "dist:msstore": "electron-builder --win appx --x64 --publish never",
+    "serve:lan": "HOST=0.0.0.0 PORT=5180 node tools/serve.mjs"
   },
   "build": {
     "appId": "com.typingwarrior.app",

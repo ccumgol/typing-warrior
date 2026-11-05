@@ -2,6 +2,7 @@
 
 - **Microsoft Store**: 게시됨(2026-11-03) — https://apps.microsoft.com/detail/9N1907XRG6SQ
 - **Mac App Store**: 심사 중(2026-11-01 제출)
+- **iPad**: `ios/` 앱 완성·실기기 확인(2026-11-04). App Store Connect → Typing Warrior → 플랫폼 추가 → iOS로 같은 앱 페이지에 등록 예정
 
 Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할 때 쓰는 값입니다. 가격은 **무료**, 앱 안 결제는 없습니다.
 

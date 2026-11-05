@@ -5,6 +5,8 @@ import { extname, join, normalize, resolve } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..', 'src', 'renderer');
 const PORT = Number(process.env.PORT) || 5173;
+// HOST=0.0.0.0 opens it to other devices on the same Wi-Fi (e.g. testing on an iPad); the default stays local only.
+const HOST = process.env.HOST || '127.0.0.1';
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png' };
 
 createServer(async (req, res) => {
@@ -20,4 +22,4 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404).end('Not found');
   }
-}).listen(PORT, '127.0.0.1', () => console.log(`Typing Warrior preview: http://127.0.0.1:${PORT}`));
+}).listen(PORT, HOST, () => console.log(`Typing Warrior preview: http://${HOST}:${PORT}`));

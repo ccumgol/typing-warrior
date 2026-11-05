@@ -87,7 +87,8 @@ export function createShortcutsMode(ctx) {
     const combo = item[platform];
     // Keyboard shown: see the answer and press it. Keyboard hidden (F2): recall it from memory.
     const reveal = keyboardShown() || misses >= HINT_AFTER_MISSES;
-    const desc = keyboardShown() ? t('sc.withKeyboard') : t('sc.fromMemory', { count: HINT_AFTER_MISSES });
+    const touch = ctx.isIPad ? 'Touch' : ''; // no F2 on iPad keyboards: point at the ⌨ button
+    const desc = keyboardShown() ? t(`sc.withKeyboard${touch}`) : t(`sc.fromMemory${touch}`, { count: HINT_AFTER_MISSES });
     area.replaceChildren(...[
       el('div', { class: 'shortcut-category' }, `${stageTitle()} · ${t(`sc.cat.${item.category}`)} · ${index + 1}/${queue.length}`),
       el('div', { class: 'shortcut-action' }, loc(item.action)),

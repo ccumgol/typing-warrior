@@ -151,6 +151,7 @@ API.Bible 약관에 따라 받은 본문은 **30일마다 다시 받아야** 하
 npm install        # 처음 한 번
 npm start          # 데스크톱 앱 실행 (Electron)
 npm run serve      # 브라우저 미리보기: http://127.0.0.1:5173
+npm run serve:lan  # 같은 와이파이의 iPad·폰에서 http://<이 맥의 IP>:5180 으로 시험
 npm test           # 단위 테스트
 npm run dist:mac      # macOS .dmg (Apple Silicon, 인텔) → dist/
 npm run dist:mac-notarized  # 서명·공증한 macOS .dmg (docs/STORE.md 참고)
@@ -162,11 +163,18 @@ npm run dist:win-zip  # Apple Silicon 맥에서 Windows zip만 만들 때
 
 Windows 설치 파일은 윈도우에서만 만들 수 있어서, 릴리스를 올리면 GitHub Actions(`.github/workflows/windows-installer.yml`)가 윈도우 컴퓨터에서 만들어 릴리스에 붙이고 `SHA256SUMS.txt`도 고칩니다. 이미 올린 릴리스에는 Actions → **Windows installer** → **Run workflow**에 태그(예: `v1.1.0`)를 넣어 실행합니다.
 
+### iPad 앱 (`ios/`)
+화면 코드(`src/renderer`)를 그대로 쓰는 Swift 앱입니다(외부 패키지 없음). Xcode에서 `ios/TypingWarrior.xcodeproj`를 열어 iPad나 시뮬레이터로 실행합니다.
+- `AppSchemeHandler.swift`: `app://typing-warrior/`로 렌더러 파일을 제공(ES 모듈, localStorage, IndexedDB가 그대로 동작)
+- `bridge.js` + `NativeBridge.swift`: Electron preload와 같은 `window.desktop` — iOS 키체인(API 키), 공유 시트(배지 카드), 하드웨어 키보드 연결 여부
+- 렌더러는 `window.desktop.platform === 'ipad'`일 때 Mac 키 배열을 쓰고, F키 대신 ⌨·🖐 버튼을 안내하며, 전체화면 버튼을 숨깁니다. App Store 빌드(`isAppStoreBuild`)는 소개 페이지의 후원 줄을 뺍니다.
+- 번들 ID는 Mac판과 같은 `com.typingwarrior.app`(App Store Connect에서 iOS 플랫폼 추가), iPad 전용.
+
 ### 설계 메모
 - **입력기와 무관한 한글 조합**: `KeyboardEvent.code`로 키 위치를 읽어 두벌식을 직접 조합합니다(`src/renderer/core/hangul.js`).
 - **타수**: 글자를 치는 데 필요한 키 입력 수 기준의 분당 타수(예: `과` = 3타). 받침이 다음 글자로 넘어가는 경우도 틀린 것으로 보지 않도록 키 입력 단위로 비교합니다.
 - **화면 언어와 연습 언어 분리**: 화면 문구는 `src/renderer/i18n/ko.js`, `en.js`.
-- **저장**: 설정·사용자·기록은 localStorage, 올린 성경은 IndexedDB(`core/bible-store.js`), API 키는 Electron safeStorage.
+- **저장**: 설정·사용자·기록은 localStorage, 올린 성경은 IndexedDB(`core/bible-store.js`), API 키는 Electron safeStorage(iPad는 iOS 키체인).
 - **버전 관리**: `package.json`과 `src/renderer/version.js`를 함께 바꾸고 [CHANGELOG.md](CHANGELOG.md)에 적습니다.
 - **아이콘**: 원본은 `build/icon.svg`. 고친 뒤 `rsvg-convert -w 1024 -h 1024 build/icon.svg -o build/icon.png`, 윈도우용 `magick build/icon.png -define icon:auto-resize=256,128,64,48,32,16 build/icon.ico`, 앱 안 로고 `src/renderer/assets/icon-64.png`·`icon-512.png`도 같은 방법으로 만듭니다.
 
@@ -178,6 +186,7 @@ Windows 설치 파일은 윈도우에서만 만들 수 있어서, 릴리스를 �
 ### 폴더 구조
 ```
 src/main/        Electron 메인 프로세스 (창, 메뉴, 키 암호화 저장)
+ios/             iPad 앱 (Swift, 같은 화면 코드를 WKWebView로)
 src/renderer/
   core/          한글 조합, 키보드 배열, 통계, 저장, 사용자, 배지, 성경 파일·API.Bible
   ui/            화면 키보드, 결과 창, 사용자 창, API.Bible 창, 배지 카드

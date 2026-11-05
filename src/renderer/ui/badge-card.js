@@ -40,8 +40,12 @@ export function drawBadgeCard({ badge, name, date = new Date() }) {
   return canvas;
 }
 
-/** Save the card as a PNG file (the desktop app asks where to save it). */
+/** Save the card as a PNG file (the desktop app asks where to save it; the iPad app opens the share sheet). */
 export function saveBadgeCard(card, fileName) {
+  if (window.desktop?.shareImage) {
+    window.desktop.shareImage(card.toDataURL('image/png'), `${fileName}.png`).catch((error) => console.warn('Could not share the badge card.', error));
+    return;
+  }
   const a = document.createElement('a');
   a.href = card.toDataURL('image/png');
   a.download = `${fileName}.png`;

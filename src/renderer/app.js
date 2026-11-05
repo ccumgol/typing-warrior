@@ -38,7 +38,9 @@ const lastInGroup = {}; // the item last opened in each group, reopened when the
 
 const $ = (id) => document.getElementById(id);
 const desktop = window.desktop; // undefined when opened in a plain browser
-const platform = /Mac/i.test(navigator.userAgent) ? 'mac' : 'win';
+// The iPad app (ios/) has no F keys or fullscreen toggle; its keyboards use the Mac layout.
+const isIPad = desktop?.platform === 'ipad';
+const platform = isIPad || /Mac/i.test(navigator.userAgent) ? 'mac' : 'win';
 
 /** App-wide settings merged with the active profile's own values (records progress, finished stages…). */
 function composeSettings() {
@@ -85,7 +87,7 @@ function renderStatus({ cpm, accuracy, time, progress }) {
   const item = (label, value) => el('span', { class: 'st' }, el('em', {}, label), el('b', {}, value));
   $('statusbar').replaceChildren(
     el('div', { class: 'st-group' }, item(t('status.cpm'), cpm), item(t('status.accuracy'), typeof accuracy === 'number' ? `${accuracy}%` : accuracy), item(t('status.time'), time), item(t('status.progress'), progress)),
-    el('div', { class: 'st-help' }, t('status.help')),
+    el('div', { class: 'st-help' }, t(isIPad ? 'status.helpTouch' : 'status.help')),
   );
 }
 
@@ -101,7 +103,7 @@ function onProfileChanged() {
 function renderTools() {
   const { activeId, profiles } = loadProfiles();
   const current = profiles.find((p) => p.id === activeId);
-  $('tools').replaceChildren(
+  $('tools').replaceChildren(...[
     iconButton(`👤 ${current?.name ?? ''}`, t('tool.profile'), false, () => openProfileDialog(onProfileChanged)),
     iconButton(`🌐 ${getUiLang().toUpperCase()}`, t('tool.uiLang'), false, toggleUiLang),
     iconButton(settings.lang === 'ko' ? '한' : 'EN', t('tool.practiceLang'), false, toggleLang),
@@ -109,8 +111,8 @@ function renderTools() {
     iconButton('🖐', t('tool.fingers'), settings.showFingers, () => updateSettings({ showFingers: !settings.showFingers })),
     iconButton(settings.sound ? '🔊' : '🔇', t('tool.sound'), settings.sound, () => updateSettings({ sound: !settings.sound })),
     iconButton(settings.theme === 'dark' ? '🌙' : '☀️', t('tool.theme'), false, () => updateSettings({ theme: settings.theme === 'dark' ? 'light' : 'dark' })),
-    iconButton(isFullscreen ? '🗗' : '⛶', t('tool.fullscreen'), isFullscreen, toggleFullscreen),
-  );
+    !isIPad && iconButton(isFullscreen ? '🗗' : '⛶', t('tool.fullscreen'), isFullscreen, toggleFullscreen),
+  ].filter(Boolean)); // the fullscreen button is left out on iPad
 }
 
 const navButton = (cls, active, label, onClick) =>
@@ -166,6 +168,7 @@ const ctx = {
   root: $('stage'),
   keyboard,
   platform,
+  isIPad,
   settings: () => settings,
   updateSettings,
   status: renderStatus,
@@ -224,6 +227,17 @@ desktop?.onFullscreenChange((value) => {
   isFullscreen = value;
   renderTools();
 });
+/** iPad: ask for a hardware keyboard when none is connected (typing practice needs one). */
+function showKeyboardNotice(connected) {
+  $('keyboard-notice')?.remove();
+  if (connected) return;
+  const notice = el('div', { class: 'keyboard-notice', id: 'keyboard-notice', role: 'status' },
+    el('span', {}, t('notice.noKeyboard')),
+    el('button', { class: 'pill', type: 'button', onclick: () => $('keyboard-notice')?.remove() }, t('action.close')));
+  document.body.append(notice);
+}
+desktop?.onKeyboardChange?.(showKeyboardNotice);
+desktop?.hasKeyboard?.().then(showKeyboardNotice).catch((error) => console.warn('Keyboard check failed.', error));
 setInterval(() => active?.tick(), 500);
 
 renderStatus({ cpm: 0, accuracy: 100, time: '00:00', progress: '-' });

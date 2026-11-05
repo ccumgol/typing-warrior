@@ -2,7 +2,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('desktop', {
-  isMacAppStore: process.mas === true, // App Store builds leave out the external donation link (guideline 3.1.1)
+  isAppStoreBuild: process.mas === true, // App Store builds leave out the external donation link (guideline 3.1.1)
   toggleFullscreen: () => ipcRenderer.invoke('toggle-fullscreen'),
   getPlatform: () => ipcRenderer.invoke('get-platform'),
   getSecret: (name) => ipcRenderer.invoke('secret-get', name),
