@@ -1,16 +1,18 @@
 // Store screenshots: opens the app's screens at 1280×800 with a 2× scale factor and saves 2560×1600 PNGs
 // to docs/screenshots/<ko|en>/. Run with `npm run screenshots` (uses a throwaway profile, not your records).
 // `npm run screenshots -- --windows` shows the Windows keyboard (Ctrl, Win, Alt) and saves to docs/screenshots/windows/<ko|en>/.
+// `npm run screenshots -- --ipad` uses the iPad layout at 1376×1032 (2752×2064, the 13-inch iPad size) → docs/screenshots/ipad/<ko|en>/.
 const { app, BrowserWindow } = require('electron');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
 const WINDOWS = process.argv.includes('--windows');
-const OUT = path.join(ROOT, 'docs', 'screenshots', ...(WINDOWS ? ['windows'] : []));
+const IPAD = process.argv.includes('--ipad');
+const OUT = path.join(ROOT, 'docs', 'screenshots', ...(WINDOWS ? ['windows'] : IPAD ? ['ipad'] : []));
 const WINDOWS_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
-const WIDTH = 1280;
-const HEIGHT = 800;
+const WIDTH = IPAD ? 1376 : 1280;
+const HEIGHT = IPAD ? 1032 : 800;
 const PSALM_23 = 501; // chapters before Psalms (478) + 23, counted across the whole Bible
 const RUTH = [233, 234, 235, 236];
 const GROUPS = { practice: 0, games: 1, shortcuts: 2, records: 3, about: 4 };
@@ -97,7 +99,10 @@ async function run() {
     useContentSize: true,
     show: false,
     paintWhenInitiallyHidden: true,
-    webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
+    webPreferences: {
+      contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false,
+      ...(IPAD ? { preload: path.join(__dirname, 'screenshot-ipad-preload.cjs') } : {}),
+    },
   });
   const page = path.join(ROOT, 'src', 'renderer', 'index.html');
   if (WINDOWS) win.webContents.setUserAgent(WINDOWS_UA); // the app picks its keyboard layout from the user agent
