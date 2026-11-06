@@ -2,7 +2,7 @@
 
 - **Microsoft Store**: 게시됨(2026-11-03) — https://apps.microsoft.com/detail/9N1907XRG6SQ
 - **Mac App Store**: 심사 중(2026-11-01 제출)
-- **iPad**: `ios/` 앱 완성·실기기 확인(2026-11-04). App Store Connect → Typing Warrior → 플랫폼 추가 → iOS로 같은 앱 페이지에 등록 예정
+- **iPad(iOS)**: 1.1.0 빌드 1 제출(2026-11-04) → 심사 거절(2026-11-05, Guideline 2.1) → 메모 보강·녹화 링크 추가 후 **재제출, 심사 대기 중**(2026-11-06). 경위는 아래 [iPad(iOS) 심사 거절 대응](#ipadios-심사-거절-대응-2026-11-05)
 
 Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할 때 쓰는 값입니다. 가격은 **무료**, 앱 안 결제는 없습니다.
 
@@ -169,3 +169,109 @@ No account or login is needed. All features work offline except "Get from API.Bi
 
 - **Microsoft Store**: 설명과 앱 안 소개 페이지에 후원 링크를 넣어도 됩니다.
 - **Mac App Store**: 앱 심사 지침 3.1.1은 앱 안의 "팁·후원"을 앱 내 결제로 하도록 정합니다. 앱 안의 외부 후원 링크는 심사에서 거절될 수 있습니다(미국 스토어는 2025년 판결 이후 외부 링크가 허용되지만 다른 나라는 아직입니다). 거절되면 스토어 빌드에서는 소개 페이지의 후원 줄을 빼고, 스토어 설명과 홈페이지에만 후원 안내를 남기는 방법을 씁니다.
+
+---
+
+## iPad(iOS) 심사 거절 대응 (2026-11-05)
+
+iOS 1.1.0 (빌드 1)이 **Guideline 2.1 – Information Needed / 2.1.0 Performance: App Completeness**로 거절됐습니다. Apple이 요구한 것은 (1) 실기기 화면 녹화와 (2) App Review Information의 **Notes** 칸에 넣을 설명 6가지입니다.
+
+### 가장 큰 원인 (추정)
+
+이 앱은 **하드웨어 키보드가 없으면 아무것도 칠 수 없습니다.** 타이핑을 `document`의 `keydown`에서 `event.code`로 읽고(입력기와 무관한 두벌식 조합) 화면에 포커스를 받는 입력칸이 없어서, 키보드를 붙이지 않은 iPad에서는 iPadOS 소프트 키보드가 아예 올라오지 않습니다. 심사자가 키보드 없는 iPad로 열면 "키보드를 연결해 주세요" 안내만 보고 끝나므로 '앱이 완성되지 않았다'로 판단하기 쉽습니다.
+
+→ Notes 맨 앞에 키보드가 필요하다는 점을 먼저 적고, 화면 녹화에도 키보드를 연결해 실제로 치는 장면을 담습니다. App Store 설명 첫 줄에도 하드웨어 키보드가 필요하다는 문장을 넣어 두면 다음 심사에서 다시 걸릴 가능성이 줄어듭니다.
+
+### App Review Information → Notes (그대로 붙여 넣기)
+
+```
+IMPORTANT: THIS APP REQUIRES A HARDWARE KEYBOARD
+
+Typing Warrior is a touch-typing tutor for iPad with an external keyboard. It reads
+physical key positions (KeyboardEvent.code) so that Korean Hangul can be composed
+directly, without switching the iPad's input source. Please connect a Magic Keyboard,
+a Smart Keyboard Folio, or any Bluetooth keyboard before reviewing. Without a hardware
+keyboard the app shows a notice asking for one and no typing is possible, because the
+app has no text field that would raise the on-screen keyboard. (In the iPad Simulator:
+I/O > Input > "Send Keyboard Input to Device".)
+
+Recorded on a physical iPad with a Magic Keyboard, starting from the Home
+Screen. Unlisted YouTube link, no sign-in needed:
+https://youtu.be/W8xmAB2OsRI
+
+2. PURPOSE AND TARGET AUDIENCE
+Typing Warrior teaches Korean (Hangul) and English touch typing by copying public
+domain texts line by line: the whole Bible (Korean 개역한글 and the King James Version),
+poems by Kim Sowol, Yun Dong-ju and Han Yong-un, Shakespeare's sonnets, Emily Dickinson,
+and old hymns. It is for students, adults learning Hangul typing, and families who want
+to practise typing with meaningful texts instead of random words. The app remembers where
+each user stopped, so a chapter a day can be typed like handwriting practice. There are
+no accounts, no ads, no in-app purchases and no user-generated content shared with others.
+
+3. HOW TO SET UP AND REACH THE MAIN FEATURES
+No login, no account and no sample file are required. Everything below works offline.
+- On first launch a welcome sheet asks for a name, a display language (Korean/English)
+  and a practice language (Hangul/English). Tap "시작하기 / Start".
+- Top menu: Typing (Key Drills, Words, Sentences, Verses by topic, Long texts),
+  Games (Word Blocks, Frontline), Shortcuts, Records, About.
+- Typing > Key Drills > Stage 1: type the large characters shown; the on-screen keyboard
+  highlights the next key.
+- Typing > Long texts: choose a work (Bible, a poetry collection) and a book/chapter,
+  type a line and press Return. Progress is saved per user.
+- Games > Word Blocks: press Return to start, type a falling word and press Return/Space.
+- Records: personal records, a local ranking of the users on this iPad, and badges.
+  A badge card can be saved or shared through the iOS share sheet.
+- OPTIONAL: Typing > Long texts > "Get from API.Bible" asks for the user's own free
+  API key. This is the only feature that uses the internet and it can be skipped entirely.
+
+4. EXTERNAL SERVICES
+Only one, and it is optional: API.Bible (https://scripture.api.bible), used solely if the
+user enters their own free API key to download an additional Bible translation. The key is
+stored in the iOS Keychain and is never sent to us. There are no analytics, advertising,
+authentication, payment or AI services. No data leaves the device otherwise; all records
+are kept in local storage on the iPad.
+
+5. REGIONAL DIFFERENCES
+None. The app behaves identically in every region. The interface is available in Korean
+and English, chosen by the user, independently of the device region.
+
+6. THIRD-PARTY MATERIAL
+All built-in practice texts are public domain or openly licensed, and every source is
+listed on the app's About page:
+- Korean Bible 개역한글 (Korean Bible Society): economic copyright expired under Korean law.
+- King James Version: CrossWire KJV (eBible.org, 1769 edition), public domain outside the UK.
+- Kim Sowol, Yun Dong-ju, Han Yong-un, Yi Yuksa, Yi Sanghwa, Jeong Jiyong, Kim Yeongnang,
+  Shim Hun: all died in 1962 or earlier, public domain under Korean law. Modern-spelling
+  texts come from Korean Wikisource and are redistributed under CC BY-SA 4.0, as stated
+  on the About page.
+- Shakespeare's sonnets, Emily Dickinson, The Christian Hymn Book: Project Gutenberg
+  #1041, #12242, #46041, public domain.
+The app's own source code is published under the MIT licence at
+https://github.com/ccumgol/typing-warrior
+```
+
+### 화면 녹화 체크리스트
+
+실기기(iPad)에서 **Magic Keyboard나 블루투스 키보드를 연결한 채로**, 최신 iPadOS에서 찍습니다. 설정 → 제어 센터에 '화면 기록'을 넣고 녹화합니다. 2~4분이면 충분합니다.
+
+1. **홈 화면에서 앱 아이콘을 눌러 실행**하는 장면부터 시작 (필수 요건)
+2. 환영 창에서 이름·화면 언어·연습 언어를 고르고 시작
+3. 타자연습 → 자리 연습 1단계를 **실제로 몇 글자 타이핑** (키보드로 치는 손이나 화면 키보드 하이라이트가 보이게)
+4. 타자연습 → 긴 글 → 성경 한 장을 골라 한두 줄 치고 Enter, 진행 저장되는 모습
+5. 게임 → 단어블록게임 몇 초
+6. 기록 → 내 기록·배지 화면
+7. 소개 화면에서 출처·저작권 목록을 잠깐 보여 주기 (6번 항목 뒷받침)
+
+계정·로그인·결제·사용자 생성 콘텐츠 흐름은 이 앱에 없으므로 녹화할 것이 없습니다.
+
+녹화본은 **App Store Connect의 '앱 심사 정보 → 첨부 파일'에 그대로 올릴 수 있습니다**(메모 칸 바로 아래). 파일이 너무 크면 유튜브 일부 공개(Unlisted)나 Dropbox 링크를 메모에 적어도 됩니다.
+
+### 재제출 (2026-11-06)
+
+- [x] Notes 전문을 iOS 1.1.0 → **앱 심사 정보 → 메모**에 넣고 저장(3,977자 / 한도 4,000자)
+- [x] App Store 설명·프로모션 텍스트는 한국어·영어 모두 이미 하드웨어 키보드가 필요하다고 첫 줄에 밝히고 있음(고칠 것 없음)
+- [x] 실기기 화면 녹화(4분) — 유튜브 일부 공개 <https://youtu.be/W8xmAB2OsRI>, 로그인 없는 브라우저에서 재생 확인. 링크를 Notes 1번에 넣음
+- [x] 버전 페이지 **심사 업데이트** → 앱 심사 페이지 **앱 심사에 다시 제출** → 상태 **심사 대기 중**. 빌드는 1 그대로
+
+남은 일: 심사 결과 대응. 새 빌드를 올릴 때만 `CURRENT_PROJECT_VERSION`(빌드 번호)을 2로 올릴 것.
+영상 설명글 초안은 [PROMO.md](PROMO.md)의 '유튜브 영상 설명글' 절에 있습니다(아직 유튜브에 반영 전).

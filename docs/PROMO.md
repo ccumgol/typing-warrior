@@ -65,3 +65,66 @@ Free for macOS and Windows. Your records stay on your computer.
 Windows: https://apps.microsoft.com/detail/9N1907XRG6SQ (Microsoft Store)
 Download for Mac and Windows: https://github.com/ccumgol/typing-warrior/releases
 Support: https://buymeacoffee.com/ccumgol
+
+---
+
+## 유튜브 영상 설명글 (iPad 사용 영상)
+
+<https://youtu.be/W8xmAB2OsRI> — App Store 심사에 제출한 실기기 녹화. 심사자가 링크를 열었을 때 무엇을 보는 영상인지 바로 알 수 있도록 썼고, 나중에 공개로 돌려 홍보에 써도 되게 했습니다.
+
+**제목 제안**: `Typing Warrior for iPad — 말씀과 시로 배우는 한글·영문 타자 연습`
+
+**설명글**
+
+```
+iPad에 키보드를 연결하고 Typing Warrior를 쓰는 모습입니다.
+
+[ 영상에서 보는 것 ]
+· 홈 화면에서 앱 실행
+· 자리 연습 — 화면 키보드가 다음에 칠 키와 손가락을 알려 줍니다
+· 긴 글 — 성경 전권(개역한글·KJV)을 책과 장을 골라 한 줄씩, 어디까지 쳤는지 저장
+· 단어블록게임과 전선작전게임
+· 기록과 배지
+· 소개 화면의 연습 글 출처와 저작권
+
+Typing Warrior는 성경 전권과 김소월·윤동주·한용운의 시, 셰익스피어 소네트,
+에밀리 디킨슨, 옛 찬송가를 한 줄씩 따라 치며 한글·영문 타자를 익히는 앱입니다.
+키의 실제 위치를 읽어 두벌식 한글을 직접 조합하므로 한/영 입력 상태를 바꿀
+필요가 없습니다. 무료이고 광고가 없으며, 연습 기록은 기기 안에만 저장됩니다.
+
+※ 블루투스 키보드나 Magic Keyboard 같은 하드웨어 키보드가 필요합니다.
+  화면 키보드로는 연습할 수 없습니다.
+
+윈도우: https://apps.microsoft.com/detail/9N1907XRG6SQ
+맥·윈도우 설치 파일: https://github.com/ccumgol/typing-warrior/releases
+홈페이지: https://jesusiswith.us
+소스 코드(MIT): https://github.com/ccumgol/typing-warrior
+
+---
+
+Typing Warrior on iPad with a hardware keyboard.
+
+In this video: launching the app, key drills with the on-screen keyboard guide,
+typing the Bible chapter by chapter in Long texts, the Word Blocks and Frontline
+games, records and badges, and the About page listing every text's source.
+
+Typing Warrior teaches Korean and English touch typing by copying public domain
+texts line by line — the whole Bible (Korean 개역한글 and the KJV), Kim Sowol,
+Yun Dong-ju, Han Yong-un, Shakespeare's sonnets, Emily Dickinson and old hymns.
+Free, no ads; records stay on the device.
+
+Note: a hardware keyboard (Bluetooth or Magic Keyboard) is required.
+```
+
+**짧게 쓰고 싶을 때** (심사용으로만 둘 경우)
+
+```
+Typing Warrior for iPad — 하드웨어 키보드를 연결해 쓰는 한글·영문 타자 연습 앱의
+사용 영상입니다. 앱 실행, 자리 연습, 성경 긴 글 타이핑, 게임, 기록·배지, 소개 화면.
+
+A screen recording of Typing Warrior on iPad with a hardware keyboard, made for
+App Review: launching the app, key drills, typing the Bible, the two games,
+records and badges, and the About page.
+```
+
+> 숫자 앞에 `#`를 쓰면 유튜브가 해시태그로 바꿉니다. 지금 설명란에 `#1041 #12242 #46041`이 해시태그로 걸려 있는 것은 심사 메모를 그대로 붙였기 때문이며, 위 글로 바꾸면 사라집니다.
