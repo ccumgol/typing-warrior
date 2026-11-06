@@ -4,7 +4,36 @@
 - **Mac App Store**: 심사 중(2026-11-01 제출)
 - **iPad(iOS)**: 1.1.0 빌드 1 제출(2026-11-04) → 심사 거절(2026-11-05, Guideline 2.1) → 메모 보강·녹화 링크 추가 후 **재제출, 심사 대기 중**(2026-11-06). 경위는 아래 [iPad(iOS) 심사 거절 대응](#ipadios-심사-거절-대응-2026-11-05)
 
+- **공식 홈페이지**: https://ccumgol.net/typing-warrior (English: https://ccumgol.net/en/typing-warrior/)
+
 Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할 때 쓰는 값입니다. 가격은 **무료**, 앱 안 결제는 없습니다.
+
+## 공식 홈페이지 (2026-11-06)
+
+스토어의 마케팅 URL·지원 URL·개인정보 처리방침 URL을 모두 자체 홈페이지로 모았습니다. GitHub Issues나 저장소 링크 대신 사람이 읽을 수 있는 페이지를 보여 주기 위해서입니다.
+
+| 쓰임 | 주소 |
+|---|---|
+| 마케팅 URL (앱 소개) | https://ccumgol.net/typing-warrior |
+| 지원 URL | https://ccumgol.net/typing-warrior/support/ |
+| 개인정보 처리방침 URL | https://ccumgol.net/typing-warrior/privacy/ |
+| 영문 소개 | https://ccumgol.net/en/typing-warrior/ |
+
+페이지는 별도 저장소 **[ccumgol/myweb](https://github.com/ccumgol/myweb)**(Hugo → Cloudflare Pages)에 있습니다.
+
+| 파일 | 하는 일 |
+|---|---|
+| `content/typing-warrior/index.md`, `index.en.md` | 한국어·영문 소개 내용(전부 front matter) |
+| `content/typing-warrior/*.webp` | 아이콘과 화면 사진(이 저장소 `docs/screenshots/`에서 변환) |
+| `layouts/typing-warrior/single.html` | 페이지 구조 |
+| `layouts/partials/typing-warrior-styles.html` | 페이지 전용 CSS(다크 모드 포함) |
+| `assets/js/typing-warrior-demo.js` | **웹에서 직접 쳐 보는 연습 칸.** 이 저장소의 `src/renderer/core/hangul.js`·`keyboard-layout.js`·`typing-input.js`를 옮겨 와, 앱과 똑같이 키의 물리 위치로 두벌식 한글을 조합합니다 |
+| `content/blog/typing-warrior-support/index.md` | 지원·FAQ (한·영 병기) |
+| `content/blog/typing-warrior-privacy/index.md` | 개인정보 처리방침 (한·영 병기, `docs/PRIVACY.md`와 같은 내용 + iPadOS 추가) |
+
+> 한글 조합 코드를 고치면 **두 곳(앱과 홈페이지)** 을 함께 맞춰야 합니다.
+>
+> 상단 메뉴(APP → Typing Warrior) 연결은 myweb 저장소의 `config/_default/menus.ko.toml`·`menus.en.toml`에 `pageRef = "typing-warrior"` 항목을 더하면 됩니다.
 
 ## 공통
 
@@ -15,8 +44,8 @@ Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할
 | 분류 | 교육(Education) · 보조 분류: 참고(Reference) |
 | 가격 | 무료 |
 | 개발자 | Gihyun Park (박기현) |
-| 홈페이지(마케팅 URL) | https://jesusiswith.us |
-| 지원 URL | https://github.com/ccumgol/typing-warrior/issues |
+| 홈페이지(마케팅 URL) | https://ccumgol.net/typing-warrior |
+| 지원 URL | https://ccumgol.net/typing-warrior/support/ |
 | 후원 | https://buymeacoffee.com/ccumgol |
 | 소스 코드 | https://github.com/ccumgol/typing-warrior (MIT) |
 | 개인정보 | 수집하지 않음. 기록은 이 컴퓨터에만 저장. 인터넷은 사용자가 직접 실행하는 "API.Bible에서 받기"만 사용 |
@@ -57,7 +86,7 @@ Learn Korean and English typing by copying Scripture and poetry line by line: th
 무료(0원), 모든 국가·지역
 
 ### 앱 개인정보 보호
-- 개인정보 처리방침 URL: https://github.com/ccumgol/typing-warrior/blob/main/docs/PRIVACY.md
+- 개인정보 처리방침 URL: https://ccumgol.net/typing-warrior/privacy/
 - 데이터 수집: **"아니요, 이 앱에서 데이터를 수집하지 않습니다"** (API 키는 사용자가 API.Bible에 직접 보내는 것이고 개발자가 받지 않음)
 
 ### 버전 정보 (1.1.0)
@@ -65,8 +94,8 @@ Learn Korean and English typing by copying Scripture and poetry line by line: th
 |---|---|---|
 | 프로모션 텍스트 (170자) | 성경 전권과 윤동주·김소월의 시, 셰익스피어와 옛 찬송가를 한 줄씩 따라 치며 한글·영문 타자를 익히세요. 무료, 광고 없음, 기록은 내 Mac에만. | Learn Korean and English typing by copying the Bible, Korean poetry, Shakespeare and old hymns line by line. Free, no ads, records stay on your Mac. |
 | 키워드 (100자) | 타자연습,타자,한글타자,영타,타이핑,성경,필사,말씀,암송,시편,윤동주,김소월,찬송가,키보드,단축키,교육 | typing,tutor,keyboard,Korean,Hangul,Bible,KJV,scripture,verse,poetry,Shakespeare,hymns,speed |
-| 지원 URL | https://github.com/ccumgol/typing-warrior/issues | 같음 |
-| 마케팅 URL | https://jesusiswith.us | 같음 |
+| 지원 URL | https://ccumgol.net/typing-warrior/support/ | https://ccumgol.net/en/typing-warrior/ 안내는 같은 페이지(한·영 병기) |
+| 마케팅 URL | https://ccumgol.net/typing-warrior | https://ccumgol.net/en/typing-warrior/ |
 | 저작권 | 2026 Gihyun Park | 같음 |
 
 **설명 (한국어)**

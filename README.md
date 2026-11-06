@@ -5,6 +5,7 @@
 성경 전권과 김소월·윤동주·한용운의 시, 셰익스피어와 디킨슨, 옛 찬송가를 한 줄씩 따라 치며 타자를 익힙니다. 지칠 때는 두 가지 게임(단어블록게임, 전선작전게임)으로 즐겁게 손을 풀 수 있습니다.
 
 - **Windows: [Microsoft Store에서 받기](https://apps.microsoft.com/detail/9N1907XRG6SQ)** · 맥·윈도우 설치 파일: [Releases](https://github.com/ccumgol/typing-warrior/releases)
+- 앱 홈페이지: <https://ccumgol.net/typing-warrior> · [지원·문의](https://ccumgol.net/typing-warrior/support/) · [개인정보 처리방침](https://ccumgol.net/typing-warrior/privacy/)
 - 버전 **1.1.0** · [바뀐 내용](CHANGELOG.md) · [버그·오타 신고와 개선 제안](https://github.com/ccumgol/typing-warrior/issues)
 - 만든 사람: 박기현 · 홈페이지 <https://jesusiswith.us>
 - 무료 프로그램입니다. 도움이 되셨다면 [☕ Buy Me a Coffee](https://buymeacoffee.com/ccumgol)로 응원해 주세요.
@@ -211,4 +212,4 @@ GitHub Pages로 이 설명서를 웹 페이지로 보이려면: 리포지토리 
 - Display language and practice language are separate, so you can learn Korean typing with an English interface.
 - Open your own text files or a whole-Bible file (CSV, XML: Zefania/OSIS/OpenSong/Beblia, TXT), or download English and Korean Bibles from API.Bible with your own key.
 - Several users per computer, a local ranking, and shareable badge cards. Everything stays on your computer; only "Get from API.Bible" uses the internet.
-- Code: MIT. Texts: public domain, except Korean Wikisource modern-spelling texts (CC BY-SA 4.0). Report bugs and ideas in [Issues](https://github.com/ccumgol/typing-warrior/issues). Windows: [Microsoft Store](https://apps.microsoft.com/detail/9N1907XRG6SQ). Made by Gihyun Park — <https://jesusiswith.us>. If it helps you, [buy me a coffee ☕](https://buymeacoffee.com/ccumgol).
+- Code: MIT. Texts: public domain, except Korean Wikisource modern-spelling texts (CC BY-SA 4.0). Report bugs and ideas in [Issues](https://github.com/ccumgol/typing-warrior/issues). Windows: [Microsoft Store](https://apps.microsoft.com/detail/9N1907XRG6SQ). Home page: <https://ccumgol.net/en/typing-warrior/> ([support](https://ccumgol.net/typing-warrior/support/), [privacy](https://ccumgol.net/typing-warrior/privacy/)). Made by Gihyun Park — <https://jesusiswith.us>. If it helps you, [buy me a coffee ☕](https://buymeacoffee.com/ccumgol).

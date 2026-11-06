@@ -1,6 +1,8 @@
 # 개인정보 처리방침 · Privacy Policy
 
-**Typing Warrior** (macOS · Windows) · 시행일 2026-11-01 · 만든 사람: 박기현 (Gihyun Park)
+**Typing Warrior** (macOS · Windows · iPadOS) · 시행일 2026-11-01 · 만든 사람: 박기현 (Gihyun Park)
+
+> 스토어에 등록한 공개 주소 · The public copy the stores link to: <https://ccumgol.net/typing-warrior/privacy/>
 
 ## 한국어
 

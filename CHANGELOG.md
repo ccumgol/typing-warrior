@@ -8,6 +8,7 @@
 새 버전을 낼 때는 `package.json`의 `version`과 `src/renderer/version.js`의 `APP_VERSION`을 같이 바꾸고(테스트가 확인), 이 파일 맨 위에 바뀐 내용을 적습니다.
 
 ## 다음 버전 (아직 내지 않음)
+- **공식 홈페이지**: https://ccumgol.net/typing-warrior (영문 /en/typing-warrior/). 웹에서 바로 한 줄 쳐 보는 연습 칸, [지원·FAQ](https://ccumgol.net/typing-warrior/support/), [개인정보 처리방침](https://ccumgol.net/typing-warrior/privacy/). 스토어의 마케팅·지원·개인정보 URL을 이 주소로 바꿈
 - **iPad 앱**(`ios/`, 하드웨어 키보드로 연습): 같은 화면 코드, iOS 키체인·공유 시트, 키보드 미연결 안내, F키 대신 버튼 안내
 - `npm run serve:lan`: 같은 와이파이의 기기에서 미리보기
 - **Microsoft Store**에 게시: https://apps.microsoft.com/detail/9N1907XRG6SQ (README·홍보글에 링크)
