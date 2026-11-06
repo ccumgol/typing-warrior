@@ -28,6 +28,7 @@ Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할
 | `layouts/typing-warrior/single.html` | 페이지 구조 |
 | `layouts/partials/typing-warrior-styles.html` | 페이지 전용 CSS(다크 모드 포함) |
 | `assets/js/typing-warrior-demo.js` | **웹에서 직접 쳐 보는 연습 칸.** 이 저장소의 `src/renderer/core/hangul.js`·`keyboard-layout.js`·`typing-input.js`를 옮겨 와, 앱과 똑같이 키의 물리 위치로 두벌식 한글을 조합합니다 |
+| `content/typing-warrior/video-thumb.webp` | 소개 영상 포스터. 누르기 전에는 유튜브에 아무 요청도 가지 않고, 누를 때만 youtube-nocookie 임베드가 붙습니다(영상: https://youtu.be/W8xmAB2OsRI, 4분 41초) |
 | `content/blog/typing-warrior-support/index.md` | 지원·FAQ (한·영 병기) |
 | `content/blog/typing-warrior-privacy/index.md` | 개인정보 처리방침 (한·영 병기, `docs/PRIVACY.md`와 같은 내용 + iPadOS 추가) |
 
