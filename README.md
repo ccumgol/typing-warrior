@@ -4,7 +4,7 @@
 
 성경 전권과 김소월·윤동주·한용운의 시, 셰익스피어와 디킨슨, 옛 찬송가를 한 줄씩 따라 치며 타자를 익힙니다. 지칠 때는 두 가지 게임(단어블록게임, 전선작전게임)으로 즐겁게 손을 풀 수 있습니다.
 
-- **Windows: [Microsoft Store에서 받기](https://apps.microsoft.com/detail/9N1907XRG6SQ)** · 맥·윈도우 설치 파일: [Releases](https://github.com/ccumgol/typing-warrior/releases)
+- **Windows: [Microsoft Store에서 받기](https://apps.microsoft.com/detail/9N1907XRG6SQ)** · **iPad: [App Store에서 받기](https://apps.apple.com/app/id6829546475)** · 맥·윈도우 설치 파일: [Releases](https://github.com/ccumgol/typing-warrior/releases)
 - 앱 홈페이지: <https://ccumgol.net/typing-warrior> · [지원·문의](https://ccumgol.net/typing-warrior/support/) · [개인정보 처리방침](https://ccumgol.net/typing-warrior/privacy/)
 - 버전 **1.1.0** · [바뀐 내용](CHANGELOG.md) · [버그·오타 신고와 개선 제안](https://github.com/ccumgol/typing-warrior/issues)
 - 만든 사람: 박기현 · 홈페이지 <https://jesusiswith.us>
@@ -32,6 +32,8 @@
 ## 설치하기
 
 **Windows는 [Microsoft Store](https://apps.microsoft.com/detail/9N1907XRG6SQ)에서 받는 것이 가장 쉽습니다.** 스토어에서는 "Typing Warrior: Bible & Poetry"라는 이름으로 나오고, 경고 창 없이 설치되며 업데이트도 자동으로 됩니다.
+
+**iPad는 [App Store](https://apps.apple.com/app/id6829546475)에서 받습니다.** iPadOS 16.4 이상이 필요하고, 타자 연습이라 블루투스·Magic Keyboard 같은 하드웨어 키보드를 연결해야 합니다.
 
 스토어를 쓰지 않거나 맥이라면 [Releases](https://github.com/ccumgol/typing-warrior/releases) 페이지에서 내 컴퓨터에 맞는 파일을 받습니다.
 
@@ -212,4 +214,4 @@ GitHub Pages로 이 설명서를 웹 페이지로 보이려면: 리포지토리 
 - Display language and practice language are separate, so you can learn Korean typing with an English interface.
 - Open your own text files or a whole-Bible file (CSV, XML: Zefania/OSIS/OpenSong/Beblia, TXT), or download English and Korean Bibles from API.Bible with your own key.
 - Several users per computer, a local ranking, and shareable badge cards. Everything stays on your computer; only "Get from API.Bible" uses the internet.
-- Code: MIT. Texts: public domain, except Korean Wikisource modern-spelling texts (CC BY-SA 4.0). Report bugs and ideas in [Issues](https://github.com/ccumgol/typing-warrior/issues). Windows: [Microsoft Store](https://apps.microsoft.com/detail/9N1907XRG6SQ). Home page: <https://ccumgol.net/en/typing-warrior/> ([support](https://ccumgol.net/typing-warrior/support/), [privacy](https://ccumgol.net/typing-warrior/privacy/)). Made by Gihyun Park — <https://jesusiswith.us>. If it helps you, [buy me a coffee ☕](https://buymeacoffee.com/ccumgol).
+- Code: MIT. Texts: public domain, except Korean Wikisource modern-spelling texts (CC BY-SA 4.0). Report bugs and ideas in [Issues](https://github.com/ccumgol/typing-warrior/issues). Windows: [Microsoft Store](https://apps.microsoft.com/detail/9N1907XRG6SQ). iPad: [App Store](https://apps.apple.com/app/id6829546475). Home page: <https://ccumgol.net/en/typing-warrior/> ([support](https://ccumgol.net/typing-warrior/support/), [privacy](https://ccumgol.net/typing-warrior/privacy/)). Made by Gihyun Park — <https://jesusiswith.us>. If it helps you, [buy me a coffee ☕](https://buymeacoffee.com/ccumgol).

@@ -2,7 +2,7 @@
 
 - **Microsoft Store**: 게시됨(2026-11-03) — https://apps.microsoft.com/detail/9N1907XRG6SQ
 - **Mac App Store**: 심사 중(2026-11-01 제출)
-- **iPad(iOS)**: 1.1.0 빌드 1 제출(2026-11-04) → 심사 거절(2026-11-05, Guideline 2.1) → 메모 보강·녹화 링크 추가 후 **재제출, 심사 대기 중**(2026-11-06). 경위는 아래 [iPad(iOS) 심사 거절 대응](#ipadios-심사-거절-대응-2026-11-05)
+- **iPad(iOS)**: 1.1.0 빌드 1 제출(2026-11-04) → 심사 거절(2026-11-05, Guideline 2.1) → 메모 보강·녹화 링크 추가 후 재제출(2026-11-06) → **게시됨**(2026-11-06) — https://apps.apple.com/app/id6829546475 (iPadOS 16.4 이상, 교육, 9+, 무료). 경위는 아래 [iPad(iOS) 심사 거절 대응](#ipadios-심사-거절-대응-2026-11-05)
 
 - **공식 홈페이지**: https://ccumgol.net/typing-warrior (English: https://ccumgol.net/en/typing-warrior/)
 
@@ -34,7 +34,23 @@ Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할
 
 > 한글 조합 코드를 고치면 **두 곳(앱과 홈페이지)** 을 함께 맞춰야 합니다.
 >
-> 상단 메뉴(APP → Typing Warrior) 연결은 myweb 저장소의 `config/_default/menus.ko.toml`·`menus.en.toml`에 `pageRef = "typing-warrior"` 항목을 더하면 됩니다.
+> 상단 메뉴(APP → Typing Warrior)는 myweb 저장소의 `config/_default/menus.ko.toml`·`menus.en.toml`에 `pageRef = "typing-warrior"`를 더해 연결해 두었습니다.
+
+### 스토어에 실제로 바꾼 것 (2026-11-06)
+
+| 항목 | 어디에서 | 상태 |
+|---|---|---|
+| 개인정보 처리방침 URL | App Store Connect → **앱이 수집하는 개인정보** → 개인정보 처리방침 **편집** | ✅ 홈페이지 주소로 저장함 |
+| 지원 URL · 마케팅 URL (iOS) | 버전 정보 (1.1.0) | 🔒 승인된 버전이라 잠김 → **1.2.0 제출 때** |
+| 지원 URL · 마케팅 URL (macOS) | 버전 정보 (1.1.0) | 🔒 심사 중이라 건드리지 않음 → **1.2.0 제출 때** |
+| 지원·홈페이지 주소 | Microsoft Store (Partner Center) | ⬜ 아직 옛 주소, 제약 없으니 아무 때나 |
+
+> **1.2.0을 제출할 때 잊지 말 것** — 지원 URL을 `https://ccumgol.net/typing-warrior/support/`,
+> 마케팅 URL을 `https://ccumgol.net/typing-warrior` 로 바꿉니다. iOS와 macOS가 **각각 따로** 있습니다.
+> 지금 들어 있는 값은 `github.com/ccumgol/typing-warrior/issues` 와 `https://jesusiswith.us` 입니다.
+>
+> **지원 URL과 마케팅 URL은 버전 정보에 있어 버전이 승인되면 잠깁니다.** 반면 개인정보 처리방침 URL은
+> 버전이 아니라 앱 단위라서 언제든 고칠 수 있고, 고친 값은 다음 버전이 출시될 때 적용됩니다.
 
 ## 공통
 
