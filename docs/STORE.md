@@ -43,7 +43,7 @@ Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할
 | 개인정보 처리방침 URL | App Store Connect → **앱이 수집하는 개인정보** → 개인정보 처리방침 **편집** | ✅ 홈페이지 주소로 저장함 |
 | 지원 URL · 마케팅 URL (iOS) | 버전 정보 (1.1.0) | 🔒 승인된 버전이라 잠김 → **1.2.0 제출 때** |
 | 지원 URL · 마케팅 URL (macOS) | 버전 정보 (1.1.0) | 🔒 심사 중이라 건드리지 않음 → **1.2.0 제출 때** |
-| 지원·홈페이지 주소 | Microsoft Store (Partner Center) | ⬜ 아직 옛 주소, 제약 없으니 아무 때나 |
+| 지원·홈페이지·개인정보 주소 | Microsoft Store (Partner Center) → 제품 업데이트 → **속성** | ✅ 새 주소로 Submission 2 제출함(2026-11-07) — **인증 중** |
 
 > **1.2.0을 제출할 때 잊지 말 것** — 지원 URL을 `https://ccumgol.net/typing-warrior/support/`,
 > 마케팅 URL을 `https://ccumgol.net/typing-warrior` 로 바꿉니다. iOS와 macOS가 **각각 따로** 있습니다.
@@ -51,6 +51,19 @@ Mac App Store(App Store Connect)와 Microsoft Store(Partner Center)에 등록할
 >
 > **지원 URL과 마케팅 URL은 버전 정보에 있어 버전이 승인되면 잠깁니다.** 반면 개인정보 처리방침 URL은
 > 버전이 아니라 앱 단위라서 언제든 고칠 수 있고, 고친 값은 다음 버전이 출시될 때 적용됩니다.
+
+### Microsoft Store 주소 바꾸는 법 (2026-11-07)
+
+MS Store는 지원·웹사이트·개인정보 주소가 **버전이 아니라 제출(submission) 단위**라, 목록만
+고치더라도 **새 제출을 만들어 인증을 다시 받아야** 합니다. 앱은 그동안에도 계속 내려받을 수 있습니다.
+
+1. Partner Center → 앱 및 게임 → **Typing Warrior: Bible & Poetry** → 응용 프로그램 개요
+2. 제품 릴리스의 **업데이트 시작** — 현재 제출을 복사한 새 초안이 생깁니다(패키지는 그대로)
+3. 왼쪽 **속성** → `Support info (optional)` 아래 세 칸
+   - 개인정보처리방침 URL → `https://ccumgol.net/typing-warrior/privacy/`
+   - 웹 사이트 → `https://ccumgol.net/typing-warrior`
+   - 지원 연락처 정보 → `https://ccumgol.net/typing-warrior/support/`
+4. **저장** → 개요로 돌아가 **인증을 위해 제출** (인증은 보통 몇 시간, 길면 영업일 3일. 그동안에도 앱은 스토어에 그대로 있습니다)
 
 ## 공통
 
